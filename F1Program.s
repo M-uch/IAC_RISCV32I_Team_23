@@ -21,9 +21,9 @@ idle:
     srli a5, a6, 0x7 /* X^8 */
     andi a5, a5, 0x1 
 
-    xor a4, a4, a5 /* X^4 + X^8
-    xor a3, a3, a4 /* X^3 + X^4 + X^8
-    xor a2, a2, a3 /* X^2 + X^3 + X^4 + X^8
+    xor a4, a4, a5 /* X^4 + X^8 */
+    xor a3, a3, a4 /* X^3 + X^4 + X^8 */
+    xor a2, a2, a3 /* X^2 + X^3 + X^4 + X^8 */
 
     slli a6, a6, 0x1 /* push xor result into LSB of a6 */
     or a6, a6, a2 
