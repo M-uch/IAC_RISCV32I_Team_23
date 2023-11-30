@@ -21,5 +21,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Register File     |           |          |           |        |
 | ALU               |           |          |           |        |
 
+*Main Contributor = M*   
 *Contribution = ✓*
+
 
