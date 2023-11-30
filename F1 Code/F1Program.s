@@ -27,6 +27,7 @@ idle:
 
     slli a6, a6, 0x1 /* push xor result into LSB of a6 */
     or a6, a6, a2 
+    andi a6, a6, 0x000000ff
 
     addi a2, zero, 0x0 /* clear registers */
     addi a3, zero, 0x0 
@@ -67,7 +68,7 @@ ready:
     addi a0, zero, 0x0
     addi t0, zero, 0x0 
 
-    bne zero, zero, idle
+    beq zero, zero, idle
 
 
 
