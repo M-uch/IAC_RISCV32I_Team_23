@@ -7,7 +7,7 @@ module  ALU #(
     output  logic                       Zero
 );
 
-always_comb begin
+always_latch begin
     if(ALUctrl == 3'b000)                                   // add
         {Zero, ALUout} = ALUop1 + ALUop2;
     if(ALUctrl == 3'b111)                                   // and

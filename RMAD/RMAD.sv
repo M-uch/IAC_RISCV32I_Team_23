@@ -9,11 +9,11 @@ module RMAD #(
     input   logic                       RegWrite,               // REG input
     input   logic [DATA_WIDTH-1:0]      ImmExt,                 // first MUX input
     input   logic                       ALUSrc,                 // first MUX input
-    input   logic                       clk,                    // DataMemory input
     input   logic                       MemWrite,               // DataMemory input
-    input   logic                       ResultSrc,              // second MUX input
+    input   logic [1:0]                 ResultSrc,              // Three input MUX input
+    input   logic [DATA_WIDTH-1:0]      PCPlus4,                // Mux3 input
     input   logic [2:0]                 ALUControl,             // ALU input
-    output  logic                       Zero,                   // ALU output
+    output  logic                       Zero                    // ALU output
 );
 
     logic   [DATA_WIDTH-1:0]              SrcA;           // interconnect wire from RD1 to ALU
@@ -58,9 +58,10 @@ DataMemory DataMem (
     .RD         (ReadData)
 );
 
-Mux SecondMux (
+Mux3 ThreeInputMux (
     .in0        (ALUResult),
     .in1        (ReadData),
+    .in2        (PCPlus4),
     .select     (ResultSrc),
     .out        (Result)
 );
