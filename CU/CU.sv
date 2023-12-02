@@ -2,9 +2,10 @@ module CU #(
     parameter WIDTH = 32
 ) (
     input logic     [WIDTH-1:0]     instr,   // Instruction
+    input logic                     eq,
     output logic                    pc_src,
-    // output logic                    result_src,
-    // output logic                    mem_write,
+    output logic                    result_src,
+    output logic                    mem_write,
     output logic    [2:0]           alu_ctrl,
     output logic                    alu_src,
     output logic    [1:0]           imm_src,
@@ -14,14 +15,16 @@ module CU #(
 
     logic [1:0] ALUOp;
     logic branch;
+    logic jump;
 
-    assign pc_src = branch;
+    assign pc_src = (branch & eq) || jump;
 
     main_decoder Main_Decoder (
         .op(instr[6:0]),
         .branch(branch),
-        // .result_src(result_src),
-        // .mem_write(mem_write),
+        .jump(jump),
+        .result_src(result_src),
+        .mem_write(mem_write),
         .alu_src(alu_src),
         .imm_src(imm_src),
         .reg_write(reg_write),

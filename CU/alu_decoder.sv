@@ -1,5 +1,5 @@
 module alu_decoder #(
-    parameter ALUOP_WIDTH = 2,
+    parameter ALUOP_WIDTH = 3,
     parameter OP_WIDTH = 7,
     parameter F3_WIDTH = 3,
     parameter F7_WIDTH = 7
@@ -11,82 +11,48 @@ module alu_decoder #(
     output logic [F3_WIDTH-1:0] alu_ctrl
 );
 
+typedef enum logic [ALUOP_WIDTH-1:0] {
+    Type_RIALU  = 3'b000;  
+    Type_I      = 3'b001; 
+    Type_S      = 3'b010; 
+    Type_B      = 3'b011; 
+    Type_U      = 3'b100; 
+    Type_U_LUI  = 3'b101; 
+    Type_J_JALR = 3'b110;  
+    Type_J_JAL  = 3'b111; 
+} Instruction_Type;
+
 always_comb begin
-
     logic [1:0] test = {op[5], funct7[5]};
+    Instruction_Type i_type = alu_op;
 
-    // if (alu_op == 2'b00) begin
-    //     alu_ctrl = 3'b000;
-    // end else if (alu_op == 2'b01) begin
-    //     alu_ctrl = 3'b001;
-    // end else if (alu_ctrl = 2'b10) begin
-    //     if (funct3 == b'000) begin
-    //         if((test == 2'b00) || (test == 2'b01) || (test == 2'b10)) begin
-    //             alu_ctrl = 3'b000;
-    //         end else if (test == 2'b11) begin
-    //             alu_ctrl = 3'b001;
-    //         end
-    //     end else if (funct3 == 3'b010) begin
-    //         alu_ctrl = 3'b101;
-    //     end else if (funct3 == 3'b110) begin
-    //         alu_ctrl = 3'b011;
-    //     end else if (functt3 == 3'b111) begin
-    //        alu_ctrl = 3'b010; 
-    //     end
-    // end
-    
-    case(alu_op)
+    case(i_type)
 
-        // lw, sw
-        2'b00: begin
-            alu_ctrl = 3'b000;
-        end
-
-        // beq
-        2'b01: begin
-            alu_ctrl = 3'b001;
-        end
-
-        // ALU instructions
-        2'b10: begin
-            
+        Type_RIALU: begin
             case(funct3)
 
-                // add or sub
-                3'b000: begin
-                    case(test)
+                3'b000: alu_ctrl = (test == 2'b11) ? 3'b001 : 3'b000;    // if test is 11 then sub, otherwise add
+                3'b000: alu_ctrl = 3'bxxx;                                // sll (to be assigned)
+                3'b010: alu_ctrl = 3'bxxx;                                // slt unassigned
+                3'b011: alu_ctrl = 3'bxxx;                                // sltu unassigned
+                3'b100: alu_ctrl = 3'b100;                                // xor
+                3'b101: alu_ctrl = 3'b101;                                // slr
+                3'b110: alu_ctrl = 3'b110;                                // or
+                3'b111: alu_ctrl = 3'b111;                                // and
 
-                        // add
-                        2'b00, 2'b01, 2'b10: begin
-                            alu_ctrl = 3'b000;
-                        end
-
-                        // sub
-                        2'b11: begin
-                            alu_ctrl = 3'b001;
-                        end
-                        default: ;
-                    endcase
-                end
-
-                // slt
-                3'b010: begin
-                    alu_ctrl = 3'b101;
-                end
-
-                // or
-                3'b110: begin
-                    alu_ctrl = 3'b011;
-                end
-
-                // and
-                3'b111: begin
-                    alu_ctrl = 3'b010;
-                end
-                default: ;
             endcase
+        
+        Type_I:         alu_ctrl = 3'b000;                                // I think for store and load we add
+        Type_S:         alu_ctrl = 3'b000;                                // ^
+        Type_B:         alu_ctrl = 3'b001;                                // beq is subtraction
+        Type_U:         alu_ctrl = 3'b000;                                // add for upper ?
+        Type_U_LUI:     alu_ctrl = 3'bxxx;                                // assuming need to do sll (NOTE: CURRENTLY UNASSIGNED IN ALU)
+        Type_J_JALR:    alu_ctrl = 3'b000;                                // add for jump 
+        Type_J_JAL:     alu_ctrl = 3'b000;                                // add for jump
+        
+        default: ;
         end
-    endcase 
+    endcase
 end
 
 endmodule
