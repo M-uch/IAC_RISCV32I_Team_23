@@ -14,12 +14,23 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 
 | Component         | Raymond   | Letong   | Matthew   | Alex   |
 | :---------        | :-------: | :------: | :-------: | :----: |
-| PC                |           |          |           |        |           
-| Intruction Memory |           |          |           |        |
-| Sign Extend       |           |          |           |        |
-| Control Unit      |           |          |           |        |
+| Assembly Code     |           |          |           |        |
+| ALU               |           |          |           |        |   
+| Control Unit      |           |          |           |        |   
+| Data Memory       |           |          |           |        |     
+| Instruction Memory|           |          |           |        |
+| Imm Extender      |           |          |           |        |
 | Register File     |           |          |           |        |
-| ALU               |           |          |           |        |
+| Top level sv      |           |          |           |        |
+| Testbench         |           |          |           |        |
+| Debugging         |           |          |           |        |
+| Pipelining Design | Raymond   | Letong   | Matthew   | Alex   |
+| :---------        | :-------: | :------: | :-------: | :----: |
+| Pipeline Registers|           |          |           |        |
+| Hazard Detection Unit|        |          |           |        |
+| Top level sv      |           |          |           |        |
+| Testbench         |           |          |           |        |
+| Debugging         |           |          |           |        |
 
 *Main Contributor = M*   
 *Contribution = ✓*
