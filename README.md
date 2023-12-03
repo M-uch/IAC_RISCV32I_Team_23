@@ -24,8 +24,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Top level sv      |           |          |           |        |
 | Testbench         |           |          |           |        |
 | Debugging         |           |          |           |        |
-| Pipelining Design | Raymond   | Letong   | Matthew   | Alex   |
-| :---------        | :-------: | :------: | :-------: | :----: |
+|*Pipelining Design*| *Raymond* | *Letong* | *Matthew* | *Alex* |
 | Pipeline Registers|           |          |           |        |
 | Hazard Detection Unit|        |          |           |        |
 | Top level sv      |           |          |           |        |
