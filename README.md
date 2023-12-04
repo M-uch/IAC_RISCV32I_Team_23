@@ -12,7 +12,7 @@ Project Decomposition
 ---
 Below is a breakdown of how we distributed the work amongst ourselves:
 
-| Component         | Raymond   | Letong   | Matthew   | Alex   |
+| Single Cycle CPU  | Raymond   | Letong   | Matthew   | Alex   |
 | :---------        | :-------: | :------: | :-------: | :----: |
 | Assembly Code     |           |          |           |        |
 | ALU               |           |          |           |        |   
