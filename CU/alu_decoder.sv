@@ -32,7 +32,7 @@ always_comb begin
             case(funct3)
 
                 3'b000: alu_ctrl = (test == 2'b11) ? 3'b001 : 3'b000;    // if test is 11 then sub, otherwise add
-                3'b000: alu_ctrl = 3'bxxx;                                // sll (to be assigned)
+                3'b000: alu_ctrl = 3'b010;                                // sll
                 3'b010: alu_ctrl = 3'bxxx;                                // slt unassigned
                 3'b011: alu_ctrl = 3'bxxx;                                // sltu unassigned
                 3'b100: alu_ctrl = 3'b100;                                // xor
@@ -46,7 +46,7 @@ always_comb begin
         Type_S:         alu_ctrl = 3'b000;                                // ^
         Type_B:         alu_ctrl = 3'b001;                                // beq is subtraction
         Type_U:         alu_ctrl = 3'b000;                                // add for upper ?
-        Type_U_LUI:     alu_ctrl = 3'bxxx;                                // assuming need to do sll (NOTE: CURRENTLY UNASSIGNED IN ALU)
+        Type_U_LUI:     alu_ctrl = 3'b010;                                // assuming need to do sll
         Type_J_JALR:    alu_ctrl = 3'b000;                                // add for jump 
         Type_J_JAL:     alu_ctrl = 3'b000;                                // add for jump
         
