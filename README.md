@@ -18,7 +18,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | :---------              | :-------: | :------: | :-------: | :----: |
 | Group Statement         |     x     |          |           |   x    |
 | F1 Assembly Code        |     M     |          |           |        |
-| ALU                     |           |          |     M     |        |   
+| ALU                     |           |          |     M     |   x    |   
 | Control Unit            |     x     |    x     |           |   M    |   
 | Data Memory             |           |          |     M     |        |     
 | Instruction Memory      |     M     |          |           |        |
