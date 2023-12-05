@@ -1,33 +1,28 @@
 #include "verilated.h"
 #include "verilated_vcd_c.h"
-#include "VCU.h"
-
-#include "vbuddy.cpp"     // include vbuddy code
+#include "VTop.h"
+#include "vbuddy.cpp"    
 #define MAX_SIM_CYC 100000
 
 int main(int argc, char **argv, char **env) {
   int i;     
-  int clk;       
+  int clk;
 
+  // VCD waveform dump
   Verilated::commandArgs(argc, argv);
-  // init top verilog instance
-  VCU* top = new VCU;
-  // init trace dump
+  VTop* top = new VTop;
   Verilated::traceEverOn(true);
   VerilatedVcdC* tfp = new VerilatedVcdC;
   top->trace (tfp, 99);
-  tfp->open ("CU.vcd");
+  tfp->open ("top.vcd");
  
   // init Vbuddy
   if (vbdOpen()!=1) return(-1);
-  vbdHeader("CU:Testing");
-  //vbdSetMode(1);        // Flag mode set to one-shot
+  vbdHeader("F1 Lights");
+  vbdSetMode(1); // apply flag state as trigger to register t0 in one shot mode
 
-  // initialize simulation input 
-  top->instr = 1;
-  top->eq = 0x1303F00F;
-
-  vbdSetMode(1);
+  top->clk = 1;
+  top->rst = 0;  
 
   // run simulation for i clock cycles
   for (int i=0; i<MAX_SIM_CYC; i++) {
@@ -39,17 +34,25 @@ int main(int argc, char **argv, char **env) {
       top->eval ();
     }
 
-    // vbdHex(4, (int(top->A0) >> 16) & 0xF);
-    // vbdHex(3, (int(top->A0) >> 8)  & 0xF);
-    // vbdHex(2, (int(top->A0) >> 4)  & 0xF);
-    // vbdHex(1, (int(top->A0)) & 0xF);
+    // display lEDS
+    vbdBar((top->a0) & 0xFF);
 
-    // either simulation finished, or 'q' is pressed
+    vbdHex(4, (int(top->a0) >> 16) & 0xF);
+    vbdHex(3, (int(top->a0) >> 8)  & 0xF);
+    vbdHex(2, (int(top->a0) >> 4)  & 0xF);
+    vbdHex(1, (int(top->a0)) & 0xF);
+
+    top->trigger = vbdFlag(); // need to add direct signal to t0 address in register to toggle f1 sequence 
+
+    // display cycle count
+    vbdCycle(i);
+
+    // exit simulation early with q 
     if ((Verilated::gotFinish()) || (vbdGetkey()=='q')) 
       exit(0);
   }
 
-  vbdClose();     // ++++
+  vbdClose(); 
   tfp->close(); 
   printf("Exiting\n");
   exit(0);

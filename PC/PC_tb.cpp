@@ -1,6 +1,6 @@
 #include "verilated.h"
 #include "verilated_vcd_c.h"
-#include "VCU.h"
+#include "VPC.h"
 
 #include "vbuddy.cpp"     // include vbuddy code
 #define MAX_SIM_CYC 100000
@@ -11,21 +11,23 @@ int main(int argc, char **argv, char **env) {
 
   Verilated::commandArgs(argc, argv);
   // init top verilog instance
-  VCU* top = new VCU;
+  VPC* top = new VPC;
   // init trace dump
   Verilated::traceEverOn(true);
   VerilatedVcdC* tfp = new VerilatedVcdC;
   top->trace (tfp, 99);
-  tfp->open ("CU.vcd");
+  tfp->open ("f1_fsm.vcd");
  
   // init Vbuddy
   if (vbdOpen()!=1) return(-1);
-  vbdHeader("CU:Testing");
+  vbdHeader("L4:PC");
   //vbdSetMode(1);        // Flag mode set to one-shot
 
   // initialize simulation input 
-  top->instr = 1;
-  top->eq = 0x1303F00F;
+  top->clk = 1;
+  top->rst = 0;
+  top->PCsrc = 1;
+  top-> ImmOp = 0xF0;
 
   vbdSetMode(1);
 
@@ -39,11 +41,12 @@ int main(int argc, char **argv, char **env) {
       top->eval ();
     }
 
-    // vbdHex(4, (int(top->A0) >> 16) & 0xF);
-    // vbdHex(3, (int(top->A0) >> 8)  & 0xF);
-    // vbdHex(2, (int(top->A0) >> 4)  & 0xF);
-    // vbdHex(1, (int(top->A0)) & 0xF);
+    vbdHex(4, (int(top->PC_out) >> 16) & 0xF);
+    vbdHex(3, (int(top->PC_out) >> 8)  & 0xF);
+    vbdHex(2, (int(top->PC_out) >> 4)  & 0xF);
+    vbdHex(1, (int(top->PC_out)) & 0xF);
 
+    top->PCsrc = vbdFlag();
     // either simulation finished, or 'q' is pressed
     if ((Verilated::gotFinish()) || (vbdGetkey()=='q')) 
       exit(0);
