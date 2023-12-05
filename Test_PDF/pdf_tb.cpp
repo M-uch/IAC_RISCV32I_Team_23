@@ -33,10 +33,10 @@ int main(int argc, char **argv, char **env) {
       top->clk = !top->clk;
       top->eval ();
     }
-
+    if (i > 330000) {
         vbdPlot(int(top->A0), 0, 255);
         vbdCycle(i);
-
+    }
     // exit simulation early with q 
     if ((Verilated::gotFinish()) || (vbdGetkey()=='q')) 
       exit(0);
