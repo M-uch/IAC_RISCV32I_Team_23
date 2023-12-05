@@ -35,7 +35,7 @@ int main(int argc, char **argv, char **env) {
     }
 
     // display lEDS
-    vbdBar((top->data_out) & 0xFF);
+    vbdBar((top->a0) & 0xFF);
 
     vbdHex(4, (int(top->a0) >> 16) & 0xF);
     vbdHex(3, (int(top->a0) >> 8)  & 0xF);
