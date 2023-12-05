@@ -20,7 +20,7 @@ int main(int argc, char **argv, char **env) {
   top->A1 = 0;
   top->A2 = 0;
   top->A3 = 10;
-  top->W3 = 0x55;
+  top->WD3 = 0x55;
   top->WE3 = 1;  
   top->trigger = 0;
   int i = 0;
@@ -32,12 +32,12 @@ int main(int argc, char **argv, char **env) {
       top->eval ();
     }
     if(i == 1){
-      top->AD3 = 5;
-      top->AD1 = 5;
+      top->A3 = 5;
+      top->A1 = 5;
       top->trigger = 1;
     }
     else{
-      top->AD3 = 0;
+      top->A3 = 0;
       top->trigger = 0;
     }
     i++;
