@@ -19,7 +19,7 @@ int main(int argc, char **argv, char **env) {
   // init Vbuddy
   if (vbdOpen()!=1) return(-1);
   vbdHeader("F1 Lights");
-  vbdSetMode(1); // apply flag state to register t0  
+  vbdSetMode(1); // apply flag state as trigger to register t0  
 
   top->clk = 1;
   top->rst = 0;  
@@ -42,7 +42,7 @@ int main(int argc, char **argv, char **env) {
     vbdHex(2, (int(top->a0) >> 4)  & 0xF);
     vbdHex(1, (int(top->a0)) & 0xF);
 
-    top->t0 = vbdFlag(); // need to add direct signal to t0 address in register to toggle f1 sequence 
+    top->trigger = vbdFlag(); // need to add direct signal to t0 address in register to toggle f1 sequence 
 
     // display cycle count
     vbdCycle(i);
