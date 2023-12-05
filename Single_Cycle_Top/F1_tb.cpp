@@ -35,14 +35,14 @@ int main(int argc, char **argv, char **env) {
     }
 
     // display lEDS
-    vbdBar((top->a0) & 0xFF);
+    vbdBar((top->A0) & 0xFF);
 
-    vbdHex(4, (int(top->a0) >> 16) & 0xF);
-    vbdHex(3, (int(top->a0) >> 8)  & 0xF);
-    vbdHex(2, (int(top->a0) >> 4)  & 0xF);
-    vbdHex(1, (int(top->a0)) & 0xF);
+    vbdHex(4, (int(top->A0) >> 16) & 0xF);
+    vbdHex(3, (int(top->A0) >> 8)  & 0xF);
+    vbdHex(2, (int(top->A0) >> 4)  & 0xF);
+    vbdHex(1, (int(top->A0)) & 0xF);
 
-    top->trigger = vbdFlag(); // need to add direct signal to t0 address in register to toggle f1 sequence 
+    top->T0 = vbdFlag(); // need to add direct signal to t0 address in register to toggle f1 sequence 
 
     // display cycle count
     vbdCycle(i);

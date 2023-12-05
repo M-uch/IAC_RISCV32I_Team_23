@@ -1,11 +1,11 @@
-module top #(
+module Top #(
     parameter WIDTH = 32
 ) (
-    input  logic            clk,        // CPU clock
-    input  logic            rst,        // reset
-    input  logic            T0,         // trigger
-    output logic            A0          // O/P Register
-)
+    input  logic                       clk,        // CPU clock
+    input  logic                       rst,        // reset
+    input  logic                       T0,         // trigger
+    output logic     [WIDTH-1:0]       A0          // O/P Register
+);
 
     // CONTROL SIGNALS
     logic                   PCSRC;
@@ -16,7 +16,6 @@ module top #(
     logic   [2:0]           IMMSRC;
     logic                   REGWRITE;
     logic                   JUMPSRC;
-    logic                   JUMP;
 
 
     // INTER SIGNALS
@@ -61,8 +60,7 @@ module top #(
         .alu_src(ALUSRC),
         .imm_src(IMMSRC),
         .reg_write(REGWRITE),
-        .jump_src(JUMPSRC),
-        .jump(JUMP)
+        .jump_src(JUMPSRC)
     );
 
     RMAD CPU_RMAD (
@@ -73,7 +71,7 @@ module top #(
         .RegWrite(REGWRITE),
         .trigger(T0),
         .ImmExt(IMMOP),
-        .ALUsrc(ALUSRC),
+        .ALUSrc(ALUSRC),
         .MemWrite(MEMWRITE),
         .ResultSrc(RESULTSRC),
         .PCPlus4(PCPLUS4),

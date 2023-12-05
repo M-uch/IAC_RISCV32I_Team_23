@@ -10,8 +10,7 @@ module CU #(
     output logic                    alu_src,
     output logic    [2:0]           imm_src,
     output logic                    reg_write,
-    output logic                    jump_src,
-    output logic                    jump
+    output logic                    jump_src
 
 );
 
