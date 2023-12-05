@@ -45,7 +45,7 @@ always_comb begin
         Type_B:         command_code = 14'b0_100_0_0_xx_1_011_0_x ;
         Type_U:         command_code = 14'b1_010_1_0_00_0_100_0_x ;
         Type_U_LUI:     command_code = 14'b1_010_1_0_00_0_101_0_x ;
-        Type_J_JALR:    command_code = 14'b1_101_0_0_xx_0_110_1_1 ;
+        Type_J_JALR:    command_code = 14'b0_101_0_0_xx_0_110_1_1 ;
         Type_J_JAL:     command_code = 14'b1_101_0_0_10_0_111_1_0 ;
         default:        command_code = 14'bx_xxx_x_x_xx_x_xxx_x_x ;
 
