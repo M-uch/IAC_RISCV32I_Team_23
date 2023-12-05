@@ -10,13 +10,15 @@ module  ALU #(
 always_latch begin
     if(ALUctrl == 3'b000)                                   // add
         {Zero, ALUout} = ALUop1 + ALUop2;
+    if(ALUctrl == 3'b001)                                   // sub
+        {Zero, ALUout} = ALUop1 - ALUop2;
     if(ALUctrl == 3'b111)                                   // and
         ALUout = ALUop1 & ALUop2;
     if(ALUctrl == 3'b110)                                   // or
         ALUout = ALUop1 | ALUop2;
     if(ALUctrl == 3'b100)                                   // xor
         ALUout = ALUop1 ^ ALUop2;
-    if(ALUctrl == 3'b001)                                   // sll
+    if(ALUctrl == 3'b010)                                   // sll
         {Zero, ALUout} = ALUop1 << ALUop2;
     if(ALUctrl == 3'b101)                                   // slr
         ALUout = ALUop1 >> ALUop2;
