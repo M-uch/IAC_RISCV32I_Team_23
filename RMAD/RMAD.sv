@@ -7,13 +7,15 @@ module RMAD #(
     input   logic [ADDRESS_WIDTH-1:0]   A2,                     // REG input
     input   logic [ADDRESS_WIDTH-1:0]   A3,                     // REG input
     input   logic                       RegWrite,               // REG input
+    input   logic                       trigger,                // REG input
     input   logic [DATA_WIDTH-1:0]      ImmExt,                 // first MUX input
     input   logic                       ALUSrc,                 // first MUX input
     input   logic                       MemWrite,               // DataMemory input
     input   logic [1:0]                 ResultSrc,              // Three input MUX input
     input   logic [DATA_WIDTH-1:0]      PCPlus4,                // Mux3 input
     input   logic [2:0]                 ALUControl,             // ALU input
-    output  logic                       Zero                    // ALU output
+    output  logic                       Zero,                   // ALU output
+    output  logic [DATA_WIDTH-1:0]      a0                      // REG output
 );
 
     logic   [DATA_WIDTH-1:0]              SrcA;           // interconnect wire from RD1 to ALU
@@ -32,7 +34,9 @@ RegFile Register (
     .WD3        (Result),
     .WE3        (RegWrite),
     .RD1        (SrcA),
-    .RD2        (RD2)
+    .RD2        (RD2),
+    .trigger    (trigger),
+    .a0         (a0)
 );
 
 Mux FirstMux (

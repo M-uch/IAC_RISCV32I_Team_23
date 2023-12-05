@@ -9,16 +9,21 @@ module RegFile #(
     input   logic [DATA_WIDTH-1:0]      WD3,
     input   logic                       WE3,
     output  logic [DATA_WIDTH-1:0]      RD1,
-    output  logic [DATA_WIDTH-1:0]      RD2
+    output  logic [DATA_WIDTH-1:0]      RD2,
+    input   logic                       trigger, // direct access to t0 for trigger
+    output  logic [DATA_WIDTH-1:0]      a0
 );
 
 logic   [DATA_WIDTH-1:0] Reg_File [2**ADDRESS_WIDTH-1:0];
 
 always_ff @(posedge clk) begin
     if(WE3) Reg_File[A3] <= WD3;
+    if(trigger== 1'b1) Reg_File[5] <= 1; // t0 location 
 end
 
 assign RD1 = Reg_File[A1];
 assign RD2 = Reg_File[A2];
+
+assign a0  = Reg_File[10];
 
 endmodule
