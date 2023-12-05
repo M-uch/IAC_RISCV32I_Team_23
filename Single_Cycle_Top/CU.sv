@@ -11,6 +11,7 @@ module CU #(
     output logic    [2:0]           imm_src,
     output logic                    reg_write,
     output logic                    jump_src
+    // output logic                    a_type
 
 );
 
@@ -39,6 +40,7 @@ module CU #(
         .funct3(instr[14:12]),
         .funct7(instr[31:25]),
         .alu_ctrl(alu_ctrl)
+        // .a_type(a_type)
     );
 
 endmodule

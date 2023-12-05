@@ -9,6 +9,7 @@ module alu_decoder #(
     input logic [F3_WIDTH-1:0] funct3,
     input logic [F7_WIDTH-1:0] funct7,
     output logic [F3_WIDTH-1:0] alu_ctrl
+    // output logic                a_type     // byte or word addressing
 );
 
 typedef enum logic [ALUOP_WIDTH-1:0] {
@@ -43,14 +44,47 @@ always_comb begin
             endcase
         end
 
-        Type_I:         alu_ctrl = 3'b000;                                // I think for store and load we add
-        Type_S:         alu_ctrl = 3'b000;                                // ^
-        Type_B:         alu_ctrl = 3'b001;                                // beq is subtraction
-        Type_U:         alu_ctrl = 3'b000;                                // add for upper ?
-        Type_U_LUI:     alu_ctrl = 3'b010;                                // assuming need to do sll
-        Type_J_JALR:    alu_ctrl = 3'b000;                                // add for jump 
-        Type_J_JAL:     alu_ctrl = 3'b000;                                // add for jump
+        Type_I: begin         
+            alu_ctrl = 3'b000;
+            // a_type = (funct3 == 3'b100) ? 1'b1 : 1'b0;                                // I think for store and load we add
+        end
+
+        Type_S: begin         
+            alu_ctrl = 3'b000;
+            // a_type = (funct3 == 3'b000) ? 1'b1 : 1'b0;                                // ^
+        end
         
+        Type_B: alu_ctrl = 3'b001;                               // beq is subtraction
+        Type_U: alu_ctrl = 3'b000;                                // add for upper ?
+        Type_U_LUI: alu_ctrl = 3'b010;                             // assuming need to do sll
+        Type_J_JALR: alu_ctrl = 3'b000;                             // add for jump 
+        Type_J_JAL: alu_ctrl = 3'b000;                                 // add for jump
+        
+        //         Type_B: begin         
+        //     alu_ctrl = 3'b001;
+        //     a_type = 1'bx;                                // beq is subtraction
+        // end
+
+        // Type_U: begin         
+        //     alu_ctrl = 3'b000; 
+        //     a_type = 1'bx;                                // add for upper ?
+        // end
+
+        // Type_U_LUI: begin     
+        //     alu_ctrl = 3'b010; 
+        //     a_type = 1'bx;                                // assuming need to do sll
+        // end
+
+        // Type_J_JALR: begin   
+        //     alu_ctrl = 3'b000;
+        //     a_type = 1'bx;                                // add for jump 
+        // end
+        
+        // Type_J_JAL: begin    
+        //     alu_ctrl = 3'b000; 
+        //     a_type = 1'bx;                                // add for jump
+        // end
+        // default: a_type = 1'bx;
         default: ;
         
     endcase
