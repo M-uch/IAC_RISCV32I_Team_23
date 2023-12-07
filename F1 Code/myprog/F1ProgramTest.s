@@ -1,12 +1,13 @@
 initialise:
     addi a6, zero, 0x1 
-    addi s1, zero, 0x1 
+    addi s1, zero, 0x1
     addi s2, zero, 0xff 
     addi s3, zero, 0x1 
-    addi s4, zero, 0x1 
+    addi s4, zero, 0x1
+    addi t0, zero, 0x0
 
 idle:
-    beq  t0, s1, countdown 
+    bne  t0, zero, countdown 
 
     srli a2, a6, 0x1 
     andi a2, a2, 0x1 
@@ -30,7 +31,7 @@ idle:
     addi a4, zero, 0x0 
     addi a5, zero, 0x0 
     
-    beq  zero, zero, idle 
+    bne  zero, s1, idle 
 
 delay:
     addi  a2, a2, 0x1   
@@ -60,4 +61,4 @@ ready:
     addi a0, zero, 0x0
     addi t0, zero, 0x0 
 
-    beq zero, zero, idle
+    bne zero, s1, idle

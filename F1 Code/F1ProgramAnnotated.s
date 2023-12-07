@@ -1,3 +1,6 @@
+// THIS IS AN OLD PROGRAM, FURTHER CHANGES WILL NOT BE MADE
+// PROGRAM CONCEPT REMAINS THE SAME FOR FUTURE ITERATIONS
+
 initialise:
     addi a6, zero, 0x1 /* initial value of lfsr system */
     addi s1, zero, 0x1 /* checks trigger = 1 */
@@ -69,8 +72,6 @@ ready:
     addi t0, zero, 0x0 
 
     beq zero, zero, idle
-
-
 
 /*
 need 0.2-3 seconds delay
