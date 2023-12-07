@@ -1,37 +1,87 @@
-# IAC-RISC-V-32I-CPU-Team-23-
-Implementing a 32 bit RISCV-I instruction set CPU used to run a F1 light simulation, with additional pipelining and data caching.
+# IAC-RISC-V-32I-CPU-Team-23
+Implementing a 32 bit RISCV-I instruction set CPU used to run a F1 light simulation, with additional versions which implement pipelining and data caching.
 
-| Name    | GitHub Username | Personal Statement                                              |
-| :-----  | :-------------  | :------------------                                             |
-| Raymond | M-uch           | [Raymond's Personal Statement](/Personal_Statements/Raymond.md) |
-| Letong  | ksrxlt          | [Letong's Personal Statement](/Personal_Statements/Letong.md)   |
-| Mathew  | MatthewGodsmark | [Matthew's Personal Statement](/Personal_Statements/Matthew.md) |
-| Alex    | AlexSeferidis   | [Alex's Personal Statement](/Personal_Statments/Alex.md)        |
+**Group Details**
 
-Project Decomposition
+| Name    | CID           | GitHub Username | Personal Statement           |
+| :-----  | :-------------| :-------------  | :------------------          |
+| Raymond | 02288579      | M-uch           | [Raymond's Personal Statement](/Personal_Statements/Raymond.md) |
+| Letong  |               | ksrxlt          | [Letong's Personal Statement](/Personal_Statements/Letong.md)  |
+| Mathew  |               | MatthewGodsmark | [Matthew's Personal Statement](/Personal_Statements/Matthew.md) |
+| Alex    |               | AlexSeferidis   | [Alex's Personal Statement](/Personal_Statments/Alex.md)    |
+
+Project Work Division
 ---
 Below is a breakdown of how we distributed the work amongst ourselves:
 
 | Single Cycle CPU  | Raymond   | Letong   | Matthew   | Alex   |
 | :---------        | :-------: | :------: | :-------: | :----: |
-| Assembly Code     |           |          |           |        |
-| ALU               |           |          |           |        |   
-| Control Unit      |           |          |           |        |   
-| Data Memory       |           |          |           |        |     
-| Instruction Memory|           |          |           |        |
-| Imm Extender      |           |          |           |        |
-| Register File     |           |          |           |        |
+| Group Statement   |     x     |          |           |   x    |
+| Assembly Code     |     M     |          |           |        |
+| ALU               |           |          |     M     |        |   
+| Control Unit      |     x     |    x     |           |   M    |   
+| Data Memory       |     x     |          |     M     |        |     
+| Instruction Memory|     M     |          |           |        |
+| Imm Extender      |     M     |          |           |        |
+| Jump & Ret Muxes  |     x     |          |     M     |   x    |
+| Program Counter   |           |          |           |   M    |
+| Register File     |     x     |          |     M     |        |
+| Top level sv      |           |          |           |   M    |
+| Testbench         |     M     |          |           |        |
+| Debugging         |     x     |          |           |   M    |
+| **Pipelining Design** | **Raymond**   | **Letong**   | **Matthew**   | **Alex**   |
+| Pipeline Registers|           |    M     |           |        |
+| Hazard Detection Unit|        |          |     M     |        |
 | Top level sv      |           |          |           |        |
 | Testbench         |           |          |           |        |
-| Debugging         |           |          |           |        |
-|**Pipelining Design**| **Raymond** | **Letong** | **Matthew** | **Alex**|
-| Pipeline Registers|           |          |           |        |
-| Hazard Detection Unit|        |          |           |        |
-| Top level sv      |           |          |           |        |
-| Testbench         |           |          |           |        |
-| Debugging         |           |          |           |        |
+| Debugging         |      
+     |          |           |        |
 
 *Main Contributor = M*   
-*Contribution = ✓*
+*Contribution = x*
 
+# Repository Organisation
 
+The decision was made to work using only the main branch to commit and pull changes to the project due to the following reasons.
+- Reduced management due to branch merging and maintenance
+- ensures that all team members are working with the newest version of the project
+- ease of access to all resources and work
+
+Individual work on components and tests on versions each CPU were created in separate folders to make them distinguishable, and components could be copied and tested with others in their own folders when needed.
+
+to avoid overlap and accidental removal of work when committing, members would individually work on folders and notify others if jointly working in one, a git pull would be run before starting a work session, with all changes being committed upon finishing. 
+
+# Summary of CPU Models
+
+1. **Single Cycle RISCV-32I**: CPU used to run the F1 light sequence program and reference programs provided, including jump instructions
+
+2. **Pipelined RISCV-32I**: CPU with pipelining which improves performance by fetching instructions for multiple steps.
+
+3. **Data Caching RISCV-32I**: CPU with data caching which improves performance by storing frequently used files. 
+
+# 1. Single Cycle RISCV-32I: 
+
+Various components could be pulled from lab 4 and reused in the project with additional modifications to include a larger instruction set such as J-types, S-types and new I-type instructions.
+
+**Lab 4 CPU Diagram**
+
+![[Pasted image 20231207112136.png]]
+
+**Project Diagram**
+
+![[Pasted image 20231207111708.png]]
+
+the following tasks needed to completed to finish the first stage of the project:
+
+- Writing a f1 program in assembly and converting to it's little endian machine code equivalent 
+- Adding the data memory component and it's respective multiplexer
+- implementing additional operations to the ALU
+- implementing additional control signals to the control unit for the JAL instructions required and store load instructions
+- Adding components to allow for jumps (storing the RET address and returning to respective address on RET)
+- implementing a trigger that can be externally changed through Vbuddy to start the f1 light sequence on demand
+
+**Specific work can be found in the individual statements as shown in the project tasks division table**
+
+# 2. **Pipelined RISCV-32I**
+
+# 3. **Data Caching RISCV-32I**
