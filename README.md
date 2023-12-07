@@ -65,11 +65,11 @@ Various components could be pulled from lab 4 and reused in the project with add
 
 **Lab 4 CPU Diagram**
 
-![[Pasted image 20231207112136.png]]
+![Alt text](<Pictures/Pasted image 20231207112136.png>)
 
 **Project Diagram**
 
-![[Pasted image 20231207111708.png]]
+![Alt text](<Pictures/Pasted image 20231207111708.png>)
 
 the following tasks needed to completed to finish the first stage of the project:
 
