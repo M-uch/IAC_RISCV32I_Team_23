@@ -13,17 +13,23 @@ module RMAD #(
     input   logic                       MemWrite,               // DataMemory input
     input   logic [1:0]                 ResultSrc,              // Three input MUX input
     input   logic [DATA_WIDTH-1:0]      PCPlus4,                // Mux3 input
+    input   logic                       JumpSrc,                // second MUX input
+    input   logic [DATA_WIDTH-1:0]      PCtargetIn,             // second MUX input
     input   logic [2:0]                 ALUControl,             // ALU input
     output  logic                       Zero,                   // ALU output
-    output  logic [DATA_WIDTH-1:0]      a0                      // REG output
+    output  logic [DATA_WIDTH-1:0]      a0,                     // REG output
+    output  logic [DATA_WIDTH-1:0]      PCtargetOut             // second MUX output
+
 );
 
     logic   [DATA_WIDTH-1:0]              SrcA;           // interconnect wire from RD1 to ALU
     logic   [DATA_WIDTH-1:0]              RD2;            // interconnect wire from RD2 to 1st MUX and DataMemory
     logic   [DATA_WIDTH-1:0]              SrcB;           // interconnect wire from 1st MUX to ALU
-    logic   [DATA_WIDTH-1:0]              ALUResult;      // interconnect wire from ALU to DataMemory and 2nd MUX
-    logic   [DATA_WIDTH-1:0]              ReadData;       // interconnect wire from DataMemory to 2nd MUX
-    logic   [DATA_WIDTH-1:0]              Result;         // interconnect wire from 2nd MUX to DataMemory
+    logic   [DATA_WIDTH-1:0]              ALUResult;      // interconnect wire from ALU to DataMemory and three input MUX
+    logic   [DATA_WIDTH-1:0]              ReadData;       // interconnect wire from DataMemory to three input MUX
+    logic   [DATA_WIDTH-1:0]              Result;         // interconnect wire from three input MUX to WD3
+    logic   [DATA_WIDTH-1:0]              ra;             // interconnect wire from ra to second MUX
+
 
 
 RegFile Register (
@@ -36,7 +42,8 @@ RegFile Register (
     .RD1        (SrcA),
     .RD2        (RD2),
     .trigger    (trigger),
-    .a0         (a0)
+    .a0         (a0),
+    .ra         (ra)
 );
 
 Mux FirstMux (
@@ -68,6 +75,13 @@ Mux3 ThreeInputMux (
     .in2        (PCPlus4),
     .select     (ResultSrc),
     .out        (Result)
+);
+
+Mux SecondMux (
+    .in0        (PCtargetIn),
+    .in1        (ra),
+    .select     (JumpSrc),
+    .out        (PCtargetOut)
 );
 
 endmodule

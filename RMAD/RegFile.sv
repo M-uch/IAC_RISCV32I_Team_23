@@ -11,7 +11,8 @@ module RegFile #(
     output  logic [DATA_WIDTH-1:0]      RD1,
     output  logic [DATA_WIDTH-1:0]      RD2,
     input   logic                       trigger, // direct access to t0 for trigger
-    output  logic [DATA_WIDTH-1:0]      a0
+    output  logic [DATA_WIDTH-1:0]      a0,
+    output  logic [DATA_WIDTH-1:0]      ra
 );
 
 logic   [DATA_WIDTH-1:0] Reg_File [2**ADDRESS_WIDTH-1:0];
@@ -23,7 +24,7 @@ end
 
 assign RD1 = Reg_File[A1];
 assign RD2 = Reg_File[A2];
-
 assign a0  = Reg_File[10];
+assign ra  = Reg_File[1];
 
 endmodule
