@@ -14,34 +14,35 @@ Project Work Division
 ---
 Below is a breakdown of how we distributed the work amongst ourselves:
 
-| Single Cycle CPU  | Raymond   | Letong   | Matthew   | Alex   |
-| :---------        | :-------: | :------: | :-------: | :----: |
-| Group Statement   |     x     |          |           |   x    |
-| Assembly Code     |     M     |          |           |        |
-| ALU               |           |          |     M     |        |   
-| Control Unit      |     x     |    x     |           |   M    |   
-| Data Memory       |           |          |     M     |        |     
-| Instruction Memory|     M     |          |           |        |
-| Imm Extender      |     M     |          |           |        |
-| Jump & Ret Muxes  |     x     |          |     M     |   x    |
-| Program Counter   |           |          |           |   M    |
-| Register File     |     x     |          |     M     |        |
-| Top level sv      |           |          |           |   M    |
-| Testbench         |     M     |          |           |        |
-| Debugging         |     x     |          |           |   x    |
-| **Reference Program** | **Raymond**   | **Letong**   | **Matthew**   | **Alex**   |
-| Testbench         |           |          |           |        |
-| Debugging         |           |          |           |        |
-| **Pipelining Design** | **Raymond**   | **Letong**   | **Matthew**   | **Alex**   |
-| Pipeline Registers|           |    M     |           |        |
-| Hazard Detection Unit|        |          |     M     |        |
-| Top level sv      |           |          |           |        |
-| Testbench         |           |          |           |        |
-| Debugging         |           |          |           |        |
-| **Reference Program** | **Raymond**   | **Letong**   | **Matthew**   | **Alex**   |
-| Testbench         |           |          |           |        |
-| Debugging         |           |          |           |        |
-| **Data Caching** | **Raymond**   | **Letong**   | **Matthew**   | **Alex**   |
+| Single Cycle CPU        | Raymond   | Letong   | Matthew   | Alex   |
+| :---------              | :-------: | :------: | :-------: | :----: |
+| Group Statement         |     x     |          |           |   x    |
+| Assembly Code           |     M     |          |           |        |
+| ALU                     |           |          |     M     |        |   
+| Control Unit            |     x     |    x     |           |   M    |   
+| Data Memory             |           |          |     M     |        |     
+| Instruction Memory      |     M     |          |           |        |
+| Imm Extender            |     M     |          |           |        |
+| Jump & Ret Muxes        |     x     |          |     M     |   x    |
+| Program Counter         |           |          |           |   M    |
+| Register File           |     x     |          |     M     |        |
+| Top level sv            |           |          |           |   M    |
+| Testbench               |     M     |          |           |        |
+| Debugging               |     x     |          |           |   x    |
+| **Reference Program**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
+| Byte address Data Memory|           |          |           |        |
+| Testbench               |           |          |           |        |
+| Debugging               |           |          |           |        |
+| **Pipelining Design**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
+| Pipeline Registers      |           |    M     |           |        |
+| Hazard Detection Unit   |           |          |     M     |        |
+| Top level sv            |           |          |           |        |
+| Testbench               |           |          |           |        |
+| Debugging               |           |          |           |        |
+| **Reference Program**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
+| Testbench               |           |          |           |        |
+| Debugging               |           |          |           |        |
+| **Data Caching**        | **Raymond** | **Letong** | **Matthew** | **Alex** |
 
 *Main Contributor = M*   
 *Contribution = x*
@@ -63,7 +64,7 @@ to avoid overlap and accidental removal of work when committing, members would i
 
 2. **Pipelined RISCV-32I**: CPU with pipelining which improves performance by fetching instructions for multiple steps.
 
-3. **Data Caching RISCV-32I**: CPU with data caching which improves performance by storing frequently used files. 
+3. **Data Caching RISCV-32I**: CPU with data caching which improves performance by storing frequently used data. 
 
 # 1. Single Cycle RISCV-32I: 
 
@@ -80,7 +81,7 @@ Various components could be pulled from lab 4 and reused in the project with add
 the following tasks needed to completed to finish the first stage of the project:
 
 - Writing a f1 program in assembly and converting to it's little endian machine code equivalent 
-- Adding the data memory component and it's respective multiplexer
+- Adding the data memory component and it's respective multiplexer (including byte sized addressing)
 - implementing additional operations to the ALU
 - implementing additional control signals to the control unit for the JAL instructions required and store load instructions
 - Adding components to allow for jumps (storing the RET address and returning to respective address on RET)
