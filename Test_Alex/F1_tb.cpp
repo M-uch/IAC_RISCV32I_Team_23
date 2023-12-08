@@ -19,7 +19,7 @@ int main(int argc, char **argv, char **env) {
   // init Vbuddy
   if (vbdOpen()!=1) return(-1);
   vbdHeader("F1 Lights");
-  vbdSetMode(0); // apply flag state as trigger to register t0 in one shot mode
+  vbdSetMode(1); // apply flag state as trigger to register t0 in one shot mode
 
   top->clk = 1;
   top->rst = 0;  
