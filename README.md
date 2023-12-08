@@ -17,7 +17,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Single Cycle CPU        | Raymond   | Letong   | Matthew   | Alex   |
 | :---------              | :-------: | :------: | :-------: | :----: |
 | Group Statement         |     x     |          |           |   x    |
-| Assembly Code           |     M     |          |           |        |
+| F1 Assembly Code        |     M     |          |           |        |
 | ALU                     |           |          |     M     |        |   
 | Control Unit            |     x     |    x     |           |   M    |   
 | Data Memory             |           |          |     M     |        |     
@@ -31,8 +31,8 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Debugging               |     x     |          |           |   x    |
 | **Reference Program**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
 | Byte address Data Memory|     M     |          |     x     |        |
-| Testbench               |           |          |           |        |
-| Debugging               |           |          |           |        |
+| Testbench               |     M     |          |           |        |
+| Debugging               |           |          |           |   M    |
 | **Pipelining Design**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
 | Pipeline Registers      |           |    M     |           |        |
 | Hazard Detection Unit   |           |          |     M     |        |
@@ -87,7 +87,7 @@ the following tasks needed to completed to finish the first stage of the project
 - Adding components to allow for jumps (storing the RET address and returning to respective address on RET)
 - implementing a trigger that can be externally changed through Vbuddy to start the f1 light sequence on demand
 
-**Specific work can be found in the individual statements as shown in the project tasks division table**
+**Specific details on components can be found in the personal statements and each component folder**
 
 # 2. **Pipelined RISCV-32I**
 
