@@ -30,7 +30,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Testbench               |     M     |          |           |        |
 | Debugging               |     x     |          |           |   x    |
 | **Reference Program**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
-| Byte address Data Memory|           |          |           |        |
+| Byte address Data Memory|     M     |          |     x     |        |
 | Testbench               |           |          |           |        |
 | Debugging               |           |          |           |        |
 | **Pipelining Design**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
