@@ -20,7 +20,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Assembly Code     |     M     |          |           |        |
 | ALU               |           |          |     M     |        |   
 | Control Unit      |     x     |    x     |           |   M    |   
-| Data Memory       |     x     |          |     M     |        |     
+| Data Memory       |           |          |     M     |        |     
 | Instruction Memory|     M     |          |           |        |
 | Imm Extender      |     M     |          |           |        |
 | Jump & Ret Muxes  |     x     |          |     M     |   x    |
@@ -28,14 +28,20 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Register File     |     x     |          |     M     |        |
 | Top level sv      |           |          |           |   M    |
 | Testbench         |     M     |          |           |        |
-| Debugging         |     x     |          |           |   M    |
+| Debugging         |     x     |          |           |   x    |
+| **Reference Program** | **Raymond**   | **Letong**   | **Matthew**   | **Alex**   |
+| Testbench         |           |          |           |        |
+| Debugging         |           |          |           |        |
 | **Pipelining Design** | **Raymond**   | **Letong**   | **Matthew**   | **Alex**   |
 | Pipeline Registers|           |    M     |           |        |
 | Hazard Detection Unit|        |          |     M     |        |
 | Top level sv      |           |          |           |        |
 | Testbench         |           |          |           |        |
-| Debugging         |      
-     |          |           |        |
+| Debugging         |           |          |           |        |
+| **Reference Program** | **Raymond**   | **Letong**   | **Matthew**   | **Alex**   |
+| Testbench         |           |          |           |        |
+| Debugging         |           |          |           |        |
+| **Data Caching** | **Raymond**   | **Letong**   | **Matthew**   | **Alex**   |
 
 *Main Contributor = M*   
 *Contribution = x*
