@@ -33,7 +33,7 @@ int main(int argc, char **argv, char **env) {
       top->clk = !top->clk;
       top->eval ();
     }
-    if (i > 330000) {
+    if (i > 10000) {
         vbdPlot(int(top->A0), 0, 255);
         vbdCycle(i);
     }

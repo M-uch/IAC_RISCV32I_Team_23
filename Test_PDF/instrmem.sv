@@ -14,8 +14,8 @@ initial begin
     $readmemh("PDF.mem", rom_array);
 end;
 
-assign instr = {rom_array[short + 32'b11], // read from largest address representing bits 25-32
-             rom_array[short + 32'b10], // bits 17-24
-             rom_array[short + 32'b1], // bits 9-16
-             rom_array[short]}; // bits 1-8
+assign instr = {rom_array[addr + 32'b11], // read from largest address representing bits 25-32
+             rom_array[addr + 32'b10], // bits 17-24
+             rom_array[addr + 32'b1], // bits 9-16
+             rom_array[addr]}; // bits 1-8
 endmodule
