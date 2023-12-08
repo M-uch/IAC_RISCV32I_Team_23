@@ -1,5 +1,5 @@
 module instrmem #(
-    parameter ADDRESS_WIDTH = 32, // 32 bit addresses // NOTE current mem only uses 172 addresses so a array 2^8 is sufficient
+    parameter ADDRESS_WIDTH = 32, // 32 bit addresses 
               DATA_WIDTH = 32, // 32 bit instructions
               READ_WIDTH = 8 // byte sized reading
 ) (
@@ -7,7 +7,7 @@ module instrmem #(
     output logic [DATA_WIDTH-1:0] instr
 );
 
-logic [READ_WIDTH-1:0] rom_array [2**8-1:0];
+logic [READ_WIDTH-1:0] rom_array [2**12-1:0]; // current rom is 2^12 as memory map states up to address FFF is used
 
 initial begin
     $display("loading rom.");

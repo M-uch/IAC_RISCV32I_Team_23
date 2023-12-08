@@ -3,7 +3,7 @@ module DataMemory #(
               DATA_WIDTH = 32 
 )(
     input   logic                       clk,
-    input   logic [DATA_WIDTH-1:0]      A,
+    input   logic [ADDRESS_WIDTH-1:0]   A,
     input   logic [DATA_WIDTH-1:0]      WD,
     input   logic                       WE,
     input   logic                       ADTP, // addressing type if 0 then 32 bit output if 1 then 8 bit output extended to 32 with 0s
@@ -11,7 +11,7 @@ module DataMemory #(
 );
 
 // 7:0 set as each address holds 8 bits
-logic [7:0] Reg_File [2**ADDRESS_WIDTH-1:0];
+logic [7:0] Reg_File [2**17-1:0]; // set max address to 1FFFF as shown in memory map 
 
 // write input
 always_ff @(posedge clk) begin
