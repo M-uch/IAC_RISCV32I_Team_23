@@ -6,7 +6,7 @@ module DataMemory #(
     input   logic [ADDRESS_WIDTH-1:0]   A,
     input   logic [DATA_WIDTH-1:0]      WD,
     input   logic                       WE,
-    input   logic                       ADTP, // addressing type if 0 then 32 bit output if 1 then 8 bit output extended to 32 with 0s
+    input   logic                       ADTP, // addressing type if 0 then 32 bit W/R , if 1 then 8 bit W/R extended to 32 with 0s
     output  logic [DATA_WIDTH-1:0]      RD
 );
 
