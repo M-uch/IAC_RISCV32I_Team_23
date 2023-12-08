@@ -5,23 +5,17 @@ module instrmem #(
 ) (
     input logic [ADDRESS_WIDTH-1:0] addr,
     output logic [DATA_WIDTH-1:0] instr
-    // output logic [ADDRESS_WIDTH-1:0] ignoreunused // ignore warning from unused input bits
 );
 
-// assign ignoreunused = addr;
-
-logic [7:0] short;
-logic [READ_WIDTH-1:0] rom_array [2**17-1:0]; 
-
-assign short = addr[7:0];
+logic [READ_WIDTH-1:0] rom_array [2**12-1:0]; 
 
 initial begin
-    $display("loading rom.");
-    $readmemh("sine.mem", rom_array);
+    $display("loading Instruction Memory.");
+    $readmemh("PDF.mem", rom_array);
 end;
 
-assign instr = {rom_array[short + 8'b11], // read from largest address representing bits 25-32
-             rom_array[short + 8'b10], // bits 17-24
-             rom_array[short + 8'b1], // bits 9-16
+assign instr = {rom_array[short + 32'b11], // read from largest address representing bits 25-32
+             rom_array[short + 32'b10], // bits 17-24
+             rom_array[short + 32'b1], // bits 9-16
              rom_array[short]}; // bits 1-8
 endmodule

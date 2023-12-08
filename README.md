@@ -32,7 +32,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | **Reference Program**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
 | Byte address Data Memory|     M     |          |     x     |        |
 | Testbench               |     M     |          |           |        |
-| Debugging               |           |          |           |   M    |
+| Debugging               |     x     |          |           |   M    |
 | **Pipelining Design**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
 | Pipeline Registers      |           |    M     |           |        |
 | Hazard Detection Unit   |           |          |     M     |        |
