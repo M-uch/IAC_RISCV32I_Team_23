@@ -24,7 +24,7 @@ int main(int argc, char **argv, char **env) {
   top->clk = 1;
   top->rst = 0;  
 
-  // run simulation for i clock cycles
+  // run simulation for many clock cycles
   for (int i=0; i<MAX_SIM_CYC; i++) {
 
     // dump variables into VCD file and toggle clock
