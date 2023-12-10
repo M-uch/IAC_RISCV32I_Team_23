@@ -19,7 +19,10 @@ _loop1:                         # repeat
 
 build:      # function to build prob dist func (pdf)
     LI      a1, 1       # a1 = base address of data array MODIFIED SINCE LI DOES NOT INCLUDE LUI AND base_data IS 20 BIT
-    SLLI    a1, a1, 4 
+    SLLI    a1, a1, 1
+    SLLI    a1, a1, 1
+    SLLI    a1, a1, 1
+    SLLI    a1, a1, 1
     LI      a2, 0               # a2 = offset into of data array 
     LI      a3, base_pdf        # a3 = base address of pdf array
     LI      a4, max_count       # a4 = maximum count to terminate
