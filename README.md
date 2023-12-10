@@ -25,7 +25,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Imm Extender            |     M     |          |           |        |
 | Jump & Ret Muxes        |     x     |          |     M     |   x    |
 | Program Counter         |           |          |           |   M    |
-| Register File           |     x     |          |     M     |        |
+| Register File           |     x     |          |     M     |   x    |
 | Top level sv            |           |          |           |   M    |
 | Testbench               |     M     |          |           |        |
 | Debugging               |     x     |          |           |   x    |
