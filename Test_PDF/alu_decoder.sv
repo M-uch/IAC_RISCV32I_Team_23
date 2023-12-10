@@ -54,36 +54,36 @@ always_comb begin
             a_type = (funct3 == 3'b000) ? 1'b1 : 1'b0;                                // ^
         end
         
-        Type_B: alu_ctrl = 3'b001;                               // beq is subtraction
-        Type_U: alu_ctrl = 3'b000;                                // add for upper ?
-        Type_U_LUI: alu_ctrl = 3'b010;                             // assuming need to do sll
-        Type_J_JALR: alu_ctrl = 3'b000;                             // add for jump 
-        Type_J_JAL: alu_ctrl = 3'b000;                                 // add for jump
+        // Type_B: alu_ctrl = 3'b001;                               // beq is subtraction
+        // Type_U: alu_ctrl = 3'b000;                                // add for upper ?
+        // Type_U_LUI: alu_ctrl = 3'b010;                             // assuming need to do sll
+        // Type_J_JALR: alu_ctrl = 3'b000;                             // add for jump 
+        // Type_J_JAL: alu_ctrl = 3'b000;                                 // add for jump
         
-        //         Type_B: begin         
-        //     alu_ctrl = 3'b001;
-        //     a_type = 1'bx;                                // beq is subtraction
-        // end
+        Type_B: begin         
+            alu_ctrl = 3'b001;
+            a_type = 1'bx;                                // beq is subtraction
+        end
 
-        // Type_U: begin         
-        //     alu_ctrl = 3'b000; 
-        //     a_type = 1'bx;                                // add for upper ?
-        // end
+        Type_U: begin         
+            alu_ctrl = 3'b000; 
+            a_type = 1'bx;                                // add for upper ?
+        end
 
-        // Type_U_LUI: begin     
-        //     alu_ctrl = 3'b010; 
-        //     a_type = 1'bx;                                // assuming need to do sll
-        // end
+        Type_U_LUI: begin     
+            alu_ctrl = 3'b010; 
+            a_type = 1'bx;                                // assuming need to do sll
+        end
 
-        // Type_J_JALR: begin   
-        //     alu_ctrl = 3'b000;
-        //     a_type = 1'bx;                                // add for jump 
-        // end
+        Type_J_JALR: begin   
+            alu_ctrl = 3'b000;
+            a_type = 1'bx;                                // add for jump 
+        end
         
-        // Type_J_JAL: begin    
-        //     alu_ctrl = 3'b000; 
-        //     a_type = 1'bx;                                // add for jump
-        // end
+        Type_J_JAL: begin    
+            alu_ctrl = 3'b000; 
+            a_type = 1'bx;                                // add for jump
+        end
         // default: a_type = 1'bx;
         default: ;
         

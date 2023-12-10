@@ -22,9 +22,9 @@ end;
 // write input
 always_ff @(posedge clk) begin
 
-    if(WE & ADTP) data_array[A] <= WD[7:0]; // if ADTP 1 then write into one address a first 8 bits of data (byte)
+    if(WE && ADTP) data_array[A] <= WD[7:0]; // if ADTP 1 then write into one address a first 8 bits of data (byte)
 
-    if(WE & ~ADTP) begin // if ADTP 0 then write into first address first 8 bits then 2nd address next 8 and so on (little endian storage)
+    if(WE && ~ADTP) begin // if ADTP 0 then write into first address first 8 bits then 2nd address next 8 and so on (little endian storage)
         data_array[A] <= WD[7:0];
         data_array[A + 32'b1] <= WD[15:8];
         data_array[A + 32'b10] <= WD[23:16];

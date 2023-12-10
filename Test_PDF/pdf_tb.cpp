@@ -2,7 +2,7 @@
 #include "verilated_vcd_c.h"
 #include "VTop.h"
 #include "vbuddy.cpp"    
-#define MAX_SIM_CYC 350000
+#define MAX_SIM_CYC 1300000
 
 int main(int argc, char **argv, char **env) {
   int i;     
@@ -33,7 +33,7 @@ int main(int argc, char **argv, char **env) {
       top->clk = !top->clk;
       top->eval ();
     }
-    if (i > 10000) {
+    if (i > 33000/*1100000*/) {
         vbdPlot(int(top->A0), 0, 255);
         vbdCycle(i);
     }
