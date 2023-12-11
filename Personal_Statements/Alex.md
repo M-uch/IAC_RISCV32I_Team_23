@@ -275,7 +275,7 @@ These were 2 partial contributions during the development of the single cycle st
         // My Contribution:
 
         always_ff @(posedge clk) begin
-            if(WE3 && (A3 != 4'b0000)) Reg_File[A3] <= WD3;     // new cond avoids writing r[0] on unconditional jumps 
+            if(WE3 && (A3 != 5'b00000)) Reg_File[A3] <= WD3;     // new cond avoids writing r[0] on unconditional jumps 
             if(trigger== 1'b1) Reg_File[5] <= 1; // t0 location 
         end
     ```
