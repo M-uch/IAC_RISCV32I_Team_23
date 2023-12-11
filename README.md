@@ -93,7 +93,10 @@ Below are the tests for the provided signal data:
 
 1. Sine wave - 'sine.mem'
 
-https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/sinetest.mp4 
+<video sine="" width="800" height="500" muted="" loop="" autoplay="">
+<source src="https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/sinetest.mp4" type="video/mp4">
+</video>
+<!-- https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/sinetest.mp4  -->
 <!-- [Sine wave](IAC_RISCV32I_Team_23/Pictures/sinetest.mp4) -->
 
 2. Triangle wave - 'traingle.mem'
