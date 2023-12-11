@@ -6,9 +6,9 @@ Implementing a 32 bit RISCV-I instruction set CPU used to run a F1 light simulat
 | Name    | CID           | GitHub Username | Personal Statement           |
 | :-----  | :-------------| :-------------  | :------------------          |
 | Raymond | 02288579      | M-uch           | [Raymond's Personal Statement](/Personal_Statements/Raymond.md) |
-| Letong  |               | ksrxlt          | [Letong's Personal Statement](/Personal_Statements/Letong.md)  |
-| Mathew  | 02300957      | MatthewGodsmark | [Matthew's Personal Statement](/Personal_Statements/Matthew.md) |
-| Alex    | 02269571      | AlexSeferidis   | [Alex's Personal Statement](/Personal_Statments/Alex.md)    |
+| Letong  |               | ksrxlt          | [Letong's Personal Statement](/Personal_Statements/Letong.md)   |
+| Matthew | 02300957      | MatthewGodsmark | [Matthew's Personal Statement](/Personal_Statements/Matthew.md) |
+| Alex    | 02269571      | AlexSeferidis   | [Alex's Personal Statement](/Personal_Statments/Alex.md)        |
 
 Project Work Division
 ---
@@ -116,4 +116,151 @@ https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/a66fb50a-68e7-4e3
 
 # 2. **Pipelined RISCV-32I**
 
+We decided to design our Pipelined processor into multiple modules:
+
+1. Fetch
+    This includes the modules:
+    - Instruction memory
+    - PC register
+    - PC mux
+    - PC + 4
+
+    And has the following inputs:
+    - PC Target E
+    - StallF
+    - StallD
+    - FlushD
+    - PCSrcE
+    - clk
+
+    And has the following outputs:
+    - InstrD
+    - PCD
+    - PC+4D
+
+2. Decode
+    This includes the modules:
+    - Register file
+    - Extend
+    - CU
+
+    And has the following inputs:
+    - InstrD
+    - PCD
+    - PC+4D
+    - RegWriteW
+    - ResultW
+    - RdW
+    - FlushE
+    - Trigger
+    - (NOT) clk
+
+    And has the following outputs:
+    - RegWriteE
+    - ATypeE
+    - ResultSrcE
+    - MemWriteE
+    - JumpE
+    - BranchE
+    - ALUCtrlE
+    - ALUSrcE
+    - Rd1E
+    - Rd2E
+    - PCE
+    - RAE
+    - A0
+    - Rs1E
+    - Rs2E
+    - RDE
+    - ImmExtE
+    - PC+4E
+    - Rs1D
+    - Rs2D
+
+3. Execute
+
+    This includes the modules:
+    - 2, 3 input muxes
+    - 2 input mux
+    - PC Targer
+    - ALU
+
+    And has the following inputs:
+    - RegWriteE
+    - ATypeE
+    - ResultSrcE
+    - MemWriteE
+    - JumpE
+    - BranchE
+    - ALUCtrlE
+    - ALUSrcE
+    - Rd1E
+    - Rd2E
+    - PCE
+    - RAE
+    - Rs1E
+    - Rs2E
+    - RDE
+    - ImmExtE
+    - PC+4E
+    - ALUResultM
+    - ResultW
+    - FowardAE
+    - ForwardBE
+
+    And has the following outputs:
+    - RDE
+    - RDM
+    - RS2E
+    - RS1E
+    - PCsrcE
+    - PC+4M
+    - WriteDataM
+    - ALUResultM
+    - MemWriteM
+    - ResultSrcM
+    - RegWriteM
+
+4. Memory
+    This includes the modules:
+    - Data memory
+
+    And has the following inputs:
+    - RDM
+    - PC+4M
+    - WriteDataM
+    - ALUResultM
+    - MemWriteM
+    - ResultSrcM
+    - RegWriteM
+    - clk
+
+    And has the following outputs:
+    - RegWriteM
+    - RegWriteW
+    - RDM
+    - ALUResultM
+    - ResultSrcW
+    - ReadDataW
+    - ALUResultW
+    - RDW
+    - PC+4W
+
+5. Writeback
+    This includes the modules:
+    - 3 input mux
+
+    And has the following inputs:
+    - RegWriteW
+    - ResultSrcW
+    - ReadDataW
+    - ALUResultW
+    - RDW
+    - PC+4W
+
+    And has the following outputs:
+    - RDW
+    - ResultW
+    - RegWriteW
+    
 # 3. **Data Caching RISCV-32I**
