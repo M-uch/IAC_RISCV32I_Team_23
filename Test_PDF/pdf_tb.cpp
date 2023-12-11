@@ -20,7 +20,7 @@ int main(int argc, char **argv, char **env) {
  
   // init Vbuddy
   if (vbdOpen()!=1) return(-1);
-  vbdHeader("PDF");
+  vbdHeader("PDF: Triangle");
   vbdSetMode(0); 
 
   top->clk = 0;

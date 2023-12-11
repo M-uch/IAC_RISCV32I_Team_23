@@ -7,8 +7,8 @@ Implementing a 32 bit RISCV-I instruction set CPU used to run a F1 light simulat
 | :-----  | :-------------| :-------------  | :------------------          |
 | Raymond | 02288579      | M-uch           | [Raymond's Personal Statement](/Personal_Statements/Raymond.md) |
 | Letong  |               | ksrxlt          | [Letong's Personal Statement](/Personal_Statements/Letong.md)  |
-| Mathew  |               | MatthewGodsmark | [Matthew's Personal Statement](/Personal_Statements/Matthew.md) |
-| Alex    |               | AlexSeferidis   | [Alex's Personal Statement](/Personal_Statments/Alex.md)    |
+| Mathew  | 02300957      | MatthewGodsmark | [Matthew's Personal Statement](/Personal_Statements/Matthew.md) |
+| Alex    | 02269571      | AlexSeferidis   | [Alex's Personal Statement](/Personal_Statments/Alex.md)    |
 
 Project Work Division
 ---
@@ -87,6 +87,29 @@ the following tasks needed to completed to finish the first stage of the project
 - Adding components to allow for jumps (storing the RET address and returning to respective address on RET)
 - implementing a trigger that can be externally changed through Vbuddy to start the f1 light sequence on demand
 
+## Evidence ##
+
+Below are the tests for the provided signal data:
+
+1. Sine wave - 'sine.mem'
+
+https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/sinetest.mp4 
+<!-- [Sine wave](IAC_RISCV32I_Team_23/Pictures/sinetest.mp4) -->
+
+2. Triangle wave - 'traingle.mem'
+
+https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/triangletest.mp4
+<!-- [Triangle Wave](IAC_RISCV32I_Team_23/Pictures/triangletest.mp4) -->
+
+3. Noise signl with gaussian distribtuion - 'gaussian.mem'
+
+https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/gaussiantest.mp4 
+<!-- [Gaussian](IAC_RISCV32I_Team_23/Pictures/gaussiantest.mp4) -->
+
+4. Noisy sine wave - 'noisy.mem'
+
+https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/noisytest.mp4
+<!-- [Noisy Sine Wave](IAC_RISCV32I_Team_23/Pictures/noisytest.mp4) -->
 **Specific details on components can be found in the personal statements and each component folder**
 
 # 2. **Pipelined RISCV-32I**
