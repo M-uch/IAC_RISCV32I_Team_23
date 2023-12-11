@@ -91,19 +91,19 @@ the following tasks needed to completed to finish the first stage of the project
 
 Below are the tests for the provided signal data:
 
-1. Sine wave - 'sine.mem'
+1. Sine wave - sine.mem:
 
 
 
-2. Triangle wave - 'traingle.mem'
+2. Triangle wave - triangle.mem:
 
-https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/triangletestnew.mp4 
+https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/triangletest930kb.mp4
 
-3. Noise signl with gaussian distribtuion - 'gaussian.mem'
+3. Noise signl with gaussian distribtuion - gaussian.mem:
 
 
 
-4. Noisy sine wave - 'noisy.mem'
+4. Noisy sine wave - noisy.mem:
 
 
 **Specific details on components can be found in the personal statements and each component folder**
