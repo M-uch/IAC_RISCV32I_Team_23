@@ -9,8 +9,8 @@ forever:
     JAL     ra, display
     J       forever
 
-init:       # function to initialise PDF buffer memory WIPES PDF ARRAY TO ALL 0
-    LI      a1, 0xff           # loop_count a1 = 256
+init:       # function to initialise PDF buffer memory 
+    LI      a1, 0x100           # loop_count a1 = 256
 _loop1:                         # repeat
     ADDI    a1, a1, -1          #     decrement a1
     SB      zero, base_pdf(a1)  #     mem[base_pdf+a1) = 0
@@ -42,4 +42,5 @@ _loop3:                         # repeat
     addi    a1, a1, 1           #   incr 
     BNE     a1, a2, _loop3      # until end of pdf array
     RET
-    
+
+  

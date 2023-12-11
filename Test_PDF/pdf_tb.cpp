@@ -7,6 +7,8 @@
 int main(int argc, char **argv, char **env) {
   int i;     
   int clk;
+  int plot;
+  plot = 0;
 
   // VCD waveform dump
   Verilated::commandArgs(argc, argv);
@@ -33,10 +35,24 @@ int main(int argc, char **argv, char **env) {
       top->clk = !top->clk;
       top->eval ();
     }
-    if (i > 33000/*1100000*/) {
+
+    if((top->A0 != 0)){
+      plot = 1;
+    } 
+
+    if (plot) {
         vbdPlot(int(top->A0), 0, 255);
         vbdCycle(i);
     }
+    
+
+    /*
+    if (i>50000) {
+        vbdPlot(int(top->A0), 0, 255);
+        vbdCycle(i);
+    }
+    */
+
     // exit simulation early with q 
     if ((Verilated::gotFinish()) || (vbdGetkey()=='q')) 
       exit(0);
