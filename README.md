@@ -93,26 +93,19 @@ Below are the tests for the provided signal data:
 
 1. Sine wave - 'sine.mem'
 
-<video sine="" width="800" height="500" muted="" loop="" autoplay="">
-<source src="https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/sinetest.mp4" type="video/mp4">
-</video>
-<!-- https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/sinetest.mp4  -->
-<!-- [Sine wave](IAC_RISCV32I_Team_23/Pictures/sinetest.mp4) -->
+
 
 2. Triangle wave - 'traingle.mem'
 
-https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/triangletest.mp4
-<!-- [Triangle Wave](IAC_RISCV32I_Team_23/Pictures/triangletest.mp4) -->
+https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/triangletestnew.mp4 
 
 3. Noise signl with gaussian distribtuion - 'gaussian.mem'
 
-https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/gaussiantest.mp4 
-<!-- [Gaussian](IAC_RISCV32I_Team_23/Pictures/gaussiantest.mp4) -->
+
 
 4. Noisy sine wave - 'noisy.mem'
 
-https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/noisytest.mp4
-<!-- [Noisy Sine Wave](IAC_RISCV32I_Team_23/Pictures/noisytest.mp4) -->
+
 **Specific details on components can be found in the personal statements and each component folder**
 
 # 2. **Pipelined RISCV-32I**
