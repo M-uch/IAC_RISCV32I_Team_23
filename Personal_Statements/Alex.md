@@ -11,6 +11,7 @@ PUT IN CONTENTS TABLE AT THE END
 - Top File([link](put in link here))
 - PC([link](put in link here))
 - Testing / Debugging([link](put in link here))
+- ALU/Register([link](put in link here))
 
 ### Pipelined Processor: ###
 - x([link](put in link here))
@@ -119,7 +120,109 @@ This has been implemented as follows:
 ```
 **Control Signals Breakdown:**
 
+Below is a table detailling what each control signal is responsible for:
 
+| Control Signal | Description / Responsibility of Control Signal | 
+| :------------: | :--------------------------------------------: | 
+| PCSrc          | Selects between PC offset or PC + 4            | 
+| ResultSrc      | Selects ALU O/P, DataMem or Ra                 | 
+| MemWrite       | Write signal for DataMem                       | 
+| ALUCtrl        | Select ALU instruction                         | 
+| ALUSrc         | Select register or imm into ALU                | 
+| ImmSrc         | Select sign extend behavior                    | 
+| RegWrite       | Write signal for RegFile                       |
+| JumpSrc        | Determine whether JAL or JALR                  |
+| AType          | Determine whether byte or word addressing      |
+
+## Top File ##
+
+wads
+
+## PC ##
+
+wasdwa
+
+## Testing / Debugging ##
+
+wadswa
+
+## ALU / Register File ##
+
+These were 2 partial contributions during the development of the single cycle stage. 
+
+1. **ALU**
+
+    I simply modified the structure of Matthew's ALU logic, changing it from if statements to a single case statement. Additionally I ammended the logic for the EQ O/P signal - we were having problems with this during the debugging stage, with respect to branching logic.
+
+    ```
+        // Orginal Code:
+
+        always_latch begin
+            if(ALUctrl == 3'b000)                                   // add
+                {Zero, ALUout} = ALUop1 + ALUop2;
+            if(ALUctrl == 3'b001)                                   // sub
+                {Zero, ALUout} = ALUop1 - ALUop2;
+            if(ALUctrl == 3'b111)                                   // and
+                {Zero, ALUout} = ALUop1 & ALUop2;
+            if(ALUctrl == 3'b110)                                   // or
+                {Zero, ALUout} = ALUop1 | ALUop2;
+            if(ALUctrl == 3'b100)                                   // xor
+                {Zero, ALUout} = ALUop1 ^ ALUop2;
+            if(ALUctrl == 3'b010)                                   // sll
+                {Zero, ALUout} = ALUop1 << ALUop2;
+            if(ALUctrl == 3'b101)                                   // slr
+                {Zero, ALUout} = ALUop1 >> ALUop2;
+        end
+    ```
+
+    ```
+        // My Contribution:
+        
+        assign Zero = (ALU_Result == 32'b0) ? 1'b1 : 1'b0;  // EQ Logic
+        assign ALUout = ALU_Result;
+
+        always_comb begin
+
+            case(ALUctrl)
+
+                3'b000: ALU_Result = ALUop1 + ALUop2; 
+                3'b001: ALU_Result = ALUop1 - ALUop2; 
+                3'b010: ALU_Result = ALUop1 << ALUop2; 
+                3'b011: ALU_Result = 32'bx;
+                3'b100: ALU_Result = ALUop1 ^ ALUop2; 
+                3'b101: ALU_Result = ALUop1 >> ALUop2;      
+                3'b110: ALU_Result = ALUop1 | ALUop2;    
+                3'b111: ALU_Result = ALUop1 & ALUop2;
+
+                default: ;
+            
+            endcase
+
+        end
+    ```
+
+2. **Register File**
+
+    During the debugging process we came across issues when performing the unconditional jump instruction in the reference program, where we would write to the zero register. This was therefore ammended with a small addition to the logic.
+
+    ```
+        // Orginal Code:
+        
+        always_ff @(posedge clk) begin
+            if(WE3) Reg_File[A3] <= WD3; 
+            if(trigger== 1'b1) Reg_File[5] <= 1; // t0 location 
+        end
+    ```
+
+    ```
+        // My Contribution:
+
+        always_ff @(posedge clk) begin
+            if(WE3 && (A3 != 4'b0000)) Reg_File[A3] <= WD3;     // new cond avoids writing r[0] on unconditional jumps 
+            if(trigger== 1'b1) Reg_File[5] <= 1; // t0 location 
+        end
+
+    ```
 ## Appendix ##
 
 [RISC-V ISA](src/RISC-V_ISA.png)
