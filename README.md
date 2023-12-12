@@ -93,18 +93,19 @@ Below are the tests for the provided signal data:
 
 1. Sine wave - sine.mem:
 
-
+https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/70d67e01-1402-4487-a6f4-13e8fe51c50d
 
 2. Triangle wave - triangle.mem:
 
-https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/triangletest930kb.mp4
+https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/03f22519-758b-468f-bdb6-fa98026f6996
 
-3. Noise signl with gaussian distribtuion - gaussian.mem:
+3. Noise signal with gaussian distribution - gaussian.mem:
 
-
+https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/92d7c906-4bcf-46a5-abcd-91c0d0818510
 
 4. Noisy sine wave - noisy.mem:
 
+https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/a66fb50a-68e7-4e3f-a972-f938b1e35a6e
 
 **Specific details on components can be found in the personal statements and each component folder**
 
