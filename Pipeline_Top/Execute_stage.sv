@@ -19,6 +19,8 @@ module Execute_stage #(
     input logic [A_WIDTH-1:0] Rs2E,
     input logic [D_WIDTH-1:0] ImmExtE,
     input logic [D_WIDTH-1:0] PCplus4E_i,
+    input logic [D_WIDTH-1:0] ALUResult, // FEEDBACK FROM MEMORY STAGE
+    input logic [D_WIDTH-1:0] ResultW,   // FEEDBACK FROM WRTIEBACK STAGE
     output logic PCSrcE,
     output logic RegWriteE_o,
     output logic [1:0] ResultSrcE_o,

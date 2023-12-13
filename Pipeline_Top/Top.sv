@@ -174,6 +174,8 @@ module Top #(
         .RdE_i(RDE),
         .ImmExtE(IMMEXTE),
         .PCplus4E_i(PCPLUS4D),
+        .ALUResult(ALURESULTM),
+        .ResultW(RESULTW),
 
         .PCSrcE(PCSRCE),                 // O/Ps
         .RegWriteE_o(REGWRITEM),
