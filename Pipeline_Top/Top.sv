@@ -190,6 +190,7 @@ module Top #(
 
     Memory_stage MEMORY (
         .clk(clk),                      // I/Ps
+        .a_typeM(ATYPEM),
         .RegWriteM_i(REGWRITEM),
         .ResultSrcM_i(RESULTSRCM),
         .MemWriteM(MEMWRITEM),
@@ -199,22 +200,25 @@ module Top #(
         .PCPlus4M_i(PCPLUS4M),
 
 
-        .RegWriteM_o(REGWRITEW),        // O/Ps
-        .ResultSrcM_o(RESULTSRCW),
-        .ALUResultM_o(ALURESULTW),
-        .RD(READDATAW),
+        .RegWriteW(REGWRITEW),        // O/Ps
+        .RegWriteM_o(REGWRITEM),
+        .ResultSrcW(RESULTSRCW),
+        .ALUResultM_o(ALURESULTM),
+        .RdW(READDATAW),
         .RdM_o(RDW_i),
-        .PCPlus4M_o(PCPLUS4W)
+        .PCPlus4M_o(PCPLUS4W),
+        .ReadDataW(READDATAW),
+        .ALUResultW(ALURESULTW)
 
     );
 
     Writeback_stage WRITEBACK (
-        .clk(clk),                      // I/Ps
-        .RegWriteW_i(REGWRITEW),
+        .RegWriteW_i(REGWRITEW),        // I/Ps
         .ResultSrcW(RESULTSRCW),
         .ReadDataW(READDATAW),
         .RdW_i(RDW_i),
         .PCPlus4W(PCPLUS4W),
+        .ALUResultW(ALURESULTW)
 
         .result(RESULTW),               // O/Ps
         .RegWriteW_o(REGWRITEW_o),
