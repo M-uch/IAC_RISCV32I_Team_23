@@ -20,8 +20,8 @@ module Execute_stage #(
     input logic [A_WIDTH-1:0] RdE_i,
     input logic [D_WIDTH-1:0] raE,
     input logic [D_WIDTH-1:0] ImmExtE,
-    input logic [D_WIDTH-1:0] PCplus4E,
-    input logic [D_WIDTH-1:0] ALUResultM, // FEEDBACK FROM MEMORY STAGE
+    input logic [D_WIDTH-1:0] PCPlus4E,
+    input logic [D_WIDTH-1:0] ALUResultM_i, // FEEDBACK FROM MEMORY STAGE
     input logic [D_WIDTH-1:0] ResultW,   // FEEDBACK FROM WRTIEBACK STAGE
 
     output logic PCSrcE,
@@ -29,11 +29,11 @@ module Execute_stage #(
     output logic [1:0] ResultSrcM,
     output logic MemWriteM,
     output logic ATypeM,
-    output logic [D_WIDTH-1:0] ALUResultM,
+    output logic [D_WIDTH-1:0] ALUResultM_o,
     output logic [D_WIDTH-1:0] WriteDataM,
     output logic [D_WIDTH-1:0] PCTargetE,
     output logic [A_WIDTH-1:0] RdM,
-    output logic [D_WIDTH-1:0] PCplus4M
+    output logic [D_WIDTH-1:0] PCPlus4M
 );
 
     // assign / declare vals
@@ -60,7 +60,7 @@ Mux     JumpMux (
 Mux3    SrcAEMux (
     .in0        (RD1E),
     .in1        (ResultW),
-    .in2        (ALUResultM),
+    .in2        (ALUResultM_i),
     .select     (ForwardAE),
     .out        (SrcAE)
 );
@@ -68,7 +68,7 @@ Mux3    SrcAEMux (
 Mux3    WriteDataEMux (
     .in0        (RD2E),
     .in1        (ResultW),
-    .in2        (ALUResultM),
+    .in2        (ALUResultM_i),
     .select     (ForwardBE),
     .out        (WriteDataE)
 );
@@ -84,7 +84,7 @@ ALU     ALUE (
     .ALUop1     (SrcAE),
     .ALUop2     (SrcBE),
     .ALUctrl    (ALUCtrlE),
-    .ALUout     (ALUResultM),
+    .ALUout     (ALUResultE),
     .Zero       (ZeroE)
 );
 
@@ -103,7 +103,7 @@ ExecuteToMemory     PipelineRegister (
     .MemWriteM  (MemWriteM),
     .ResultSrcM (ResultSrcM),
     .RdM        (RdM),
-    .ALUResultM (ALUResultM),
+    .ALUResultM (ALUResult_o),
     .WriteDataM (WriteDataM),
     .PCPlus4M   (PCPlus4M),
     .a_typeM    (ATypeM)

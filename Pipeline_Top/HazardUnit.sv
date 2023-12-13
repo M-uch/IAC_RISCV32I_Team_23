@@ -8,7 +8,7 @@ module  HazardUnit #(
 );
     logic                                  lwStall;
 
-always_latch begin
+always_ff begin
 
 // Forwarding to solve RAW data hazard
     if ((Rs1E == RdM) && (RegWriteM) && (Rs1E!=0))          ForwardAE = 2;
