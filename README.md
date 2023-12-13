@@ -34,15 +34,16 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Testbench               |     M     |          |           |        |
 | Debugging               |     x     |          |           |   x    |
 | **Pipelining Design**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
-| Pipeline Registers      |           |    M     |           |        |
+| Pipeline Registers      |           |          |     M     |        |
 | Hazard Detection Unit   |           |          |     M     |        |
-| Top level sv            |           |          |           |        |
-| Testbench               |           |          |           |        |
-| Debugging               |           |          |           |        |
-| **Reference Program**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
-| Testbench               |           |          |           |        |
-| Debugging               |           |          |           |        |
-| **Data Caching**        | **Raymond** | **Letong** | **Matthew** | **Alex** |
+| Top level sv            |           |          |     x     |    M   |
+| Fetch Stage             |           |          |           |    M   |
+| Decode Stage            |           |          |           |    M   |
+| Execute Stage           |           |          |     M     |    x   |
+| Memory Stage            |           |          |     M     |    x   |
+| Writeback Stage         |           |          |     M     |    x   |
+| Debugging               |           |          |     x     |    x   |
+
 
 *Main Contributor = M*   
 *Contribution = x*
