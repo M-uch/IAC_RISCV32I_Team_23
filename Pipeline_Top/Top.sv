@@ -73,7 +73,7 @@ module Top #(
     // --- MEMORY O/P --- //
 
     // CONTROL SIGNALS
-    logic REGWRITEW_i;
+    logic REGWRITEW;
     logic [1:0] RESULTSRCW;
 
     // DATA
@@ -206,7 +206,7 @@ module Top #(
         .RegWriteM_o(REGWRITEM),
         .ResultSrcW(RESULTSRCW),
         .ALUResultM_o(ALURESULTM),
-        .RdW(READDATAW),
+        .RdW(RDW),
         .RdM_o(RDW_i),
         .PCPlus4M_o(PCPLUS4W),
         .ReadDataW(READDATAW),
@@ -233,7 +233,7 @@ module Top #(
         .Rs1E(RS1E),
         .Rs2E(RS2E),
         .RdM(RDM),
-        .RdW(RdW),
+        .RdW(RDW),
         .RdE(RDE),
         .RegWriteM(REGWRITEM),
         .RegWriteW(REGWRITEW),
