@@ -11,7 +11,7 @@ logic [READ_WIDTH-1:0] rom_array [2**12-1:0];
 
 initial begin
     $display("loading Instruction Memory.");
-    $readmemh("F1.mem", rom_array);
+    $readmemh("PDF.mem", rom_array);
 end;
 
 assign instr = {rom_array[addr + 32'b11], // read from largest address representing bits 25-32

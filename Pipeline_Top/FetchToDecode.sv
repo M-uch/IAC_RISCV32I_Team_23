@@ -6,7 +6,7 @@ module FetchToDecode #(
     output  logic [DATA_WIDTH-1:0]      InstrD, PCPlus4D, PCD
 );
 
-always_ff @(posedge CLK, posedge CLR) begin
+always_ff @(posedge CLK) begin
     if(~EN) begin
         if(CLR) begin
             InstrD <= 32'b0;

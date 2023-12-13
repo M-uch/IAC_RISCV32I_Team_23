@@ -15,14 +15,14 @@ module DecodeToExecute #(
     output  logic [DATA_WIDTH-1:0]      RD1E, RD2E, RaE, PCE, ImmExtE, PCPlus4E
     );
 
-always_ff @(posedge CLK, posedge CLR) begin
+always_ff @(posedge CLK) begin
     if(CLR) begin
         RegWriteE <= 1'b0;
         MemWriteE <= 1'b0;
         JumpE <= 1'b0;
         BranchE <= 1'b0;
         ALUSrcE <= 1'b0;
-        JumpSrcE <= 1'b0;
+        JumpSrcE <= 1'b1;
         ATypeE <= 1'b0;
         ResultSrcE <= 2'b0;
         ALUControlE <= 3'b0;
