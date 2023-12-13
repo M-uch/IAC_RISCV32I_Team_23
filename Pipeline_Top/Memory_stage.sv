@@ -2,47 +2,43 @@ module Memory_stage #(
     parameter D_WIDTH = 32,
     parameter A_WIDTH = 5
 ) (
-    input logic                     clk, RegWriteM_i, MemWriteM, a_typeM,
-    input logic [1:0]               ResultSrcM_i,
-    input logic [D_WIDTH-1:0]       PCPlus4M_i, ALUResultM_i, WriteDataM,
-    input logic [A_WIDTH-1:0]       RdM_i,
+    input logic                     clk, RegWriteM, MemWriteM, a_typeM,
+    input logic [1:0]               ResultSrcM,
+    input logic [D_WIDTH-1:0]       PCPlus4M, ALUResultM, WriteDataM,
+    input logic [A_WIDTH-1:0]       RdM,
 
-    output logic                    RegWriteM_o, RegWriteW,
+    output logic                    RegWriteW,
     output logic [1:0]              ResultSrcW,
-    output logic [D_WIDTH-1:0]      ALUResultM_o, ReadDataW, ALUResultW, PCPlus4M_o,
-    output logic [A_WIDTH-1:0]      RdM_o, RdW
+    output logic [A_WIDTH-1:0]      RdW,
+    output logic [D_WIDTH-1:0]      PCPlus4W, ReadDataW, ALUResultW
 );
 
 logic   [D_WIDTH-1:0]           ReadDataM;
-
-assign RegWriteM_o = RegWriteM_i;
-assign RdM_o = RdM_i;
-assign ALUResultM_o = ALUResultM_i;
 
 DataMemory DataMem (
     .clk        (clk),
     .ADTP       (a_typeM),
     .WE         (MemWriteM),
-    .A          (ALUResultM_i),
+    .A          (ALUResultM),
     .WD         (WriteDataM),
     .RD         (ReadDataM)
 );
 
 MemoryToWriteback   PipelineRegisters (
     .CLK        (clk),
-    .RegWriteM  (RegWriteM_i),
-    .ResultSrcM (ResultSrcM_i),
-    .RdM        (RdM_i),
-    .ALUResultM (ALUResultM_i),
+    .RegWriteM  (RegWriteM),
+    .ResultSrcM (ResultSrcM),
+    .RdM        (RdM),
+    .ALUResultM (ALUResultM),
     .ReadDataM  (ReadDataM),
-    .PCPlus4M   (PCPlus4M_i),
+    .PCPlus4M   (PCPlus4M),
 
     .RegWriteW  (RegWriteW),
     .ResultSrcW (ResultSrcW),
     .RdW        (RdW),
     .ALUResultW (ALUResultW),
     .ReadDataW  (ReadDataW),
-    .PCPlus4W   (PCPlus4M_o)
+    .PCPlus4W   (PCPlus4W)
 );
 
 endmodule
