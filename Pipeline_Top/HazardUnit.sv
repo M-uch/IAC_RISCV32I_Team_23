@@ -2,8 +2,8 @@ module  HazardUnit #(
     parameter       ADDRESS_WIDTH = 5
 )(
     input   logic [ADDRESS_WIDTH-1:0]      Rs1D, Rs2D, Rs1E, Rs2E, RdM, RdW, RdE,
-    input   logic                          RegWriteM, RegWriteW, PCSrcE,
-    output  logic [1:0]                    ForwardAE, ForwardBE, ResultSrcE,
+    input   logic                          RegWriteM, RegWriteW, PCSrcE, ResultSrcE,
+    output  logic [1:0]                    ForwardAE, ForwardBE,
     output  logic                          StallF, StallD, FlushD, FlushE
 );
     logic                                  lwStall;
@@ -20,7 +20,7 @@ always_ff begin
     else                                                    ForwardBE = 0;
 
 // Stalling to solve Load data hazard
-    lwStall = ResultSrcE[0] & ((Rs1D == RdE) | (Rs2D == RdE));
+    lwStall = ResultSrcE & ((Rs1D == RdE) | (Rs2D == RdE));
     StallD = lwStall;
     StallF = lwStall;
 
