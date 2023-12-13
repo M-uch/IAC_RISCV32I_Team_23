@@ -10,9 +10,10 @@ module register_P #(
 
 );
 
-always_ff @ (posedge clk, posedge rst)
-    if(~en) {                            // if no stall
+always_ff @ (posedge clk, posedge rst) begin
+    if(~en) begin                           // if no stall
         if (rst) PC <= {WIDTH{1'b0}};    // if reset = 1 then PC = 0
         else PC <= next_PC;
-    }               
+    end
+end               
 endmodule

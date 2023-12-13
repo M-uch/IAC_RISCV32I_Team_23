@@ -8,7 +8,7 @@ module PC_P#(
     input  logic    [WIDTH-1:0]      PC_Target,                      
     input  logic                     PCsrc,        // select for mux
     output logic    [WIDTH-1:0]      PC_out,       // PC Counter
-    output logic    [WIDTH-1:0]      PC_Plus4,      // PC + 4 (for return address)
+    output logic    [WIDTH-1:0]      PC_Plus4      // PC + 4 (for return address)
 );
 
     // intermediate vals

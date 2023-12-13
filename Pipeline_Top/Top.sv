@@ -46,7 +46,7 @@ module Top #(
     logic [5:0] RS1E;
     logic [5:0] RS2E;
     logic [5:0] RDE;
-    logic [WIDTH-1:0] PCPLUS4E
+    logic [WIDTH-1:0] PCPLUS4E;
 
 // <-------------------------------------------------------------------------------------> //
 
@@ -220,7 +220,7 @@ module Top #(
         .ReadDataW(READDATAW),
         .RdW_i(RDW_i),
         .PCPlus4W(PCPLUS4W),
-        .ALUResultW(ALURESULTW)
+        .ALUResultW(ALURESULTW),
 
         .result(RESULTW),               // O/Ps
         .RegWriteW_o(REGWRITEW_o),

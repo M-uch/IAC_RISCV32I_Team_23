@@ -17,7 +17,7 @@ module RegFile_P #(
 
 logic   [DATA_WIDTH-1:0] Reg_File [2**ADDRESS_WIDTH-1:0];
 
-always_ff @(posedge ~clk) begin
+always_ff @(negedge clk) begin
     if(WE3 && (A3 != 5'b00000)) Reg_File[A3] <= WD3;     // new cond to avoid writing to r[0] on unconditional jumps 
     if(trigger== 1'b1) Reg_File[5] <= 1; // t0 location 
 end
