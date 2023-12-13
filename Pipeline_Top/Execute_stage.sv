@@ -3,46 +3,110 @@ module Execute_stage #(
     parameter A_WIDTH = 5
 ) (
     input logic clk,
-    input logic ForwardAE,
-    input logic ForwardBE,
-    input logic RegWriteE_i,
+    input logic [1:0] ForwardAE,
+    input logic [1:0] ForwardBE,
+    input logic RegWriteE,
     input logic [1:0] ResultSrcE_i,
-    input logic MemWriteE_i,
+    input logic MemWriteE,
     input logic JumpE,
     input logic BranchE,
     input logic [2:0] ALUCtrlE,
     input logic ALUSrcE,
     input logic JumpSrcE,
-    input logic ATypeE_i,
-    input logic [D_WIDTH-1:0] PCE_i,
-    input logic [A_WIDTH-1:0] Rs1E,
-    input logic [A_WIDTH-1:0] Rs2E,
+    input logic ATypeE,
+    input logic [D_WIDTH-1:0] PCE,
+    input logic [D_WIDTH-1:0] RD1E,
+    input logic [D_WIDTH-1:0] RD2E,
+    input logic [A_WIDTH-1:0] RdE_i,
+    input logic [D_WIDTH-1:0] raE,
     input logic [D_WIDTH-1:0] ImmExtE,
-    input logic [D_WIDTH-1:0] PCplus4E_i,
-    input logic [D_WIDTH-1:0] ALUResult, // FEEDBACK FROM MEMORY STAGE
+    input logic [D_WIDTH-1:0] PCplus4E,
+    input logic [D_WIDTH-1:0] ALUResultM, // FEEDBACK FROM MEMORY STAGE
     input logic [D_WIDTH-1:0] ResultW,   // FEEDBACK FROM WRTIEBACK STAGE
+
     output logic PCSrcE,
-    output logic RegWriteE_o,
-    output logic [1:0] ResultSrcE_o,
-    output logic MemWriteE_o
-    output logic ATypeE_o,
-    output logic [D_WIDTH-1:0] ALUResult,
-    output logic [D_WIDTH-1:0] WriteDataE, // NOT SURE ABOUT THE SIZE
+    output logic RegWriteM,
+    output logic [1:0] ResultSrcM,
+    output logic MemWriteM,
+    output logic ATypeM,
+    output logic [D_WIDTH-1:0] ALUResultM,
+    output logic [D_WIDTH-1:0] WriteDataM,
     output logic [D_WIDTH-1:0] PCTargetE,
-    output logic [A_WIDTH-1:0] RdE_o,
-    output logic [D_WIDTH-1:0] PCplus4E_o
+    output logic [A_WIDTH-1:0] RdM,
+    output logic [D_WIDTH-1:0] PCplus4M
 );
 
-    // Connect follow through wires
-    assign RegWriteE_i = RegWriteE_o;
-    assign ResultSrcE_i = ResultSrcE_o;
-    assign MemWriteE_i = MemWriteE_o;    
-    assign PCplus4E_i = PCplus4E_o;
-
     // assign / declare vals
+    logic               ZeroE;
     logic [D_WIDTH-1:0] SrcAE;
     logic [D_WIDTH-1:0] WriteDataE;
     logic [D_WIDTH-1:0] SrcBE;
+    logic [D_WIDTH-1:0] ALUResultE;
+    logic [D_WIDTH-1:0] PCTarget;
 
+
+
+    // Connect follow through wires
+    assign PCSrcE = (BranchE & ZeroE) | JumpE;
+    assign PCTarget = PCE + ImmExtE;
+
+Mux     JumpMux (
+    .in0        (PCTarget),
+    .in1        (raE),
+    .select     (JumpSrcE),
+    .out        (PCTargetE)
+);
+
+Mux3    SrcAEMux (
+    .in0        (RD1E),
+    .in1        (ResultW),
+    .in2        (ALUResultM),
+    .select     (ForwardAE),
+    .out        (SrcAE)
+);
+
+Mux3    WriteDataEMux (
+    .in0        (RD2E),
+    .in1        (ResultW),
+    .in2        (ALUResultM),
+    .select     (ForwardBE),
+    .out        (WriteDataE)
+);
+
+Mux     SrcBEMux (
+    .in0        (WriteDataE),
+    .in1        (ImmExtE),
+    .select     (ALUSrcE),
+    .out        (SrcBE)
+);
+
+ALU     ALUE (
+    .ALUop1     (SrcAE),
+    .ALUop2     (SrcBE),
+    .ALUctrl    (ALUCtrlE),
+    .ALUout     (ALUResultM),
+    .Zero       (ZeroE)
+);
+
+ExecuteToMemory     PipelineRegister (
+    .CLK        (clk),
+    .RegWriteE  (RegWriteE),
+    .MemWriteE  (MemWriteE),
+    .a_typeE    (ATypeE),
+    .ResultSrcE (ResultSrcE_i),
+    .RdE        (RdE_i),
+    .ALUResultE (ALUResultE),
+    .WriteDataE (WriteDataE),
+    .PCPlus4E   (PCPlus4E),
+
+    .RegWriteM  (RegWriteM),
+    .MemWriteM  (MemWriteM),
+    .ResultSrcM (ResultSrcM),
+    .RdM        (RdM),
+    .ALUResultM (ALUResultM),
+    .WriteDataM (WriteDataM),
+    .PCPlus4M   (PCPlus4M),
+    .a_typeM    (ATypeM)
+);
 
 endmodule

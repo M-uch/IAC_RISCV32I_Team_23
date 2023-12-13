@@ -4,10 +4,12 @@ module Writeback_stage #(
 ) (
     input logic                     RegWriteW_i,
     input logic [1:0]               ResultSrcW,
-    input logic [D_WIDTH-1:0]       ReadDataW, ALUResultW, RdW_i, PCPlus4W,
+    input logic [D_WIDTH-1:0]       ReadDataW, ALUResultW, PCPlus4W,
+    input logic [A-WIDTH-1:0]       RdW_i,
 
     output logic                    RegWriteW_o,
-    output logic [D_WIDTH-1:0]      result, RdW_o
+    output logic [D_WIDTH-1:0]      result,
+    output logic [A_WIDTH-1:0]      RdW_o
 );
 
 assign RegWriteW_o = RegWriteW_i;

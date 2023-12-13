@@ -2,13 +2,15 @@ module Memory_stage #(
     parameter D_WIDTH = 32,
     parameter A_WIDTH = 5
 ) (
-    input logic                     clk, RegWriteM_i, WriteDataM, MemWriteM, a_typeM,
+    input logic                     clk, RegWriteM_i, MemWriteM, a_typeM,
     input logic [1:0]               ResultSrcM_i,
-    input logic [D_WIDTH-1:0]       RdM_i, PCPlus4M_i, ALUResultM_i,
+    input logic [D_WIDTH-1:0]       PCPlus4M_i, ALUResultM_i, WriteDataM,
+    input logic [A-WIDTH-1:0]       RdM_i,
 
     output logic                    RegWriteM_o, RegWriteW,
     output logic [1:0]              ResultSrcW,
-    output logic [D_WIDTH-1:0]      RdM_o, ALUResultM_o, ReadDataW, ALUResultW, RdW, PCPlus4M_o
+    output logic [D_WIDTH-1:0]      ALUResultM_o, ReadDataW, ALUResultW, PCPlus4M_o,
+    output logic [A-WIDTH-1:0]      RdM_o, RdW
 );
 
 logic   [D_WIDTH-1:0]           ReadDataM;
