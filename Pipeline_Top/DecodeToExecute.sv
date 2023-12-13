@@ -2,17 +2,17 @@ module DecodeToExecute #(
     parameter   DATA_WIDTH = 32,
                 ADDRESS_WIDTH = 5
 )(
-    input   logic                       CLK, CLR, RegWriteD, MemWriteD, JumpD, BranchD, ALUSrcD,
+    input   logic                       CLK, CLR, RegWriteD, MemWriteD, JumpD, BranchD, ALUSrcD, JumpSrcD, ATypeD,
     input   logic [1:0]                 ResultSrcD,
     input   logic [2:0]                 ALUControlD,
     input   logic [ADDRESS_WIDTH-1:0]   Rs1D, Rs2D, RdD,
-    input   logic [DATA_WIDTH-1:0]      RD1D, RD2D, PCD, ImmExtD, PCPlus4D,
+    input   logic [DATA_WIDTH-1:0]      RD1D, RD2D, Ra, PCD, ImmExtD, PCPlus4D,
 
-    output  logic                       RegWriteE, MemWriteE, JumpE, BranchE, ALUSrcE,
+    output  logic                       RegWriteE, MemWriteE, JumpE, BranchE, ALUSrcE, JumpSrcE, ATypeE,
     output  logic [1:0]                 ResultSrcE,
     output  logic [2:0]                 ALUControlE,
     output  logic [ADDRESS_WIDTH-1:0]   Rs1E, Rs2E, RdE,
-    output  logic [DATA_WIDTH-1:0]      RD1E, RD2E, PCE, ImmExtE, PCPlus4E
+    output  logic [DATA_WIDTH-1:0]      RD1E, RD2E, RaE, PCE, ImmExtE, PCPlus4E
     );
 
 always_ff @(posedge CLK, posedge CLR) begin
@@ -22,6 +22,8 @@ always_ff @(posedge CLK, posedge CLR) begin
         JumpE <= 1'b0;
         BranchE <= 1'b0;
         ALUSrcE <= 1'b0;
+        JumpSrcE <= 1'b0;
+        ATypeE <= 1'b0;
         ResultSrcE <= 2'b0;
         ALUControlE <= 3'b0;
         Rs1E <= 5'b0;
@@ -29,6 +31,7 @@ always_ff @(posedge CLK, posedge CLR) begin
         RdE <= 5'b0;
         RD1E <= 32'b0;
         RD2E <= 32'b0;
+        RaE <= 32'b0;
         PCE <= 32'b0;
         ImmExtE <= 32'b0;
         PCPlus4E <= 32'b0;
@@ -39,6 +42,8 @@ always_ff @(posedge CLK, posedge CLR) begin
         JumpE <= JumpD;
         BranchE <= BranchD;
         ALUSrcE <= ALUSrcD;
+        JumpSrcE <= JumpSrcD;
+        ATypeE <= ATypeD;
         ResultSrcE <= ResultSrcD;
         ALUControlE <= ALUControlD;
         Rs1E <= Rs1D;
@@ -46,6 +51,7 @@ always_ff @(posedge CLK, posedge CLR) begin
         RdE <= RdD;
         RD1E <= RD1D;
         RD2E <= RD2D;
+        RaE <= Ra;
         PCE <= PCD;
         ImmExtE <= ImmExtD;
         PCPlus4E <= PCPlus4D;

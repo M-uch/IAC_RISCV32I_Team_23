@@ -3,7 +3,6 @@ module Top #(
 ) (
     input  logic                       clk,        // CPU clock
     input  logic                       rst,        // reset
-    input  logic                       en,         // enable
     input  logic                       T0,         // trigger
     output logic     [WIDTH-1:0]       A0          // O/P Register
 );
@@ -39,13 +38,13 @@ module Top #(
     logic [WIDTH-1:0] RAE;
 
     // SIGN EXTEND
-    logic [25:0] IMMEXTE;
+    logic [WIDTH-1:0] IMMEXTE;
 
     // FLOW THROUGH
     logic [WIDTH-1:0] PCE;
-    logic [5:0] RS1E;
-    logic [5:0] RS2E;
-    logic [5:0] RDE;
+    logic [4:0] RS1E;
+    logic [4:0] RS2E;
+    logic [4:0] RDE;
     logic [WIDTH-1:0] PCPLUS4E;
 
 // <-------------------------------------------------------------------------------------> //
@@ -65,7 +64,7 @@ module Top #(
     logic [WIDTH-1:0] PCTARGETE;
 
     // FLOW THROUGH
-    logic [5:0] RDM;
+    logic [4:0] RDM;
     logic [WIDTH-1:0] PCPLUS4M;
 
 // <-------------------------------------------------------------------------------------> //
@@ -81,7 +80,7 @@ module Top #(
     logic [WIDTH-1:0] READDATAW;
 
     // FLOW THROUGH
-    logic [5:0] RDW;
+    logic [4:0] RDW;
     logic [WIDTH-1:0] PCPLUS4W;
 
 // <-------------------------------------------------------------------------------------> //
@@ -90,7 +89,7 @@ module Top #(
 
     logic [WIDTH-1:0] RESULTW;
     logic             REGWRITEW_o;
-    logic [5:0]       RDW_o;
+    logic [4:0]       RDW_o;
 
 // <-------------------------------------------------------------------------------------> //    
 
@@ -100,8 +99,8 @@ module Top #(
     logic STALLD;
     logic FLUSHD;
     logic FLUSHE;
-    logic FORWARDAE; 
-    logic FORWARDBE;
+    logic [1:0] FORWARDAE; 
+    logic [1:0] FORWARDBE;
 
 // <-------------------------------------------------------------------------------------> //  
 
@@ -173,7 +172,7 @@ module Top #(
         .RD2E(RD2E),
         .RdE_i(RDE),
         .ImmExtE(IMMEXTE),
-        .PCPlus4E(PCPLUS4D),
+        .PCPlus4E(PCPLUS4E),
         .ALUResultM_i(ALURESULTM),
         .ResultW(RESULTW),
         .raE(RAE),
