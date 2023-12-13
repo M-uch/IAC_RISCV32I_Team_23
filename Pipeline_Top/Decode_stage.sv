@@ -29,7 +29,7 @@ module Decode_stage #(
     output logic [A_WIDTH-1:0] Rs2E,
     output logic [A_WIDTH-1:0] RdE,
     output logic [D_WIDTH-1:0] PCplus4E,
-    output logic [D_WIDTH-1:0] A0
+    output logic [D_WIDTH-1:0] a0
 
 );
 
@@ -76,7 +76,7 @@ module Decode_stage #(
         .RD1(Rd1),
         .RD2(Rd2),
         .ra(Ra),
-        .a0(A0)
+        .a0(a0)
     );
 
     signextend CPU_SIGNEXTEND (

@@ -245,7 +245,7 @@ module Top #(
         .StallF(STALLF),
         .StallD(STALLD),
         .FlushD(FLUSHD),
-        .FlushE(FLUSHE),
+        .FlushE(FLUSHE)
     );
 
 endmodule
