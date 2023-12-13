@@ -5,12 +5,12 @@ module Memory_stage #(
     input logic                     clk, RegWriteM_i, MemWriteM, a_typeM,
     input logic [1:0]               ResultSrcM_i,
     input logic [D_WIDTH-1:0]       PCPlus4M_i, ALUResultM_i, WriteDataM,
-    input logic [A-WIDTH-1:0]       RdM_i,
+    input logic [A_WIDTH-1:0]       RdM_i,
 
     output logic                    RegWriteM_o, RegWriteW,
     output logic [1:0]              ResultSrcW,
     output logic [D_WIDTH-1:0]      ALUResultM_o, ReadDataW, ALUResultW, PCPlus4M_o,
-    output logic [A-WIDTH-1:0]      RdM_o, RdW
+    output logic [A_WIDTH-1:0]      RdM_o, RdW
 );
 
 logic   [D_WIDTH-1:0]           ReadDataM;
@@ -42,7 +42,7 @@ MemoryToWriteback   PipelineRegisters (
     .RdW        (RdW),
     .ALUResultW (ALUResultW),
     .ReadDataW  (ReadDataW),
-    .PCPlus4M_o (PCPlus4M_i)
+    .PCPlus4W   (PCPlus4M_o)
 );
 
 endmodule
