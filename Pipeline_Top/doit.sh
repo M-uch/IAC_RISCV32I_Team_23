@@ -7,17 +7,17 @@ rm -f top.vcd
 # run Verilator to translate Verilog into C++, including C++ testbench
 # -- Fetch -- #
 verilator -cc pc_mux.sv                    
-verilator -cc register.sv
-verilator -cc PC.sv
+verilator -cc register_P.sv
+verilator -cc PC_P.sv
 verilator -cc instrmem.sv
 verilator -cc FetchToDecode.sv
 verilator -cc Fetch_stage.sv     
 # -- Decode -- #
-verilator -cc RegFile.sv
+verilator -cc RegFile_P.sv
 verilator -cc signextend.sv
 verilator -cc main_decoder.sv
 verilator -cc alu_decoder.sv
-verilator -cc CU.sv
+verilator -cc CU_P.sv
 verilator -cc DecodeToExecute.sv
 verilator -cc Decode_stage.sv
 # -- Execute -- #

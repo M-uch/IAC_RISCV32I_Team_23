@@ -112,7 +112,6 @@ module Top #(
     Fetch_stage FETCH (
         .clk(clk),                          // I/Ps
         .rst(rst),
-        .en(en),
         .StallF(STALLF),
         .StallD(STALLD),
         .FlushD(FLUSHD),
@@ -121,7 +120,7 @@ module Top #(
 
         .InstrD(INSTRD),                    // O/Ps
         .PCOut(PCD),
-        .PCplus4F(PCPLUS4D)
+        .PCplus4F_o(PCPLUS4D)
     );
 
     Decode_stage DECODE (
