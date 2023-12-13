@@ -8,11 +8,11 @@ module RegFile_P #(
     input   logic [ADDRESS_WIDTH-1:0]   A3,
     input   logic [DATA_WIDTH-1:0]      WD3,
     input   logic                       WE3,
+    input   logic                       trigger, // direct access to t0 for trigger
     output  logic [DATA_WIDTH-1:0]      RD1,
     output  logic [DATA_WIDTH-1:0]      RD2,
-    input   logic                       trigger, // direct access to t0 for trigger
-    output  logic [DATA_WIDTH-1:0]      a0,
-    output  logic [DATA_WIDTH-1:0]      ra
+    output  logic [DATA_WIDTH-1:0]      ra,
+    output  logic [DATA_WIDTH-1:0]      a0
 );
 
 logic   [DATA_WIDTH-1:0] Reg_File [2**ADDRESS_WIDTH-1:0];

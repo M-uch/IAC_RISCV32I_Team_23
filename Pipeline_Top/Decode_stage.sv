@@ -6,10 +6,11 @@ module Decode_stage #(
     input logic FlushE,
     input logic WE3,
     input logic [D_WIDTH-1:0] InstrD,
-    input logic [D_WIDTH-1:0] PCD_i,
+    input logic [D_WIDTH-1:0] PCD,
     input logic [D_WIDTH-1:0] PCplus4D_i,
     input logic [A_WIDTH-1:0] A3,
     input logic [D_WIDTH-1:0] WD3,
+    input logic               trigger,
     output logic RegWriteE,
     output logic [1:0] ResultSrcE,
     output logic MemWriteE,
@@ -19,22 +20,18 @@ module Decode_stage #(
     output logic ALUSrcE,
     output logic JumpSrcE,
     output logic ATypeE,
-    output logic [D_WIDTH-1:0] RD1,
-    output logic [D_WIDTH-1:0] RD2,
-    output logic [D_WIDTH-1:0] RA,
-    output logic [D_WIDTH-1:0] ImmExtD,
-    output logic [D_WIDTH-1:0] PCD_o,
-    output logic [A_WIDTH-1:0] Rs1D,
-    output logic [A_WIDTH-1:0] Rs2D,
-    output logic [A_WIDTH-1:0] RdD,
-    output logic [D_WIDTH-1:0] PCplus4D_o,
+    output logic [D_WIDTH-1:0] RD1E,
+    output logic [D_WIDTH-1:0] RD2E,
+    output logic [D_WIDTH-1:0] RAE,
+    output logic [D_WIDTH-1:0] ImmExtE,
+    output logic [D_WIDTH-1:0] PCE,
+    output logic [A_WIDTH-1:0] Rs1E,
+    output logic [A_WIDTH-1:0] Rs2E,
+    output logic [A_WIDTH-1:0] RdE,
+    output logic [D_WIDTH-1:0] PCplus4E,
     output logic [D_WIDTH-1:0] A0
 
 );
-
-    // Connect follow through wires
-    assign PCD_o = PCD_i;    
-    assign PCplus4D_i = PCplus4D_o;
 
     // assign / declare vals
     logic [A_WIDTH-1:0] A1 = InstrD[19:15];
@@ -54,6 +51,11 @@ module Decode_stage #(
     logic JumpSrcD;
     logic ATypeD;
 
+    logic [D_WIDTH-1:0] Rd1;
+    logic [D_WIDTH-1:0] Rd2;
+    logic [D_WIDTH-1:0] Ra;
+    logic [D_WIDTH-1:0] ImmExtD;
+
     CU_P CPU_CU (
         .instr(InstrD),
         .result_src(ResultSrcD),
@@ -68,5 +70,22 @@ module Decode_stage #(
         .branch(BranchD)
     );
 
-    RegFile_P CPU_REGFile
+    RegFile_P CPU_REGFile (
+        .clk(clk),              // I/Ps
+        .A1(A1),
+        .A2(A2),
+        .A3(A3),
+        .WD3(WD3),
+        .WE3(WE3),
+        .trigger(trigger),
+
+        .RD1(Rd1),
+        .RD2(Rd2),
+        .ra(Ra),
+        .a0(A0)
+    );
+
+    DecodeToExecute D2E (
+        
+    );
 endmodule
