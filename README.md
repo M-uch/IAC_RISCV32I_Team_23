@@ -23,19 +23,20 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Data Memory             |           |          |     M     |        |     
 | Instruction Memory      |     M     |          |           |        |
 | Imm Extender            |     M     |          |           |        |
-| Jump & Ret Muxes        |     x     |          |     M     |   x    |
+| Jump & Ret Muxes        |     x     |          |     x     |   x    |
 | Program Counter         |           |          |           |   M    |
 | Register File           |     x     |          |     M     |   x    |
 | Top level sv            |           |          |           |   M    |
 | Testbench               |     M     |          |           |        |
 | Debugging               |     x     |          |           |   x    |
 | **Reference Program**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
-| Byte address Data Memory|     M     |          |     x     |        |
+| PDF.s Modification      |     M     |          |           |        |
+| Byte address Data Memory|     M     |          |           |        |
 | Testbench               |     M     |          |           |        |
 | Debugging               |     x     |          |           |   x    |
 | **Pipelining Design**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
 | Pipeline Registers      |           |          |     M     |    x   |
-| Hazard Detection Unit   |           |          |     M     |        |
+| Hazard Detection Unit   |     x     |          |     M     |        |
 | Top level sv            |           |          |     x     |    M   |
 | Fetch Stage             |           |          |           |    M   |
 | Decode Stage            |           |          |           |    M   |

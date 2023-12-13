@@ -9,8 +9,8 @@ forever:
     JAL     ra, display
     J       forever
 
-init:       # function to initialise PDF buffer memory WIPES PDF ARRAY TO ALL 0
-    LI      a1, 0xff           # loop_count a1 = 256
+init:       # function to initialise PDF buffer memory 
+    LI      a1, 0x100           # loop_count a1 = 256
 _loop1:                         # repeat
     ADDI    a1, a1, -1          #     decrement a1
     SB      zero, base_pdf(a1)  #     mem[base_pdf+a1) = 0
@@ -18,7 +18,8 @@ _loop1:                         # repeat
     RET
 
 build:      # function to build prob dist func (pdf)
-    LI      a1, base_data       # a1 = base address of data array
+    LI      a1, 1       # a1 = base address of data array MODIFIED SINCE LI DOES NOT INCLUDE LUI AND base_data IS 20 BIT
+    SLLI    a1, a1, 16
     LI      a2, 0               # a2 = offset into of data array 
     LI      a3, base_pdf        # a3 = base address of pdf array
     LI      a4, max_count       # a4 = maximum count to terminate
@@ -41,3 +42,5 @@ _loop3:                         # repeat
     addi    a1, a1, 1           #   incr 
     BNE     a1, a2, _loop3      # until end of pdf array
     RET
+
+  

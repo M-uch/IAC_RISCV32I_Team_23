@@ -6,7 +6,7 @@ initialise:
     addi s1, zero, 0x1 /* checks trigger = 1 */
     addi s2, zero, 0xff /* checks all lights on */
     addi s3, zero, 0x1 /* determines number of cycles for one call of delay (make so that one call = 1s default) */
-    addi s4, zero, 0x1 /* base case of 0.2s delay before GO */
+    addi s4, zero, 0x1 /* sets a fixed delay when all lights on */
 
 idle:
     beq  t0, s1, countdown /* branch to countdown if triggered */
@@ -30,7 +30,7 @@ idle:
 
     slli a6, a6, 0x1 /* push xor result into LSB of a6 */
     or a6, a6, a2 
-    andi a6, a6, 0x000000ff
+    andi a6, a6, 0xff
 
     addi a2, zero, 0x0 /* clear registers */
     addi a3, zero, 0x0 
@@ -46,7 +46,7 @@ delay:
     RET
 
 countdown: 
-    /* push binary 1 to LSB every cycle e.g 1 ~ 11 ~ 111 ~ 1111 etc (for LEDS) */
+    /* push binary 1 to LSB every cycle e.g 1 ~ 11 ~ 111 ... 11111111 etc (for LEDS) */
 
     jal ra, delay /* 1s delay between lights */
 
@@ -55,12 +55,12 @@ countdown:
     bne  a0, s2, countdown 
 
     addi s5, s3, 0x0 /* save 1s delay value temp */
-    addi s3, s4, 0x0 /* replace for 0.2s delay */ 
+    addi s3, s4, 0x0 /* s4 can be used to set a fixed delay when all lights on */ 
     jal ra, delay
     addi s3, s5, 0x0 /* restore */ 
 
 ready: 
-    /* lights all on for 0.2 seconds, now adding a random delay */ 
+    /* lights all on for a set duration, now adding a random delay */ 
 
     addi s5, s3, 0x0 /* save 1s delay value temp */
     addi s3, a6, 0x0 /* replace for random delay between 0~255 cycles */
@@ -74,12 +74,7 @@ ready:
     beq zero, zero, idle
 
 /*
-need 0.2-3 seconds delay
-
-let 0.2 delay be lfsr result = 00000001
-let 3 delay be lfsr result = 11111111
-
-255 possible values
+255 possible values to a6 so sufficient amount of random delays
 
 delay will vary between computers due to processing speed needs tuning for each pc 
 */
