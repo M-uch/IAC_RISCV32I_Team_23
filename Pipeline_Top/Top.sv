@@ -81,7 +81,7 @@ module Top #(
     logic [WIDTH-1:0] READDATAW;
 
     // FLOW THROUGH
-    logic [5:0] RDW_i;
+    logic [5:0] RDW;
     logic [WIDTH-1:0] PCPLUS4W;
 
 // <-------------------------------------------------------------------------------------> //
@@ -170,11 +170,11 @@ module Top #(
         .ATypeE(ATYPEE),
         .PCE(PCE),
         .RD1E(RD1E),
-        .RD1E(RD2E),
+        .RD2E(RD2E),
         .RdE_i(RDE),
         .ImmExtE(IMMEXTE),
-        .PCplus4E(PCPLUS4D),
-        .ALUResultM(ALURESULTM),
+        .PCPlus4E(PCPLUS4D),
+        .ALUResultM_i(ALURESULTM),
         .ResultW(RESULTW),
         .raE(RAE),
 
@@ -183,11 +183,11 @@ module Top #(
         .ResultSrcM(RESULTSRCM),
         .MemWriteM(MEMWRITEM),
         .ATypeM(ATYPEM),
-        .ALUResultM(ALURESULTM),
+        .ALUResultM_o(ALURESULTM),
         .WriteDataM(WRITEDATAM),
         .PCTargetE(PCTARGETE),
         .RdM(RDM),
-        .PCplus4M(PCPLUS4M),
+        .PCPlus4M(PCPLUS4M)
     );
 
     Memory_stage MEMORY (
@@ -207,7 +207,7 @@ module Top #(
         .ResultSrcW(RESULTSRCW),
         .ALUResultM_o(ALURESULTM),
         .RdW(RDW),
-        .RdM_o(RDW_i),
+        .RdM_o(RDM),
         .PCPlus4M_o(PCPLUS4W),
         .ReadDataW(READDATAW),
         .ALUResultW(ALURESULTW)
@@ -218,7 +218,7 @@ module Top #(
         .RegWriteW_i(REGWRITEW),        // I/Ps
         .ResultSrcW(RESULTSRCW),
         .ReadDataW(READDATAW),
-        .RdW_i(RDW_i),
+        .RdW_i(RDW),
         .PCPlus4W(PCPLUS4W),
         .ALUResultW(ALURESULTW),
 
