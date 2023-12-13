@@ -7,7 +7,7 @@ module Decode_stage #(
     input logic WE3,
     input logic [D_WIDTH-1:0] InstrD,
     input logic [D_WIDTH-1:0] PCD,
-    input logic [D_WIDTH-1:0] PCplus4D_i,
+    input logic [D_WIDTH-1:0] PCplus4D,
     input logic [A_WIDTH-1:0] A3,
     input logic [D_WIDTH-1:0] WD3,
     input logic               trigger,
@@ -34,13 +34,7 @@ module Decode_stage #(
 );
 
     // assign / declare vals
-    logic [A_WIDTH-1:0] A1 = InstrD[19:15];
-    logic [A_WIDTH-1:0] A2 = InstrD[24:20];
     logic [2:0] ImmSrcD;
-    assign Rs1D = InstrD[19:15];
-    assign Rs2D = InstrD[24:20];
-    assign RdD =  InstrD[11:7];
-    assign imm_ext = InstrD[31:7];
     logic RegWriteD;
     logic [1:0] ResultSrcD;
     logic MemWriteD;
@@ -72,8 +66,8 @@ module Decode_stage #(
 
     RegFile_P CPU_REGFile (
         .clk(clk),              // I/Ps
-        .A1(A1),
-        .A2(A2),
+        .A1(InstrD[19:15]),
+        .A2(InstrD[24:20]),
         .A3(A3),
         .WD3(WD3),
         .WE3(WE3),
@@ -85,7 +79,47 @@ module Decode_stage #(
         .a0(A0)
     );
 
-    DecodeToExecute D2E (
-        
+    signextend CPU_SIGNEXTEND (
+        .code(InstrD),
+        .immscr(ImmSrcD),
+        .immop(ImmExtD)
     );
+
+    DecodeToExecute D2E (
+        .CLK(clk),              // I/Ps
+        .CLR(FlushE),
+        .RegWriteD(RegWriteD),
+        .MemWriteD(MemWriteD),
+        .JumpD(JumpD),
+        .BranchD(BranchD),
+        .ALUSrcD(ALUSrcD),
+        .ResultSrcD(ResultSrcD),
+        .ALUControlD(ALUCtrlD),
+        .Rs1D(InstrD[19:15]),
+        .Rs2D(InstrD[24:20]),
+        .RdD(InstrD[11:7]),
+        .RD1D(Rd1),
+        .RD2D(Rd2),
+        .PCD(PCplus4D),
+        .ImmExtD(ImmExtD),
+        .PCPlus4D(PCplus4D),
+
+        .RegWriteE(RegWriteE),           // O/Ps
+        .MemWriteE(MemWriteE),
+        .JumpE(JumpE),
+        .BranchE(BranchE),
+        .ALUSrcE(ALUSrcE),
+        .ResultSrcE(ResultSrcE),
+        .ALUControlE(ALUCtrlE),
+        .Rs1E(Rs1E),
+        .Rs2E(Rs2E),
+        .RdE(RdE),
+        .RD1E(RD1E),
+        .RD2E(RD2E),
+        .PCE(PCE),
+        .ImmExtE(ImmExtE),
+        .PCPlus4E(PCplus4E)
+    );
+
+
 endmodule

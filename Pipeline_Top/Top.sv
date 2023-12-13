@@ -129,7 +129,7 @@ module Top #(
         .WE3(REGWRITEW_o),
         .InstrD(INSTRD),
         .PCD(PCD),
-        .PCplus4D_i(PCPLUS4D),
+        .PCplus4D(PCPLUS4D),
         .A3(RDW_o),
         .WD3(RESULTW),
         .trigger(T0),
