@@ -34,7 +34,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Testbench               |     M     |          |           |        |
 | Debugging               |     x     |          |           |   x    |
 | **Pipelining Design**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
-| Pipeline Registers      |           |          |     M     |        |
+| Pipeline Registers      |           |          |     M     |    x   |
 | Hazard Detection Unit   |           |          |     M     |        |
 | Top level sv            |           |          |     x     |    M   |
 | Fetch Stage             |           |          |           |    M   |
