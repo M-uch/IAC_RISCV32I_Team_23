@@ -2,11 +2,13 @@
 #include "verilated_vcd_c.h"
 #include "VTop.h"
 #include "vbuddy.cpp"    
-#define MAX_SIM_CYC 100000
+#define MAX_SIM_CYC 1300000
 
 int main(int argc, char **argv, char **env) {
   int i;     
   int clk;
+  int plot;
+  plot = 0;
 
   // VCD waveform dump
   Verilated::commandArgs(argc, argv);
@@ -18,7 +20,7 @@ int main(int argc, char **argv, char **env) {
  
   // init Vbuddy
   if (vbdOpen()!=1) return(-1);
-  vbdHeader("PDF");
+  vbdHeader("PDF: Triangle");
   vbdSetMode(0); 
 
   top->clk = 0;
@@ -34,8 +36,14 @@ int main(int argc, char **argv, char **env) {
       top->eval ();
     }
 
-        vbdPlot(int(top->a0), 0, 255);
-        vbdCycle(simcyc)
+    if((top->A0 != 0)){ // starts plotting after an output is detected (skips vbuddy while still initialising PDF)
+      plot = 1;
+    } 
+
+    if (plot) {
+        vbdPlot(int(top->A0), 0, 255);
+        vbdCycle(i);
+    }
 
     // exit simulation early with q 
     if ((Verilated::gotFinish()) || (vbdGetkey()=='q')) 

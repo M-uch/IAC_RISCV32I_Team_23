@@ -1,0 +1,1 @@
+This folder contains all resources regarding the F1 Program and it's assembly into machine code. For a detailed description of the program see [Annotated Program](F1ProgramAnnotated.s). 

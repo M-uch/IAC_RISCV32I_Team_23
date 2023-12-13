@@ -25,8 +25,8 @@ int main(int argc, char **argv, char **env) {
             top->eval ();
         }
 
-    if ((i<8)){
-        top->addr = i*4;
+    if ((i<8)){ // PC = 0 for 8 cycles 
+        top->addr = i*4; // increment PC in multiples of 4
     }
 
         if (Verilated::gotFinish()) exit(0);

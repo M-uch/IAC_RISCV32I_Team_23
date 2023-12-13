@@ -51,7 +51,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 
 # Repository Organisation
 
-The decision was made to work using only the main branch to commit and pull changes to the project due to the following reasons.
+The decision was made to work within a branch for each version of the CPU, with single cycle and pipelining being seperate branches. 
 - Reduced management due to branch merging and maintenance
 - ensures that all team members are working with the newest version of the project
 - ease of access to all resources and work
@@ -117,6 +117,8 @@ https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/a66fb50a-68e7-4e3
 **Specific details on components can be found in the personal statements and each component folder**
 
 # 2. **Pipelined RISCV-32I**
+
+For files and CPU see [Pipeline Processor Branch](https://github.com/M-uch/IAC_RISCV32I_Team_23/tree/Pipeline-Processor).
 
 We decided to design our Pipelined processor into multiple modules:
 
@@ -266,3 +268,5 @@ We decided to design our Pipelined processor into multiple modules:
     - RegWriteW
     
 # 3. **Data Caching RISCV-32I**
+
+N/A
