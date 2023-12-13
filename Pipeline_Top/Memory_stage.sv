@@ -37,7 +37,7 @@ MemoryToWriteback   PipelineRegisters (
     .ReadDataM  (ReadDataM),
     .PCPlus4M   (PCPlus4M_i),
 
-    .RegWriteW  (RegWriteW)
+    .RegWriteW  (RegWriteW),
     .ResultSrcW (ResultSrcW),
     .RdW        (RdW),
     .ALUResultW (ALUResultW),

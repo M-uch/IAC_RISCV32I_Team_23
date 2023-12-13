@@ -47,7 +47,7 @@ module Execute_stage #(
 
 
     // Connect follow through wires
-    assign PCSrcE = (BranchE & ZeroE) | JumpE;
+    assign PCSrcE = (BranchE & ~ZeroE) | JumpE;
     assign PCTarget = PCE + ImmExtE;
 
 Mux     JumpMux (
@@ -103,7 +103,7 @@ ExecuteToMemory     PipelineRegister (
     .MemWriteM  (MemWriteM),
     .ResultSrcM (ResultSrcM),
     .RdM        (RdM),
-    .ALUResultM (ALUResult_o),
+    .ALUResultM (ALUResultM_o),
     .WriteDataM (WriteDataM),
     .PCPlus4M   (PCPlus4M),
     .a_typeM    (ATypeM)
