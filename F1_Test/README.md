@@ -1,6 +1,6 @@
 # Testing the F1 Program
 
-## You can simulate the CPU and run the F1 program using the following steps. 
+## You can simulate the CPU and run the F1 program following these steps. 
 
 1. Connect Vbuddy to WSL and ensure that the correct [USB Port](vbuddy.cfg) is written into the config file (typically /dev/ttyUSB0)
 
@@ -17,6 +17,6 @@ $ ./doit.sh
 
 - The F1 light sequence can vary in speeds depending on the processor speed of the computer it is run on. Faster CPU clock speeds result in shorter delays between the LED lights turning on, and an overall shorter delay between all LEDs on and turning off. 
 
-This can be tuned by editing the initial loaded values of registers s4 (delay between LEDs) and s5 (fixed delay when all LEDs on) in the [F1 Program](<../Legacy Components/F1 Code/myprog/F1ProgramTest.s>). Then recompiling the program and inserting the machine code into [F1.mem](F1.mem).
+- This can be tuned by editing the initial loaded values of registers s4 (delay between LEDs) and s5 (fixed delay when all LEDs on) in the [F1 Program](<../Legacy Components/F1 Code/myprog/F1ProgramTest.s>). Then recompiling the program and inserting the machine code into [F1.mem](F1.mem).
 
 - The F1 Program assembly can be found in [F1 Code](<../Legacy Components/F1 Code>), which contains an commented version describing the process in detail, and the newer compiled version in "myprog". The two programs differ slightly in register use and use BNEs for unconditional branching instead of BEQs however should function exactly the same. 
