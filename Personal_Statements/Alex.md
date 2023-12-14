@@ -6,11 +6,16 @@
 3. [Top File](#Top)
 4. [Program Counter](#PC)
 5. [Testing / Debugging](#Test)
-6. [ALU / Register File](#partial) 
+6. [ALU / Register File](#partial)
+7. [Top File / Structure (Pipelining)](#Top_P)
+8. [Fetch Stage](#Fetch)
+9. [Decode Stage](#Decode) 
 
 PUT IN CONTENTS TABLE AT THE END
 
-## My Contributions: <a name="contributions"></a> ##
+<div id ="contributions">
+
+## My Contributions: ##
 
 ### Single Cycle Processor: ###
 
@@ -21,12 +26,13 @@ PUT IN CONTENTS TABLE AT THE END
 - ALU/Register([link](put in link here))
 
 ### Pipelined Processor: ###
-- x([link](put in link here))
-- y([link](put in link here))
-- z([link](put in link here))
+- Top File([Top File](#Top_P))
+- Fetch Stage([Fetch Stage](#Fetch))
+- Decode Stage([Decode Stage](#Decode))
 
+<div id="CU">
 
-## The Control Unit <a name="CU"></a> ##
+## The Control Unit ##
 
 The main methodology behind my CU design was to make the '.sv' files readbable and easy to debug. This would allow my team members to quickly interpret and thus inform their own design choices when they depended upon control signals from the CU.
 
@@ -161,7 +167,9 @@ Below is a table detailling what each control signal is responsible for:
 | JumpSrc        | Determine whether JAL or JALR                  |
 | AType          | Determine whether byte or word addressing      |
 
-## Top File <a name="Top"></a> ##
+<div id="Top">
+
+## Top File ##
 
 Designing and construction of the Top file included a lot of debugging and house keeping. This meant solving errors and warnings here and there, those of note will be mentioned in the 'Testing/Debugging' and the 'ALU/Register File' section.
 
@@ -171,7 +179,9 @@ Below is a diagram detailling the abstracted scope of the top file:
 
 ![Abstracted Top File](src/Top_Abstracted.png)
 
-## PC <a name="PC"></a> ##
+<div id ="PC">
+
+## PC ##
 
 The PC was mostly unchanged from the design I implemented in Lab 4, however slight changes were made so that we could implement 'JALR' logic, this meant storing PC+4 when we perform a JAL instruction and then also allowing use of the PC_Target signal. This was used to implement a mux which chooses between PC_Target (on branches), or the value stored in Ra (on return instructions).
 
@@ -201,11 +211,15 @@ Below are the changes:
         // Then instantiated seperate modules... (same as Lab 4)
 ```
 
-## Testing / Debugging <a name="Test"></a> ##
+<div id="Test">
 
+## Testing / Debugging  ##
 
+TALK ABOUT VIDEOS, DEBUGGING IN OTHER SECTIONS, LUI TESTING ETC (MAYBE THE GRAPHS IF YOU HAVE TIME)
 
-## ALU / Register File <a name="partial"></a> ##
+<div id="partial">
+
+## ALU / Register File ##
 
 These were 2 partial contributions during the development of the single cycle stage. 
 
@@ -280,6 +294,121 @@ These were 2 partial contributions during the development of the single cycle st
             if(WE3 && (A3 != 5'b00000)) Reg_File[A3] <= WD3;     // new cond avoids writing r[0] on unconditional jumps 
             if(trigger== 1'b1) Reg_File[5] <= 1; // t0 location 
         end
+    ```
+<div id="Top_P">
+
+## Top File / Structure (Pipelining) ##
+
+CREATE TABLE FOR EACH STAGE, INSERT ABSTRACTED DIAGRAM!!!!!!!
+<div id="Fetch">
+
+## Fetch Stage ##
+
+The Fetch Stage is responsible for outputting instructions for the rest of the pipeline. There were 2 modules which required changing (from the single-cycle versions) for implementation in the pipelined processor:
+
+1. **PC**
+
+    The PC needed to be changed as we required the 'PC Target' calculation to be performed in the Execute stage of the pipeling. This meant the I/O ultimately became a lot simpler as we no longer had a feedback loop between multiple modules.
+
+    ```
+        // Original Code:
+        module PC#(
+            parameter WIDTH = 32
+        )(
+
+            input  logic                     clk,
+            input  logic                     rst,
+            input  logic    [WIDTH-1:0]      PC_TargetI,                      
+            input  logic                     PCsrc,        // select for mux
+            input  logic    [WIDTH-1:0]      ImmOp,        // imm ofFset
+            output logic    [WIDTH-1:0]      PC_out,       // PC Counter
+            output logic    [WIDTH-1:0]      PC_Plus4,     // PC + 4 (for return address)
+            output logic    [WIDTH-1:0]      PC_TargetO    // PC Target
+        );
+
+            // intermediate vals
+            logic [WIDTH-1:0]   next_PC;                   // result from select line
+
+            assign PC_TargetO = PC_out + ImmOp;            // NOTE: Calculate in PC
+            assign PC_Plus4 = PC_out + 32'b100;
+
+            // Instantiate Modules... 
+    ```
+
+    ```
+        // Pipeline Modifications:
+        module PC_P#(
+            parameter WIDTH = 32
+        )(
+
+            input  logic                     clk,
+            input  logic                     rst,
+            input  logic                     en,           // NEW: enable signal
+            input  logic    [WIDTH-1:0]      PC_Target,    // NEW: No more feeback loop                 
+            input  logic                     PCsrc,        // select for mux
+            output logic    [WIDTH-1:0]      PC_out,       // PC Counter
+            output logic    [WIDTH-1:0]      PC_Plus4      // PC + 4 (for return address)
+        );
+
+            // intermediate vals
+            logic [WIDTH-1:0]   next_PC;      // result from select line
+
+            assign PC_Plus4 = PC_out + 32'b100;
+
+            // Instantiate modules...
+    ```
+
+2. **PC Register**
+
+    The PC register also needed some modifications. It required a new 'en' signal which was defined as the 'StallF' signal from the Hazard Unit.
+
+    ```
+        // Original Code:
+        always_ff @ (posedge clk, posedge rst)
+            if (rst) PC <= {WIDTH{1'b0}};    // if reset = 1 then PC = 0
+            else PC <= next_PC;
+    ```
+
+    ```
+        // Pipeline Modifications:
+        always_ff @ (posedge clk, posedge rst) begin
+            if(~en) begin                               // NEW: Stall condition
+                if (rst) PC <= {WIDTH{1'b0}};           // if reset = 1 then PC = 0
+                else PC <= next_PC;
+            end
+        end        
+    ```
+
+    *Note that the condition is '~en' - therefore only store if there is no stall* 
+
+<div id="Decode">
+
+## Decode Stage ##
+
+The Decode Stage is responsible for...
+
+1. **CU**
+
+    wdasd
+
+    ```
+        // Original Code:
+    ```
+
+    ```
+        // Pipeline Modifications:
+    ```
+
+2. **Register File**
+
+    wadswa
+
+    ```
+        // Original Code:
+    ```
+
+    ```
+        // Pipeline Modifications:
     ```
 
 ## Appendix ##

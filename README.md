@@ -120,6 +120,20 @@ https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/a66fb50a-68e7-4e3
 
 For files and CPU see [Pipeline Processor Branch](https://github.com/M-uch/IAC_RISCV32I_Team_23/tree/Pipeline-Processor).
 
+## Pipeline Structure ##
+
+We decided to split the pipeline into 5 stages:
+
+1. Fetch
+2. Decode
+3. Execute
+4. Memory
+5. Writeback
+
+Below is a diagram detailling the abstracted scope of the top file:
+
+INSERT DIAGRAM HERE
+
 ## Pipeline Performance ## 
 
 This was measured by collecting the start cycle - when we first start recieving data:
@@ -133,9 +147,11 @@ This was measured by collecting the start cycle - when we first start recieving 
 
 We actually see that for our particular PDF program, pipelining is slower. This is due to the fact our program is small and performs frequenct branching and jumping, causing more frequenct flushes of our pipeline registers.
 
-For example, this can be seen in the following wavefile of XXXX.mem:
+For example, this can be seen in the following wavefile of noisy.mem:
 
-INSERT WAVE VIEWER HERE
+![Noisy Wave Viewer](Test_Evidence/Pipeline_Performance/noisypipelinewaveform.png)
+
+Left of the marker is the PDF program before plotting and to the right is during plotting. It can be seen clearly that flushes occur very frequently, therefore explaining the loss in performance for our particular program.
 
 We decided to design our Pipelined processor into multiple modules:
 
