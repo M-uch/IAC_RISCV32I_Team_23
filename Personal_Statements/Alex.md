@@ -167,7 +167,9 @@ Designing and construction of the Top file included a lot of debugging and house
 
 Another consideration included in the top file was the naming convention of having all top signals in all captial letters. This was designed to make it easy to distinguish between the layers of the abstraction in the CPU and helped with out decomposition overall.
 
-INSERT SIMPLIFIED TOP FILE DIAGRAM HERE
+Below is a diagram detailling the abstracted scope of the top file:
+
+![Abstracted Top File](src/Top_Abstracted.png)
 
 ## PC <a name="PC"></a> ##
 
@@ -279,6 +281,7 @@ These were 2 partial contributions during the development of the single cycle st
             if(trigger== 1'b1) Reg_File[5] <= 1; // t0 location 
         end
     ```
+
 ## Appendix ##
 
 [RISC-V ISA](src/RISC-V_ISA.png)
