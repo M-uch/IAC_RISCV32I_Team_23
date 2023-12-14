@@ -8,7 +8,7 @@ Implementing a 32 bit RISCV-I instruction set CPU used to run a F1 light simulat
 | Raymond | 02288579      | M-uch           | [Raymond's Personal Statement](/Personal_Statements/Raymond.md) |
 | Letong  |               | ksrxlt          | [Letong's Personal Statement](/Personal_Statements/Letong.md)   |
 | Matthew | 02300957      | MatthewGodsmark | [Matthew's Personal Statement](/Personal_Statements/Matthew.md) |
-| Alex    | 02269571      | AlexSeferidis   | [Alex's Personal Statement](/Personal_Statments/Alex.md)        |
+| Alex    | 02269571      | AlexSeferidis   | [Alex's Personal Statement](/Personal_Statements/Alex.md)        |
 
 Project Work Division
 ---

@@ -53,7 +53,7 @@ Here is where the bulk of the signals are assigned, only excluding 'ALUCTRL' and
 | Type_S           |     0    |   011  |    1   |     1    |     xx    |    0   |  010  |   0  |    x    |
 | Type_B           |     0    |   100  |    0   |     0    |     xx    |    1   |  011  |   0  |    0    |
 | Type_U           |     1    |   010  |    1   |     0    |     00    |    0   |  100  |   0  |    x    |
-| Type_U_LUI       |     1    |   010  |    1   |     0    |     01    |    0   |  101  |   0  |    x    |
+| Type_U_LUI       |     1    |   010  |    1   |     0    |     00    |    0   |  101  |   0  |    x    |
 | Type_J_JALR      |     0    |   001  |    0   |     0    |     xx    |    0   |  110  |   1  |    1    |
 | Type_J_JAL       |     1    |   101  |    0   |     0    |     10    |    0   |  111  |   1  |    0    | 
 
@@ -77,7 +77,7 @@ always_comb begin
         Type_S:         command_code = 14'b0_011_1_1_xx_0_010_0_x ;
         Type_B:         command_code = 14'b0_100_0_0_xx_1_011_0_0 ;
         Type_U:         command_code = 14'b1_010_1_0_00_0_100_0_x ;
-        Type_U_LUI:     command_code = 14'b1_010_1_0_01_0_101_0_x ; 
+        Type_U_LUI:     command_code = 14'b1_010_1_0_00_0_101_0_x ; 
         Type_J_JALR:    command_code = 14'b0_001_0_0_xx_0_110_1_1 ;
         Type_J_JAL:     command_code = 14'b1_101_0_0_10_0_111_1_0 ; 
         default:        command_code = 14'bx_xxx_x_x_xx_x_xxx_x_x ;
@@ -98,7 +98,7 @@ The table below details the 'ALUCtrl' and 'AType' signals based on the instructi
 | Type_S           |   000   | 
 | Type_B           |   001   | 
 | Type_U           |   000   | 
-| Type_U_LUI       |   010   | 
+| Type_U_LUI       |   011   | 
 | Type_J_JALR      |   000   | 
 | Type_J_JAL       |   000   | 
 
@@ -247,7 +247,7 @@ These were 2 partial contributions during the development of the single cycle st
                 3'b000: ALU_Result = ALUop1 + ALUop2; 
                 3'b001: ALU_Result = ALUop1 - ALUop2; 
                 3'b010: ALU_Result = ALUop1 << ALUop2; 
-                3'b011: ALU_Result = 32'bx;
+                3'b011: ALU_Result = ALUop2;
                 3'b100: ALU_Result = ALUop1 ^ ALUop2; 
                 3'b101: ALU_Result = ALUop1 >> ALUop2;      
                 3'b110: ALU_Result = ALUop1 | ALUop2;    
