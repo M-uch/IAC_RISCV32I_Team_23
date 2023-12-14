@@ -120,6 +120,23 @@ https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/a66fb50a-68e7-4e3
 
 For files and CPU see [Pipeline Processor Branch](https://github.com/M-uch/IAC_RISCV32I_Team_23/tree/Pipeline-Processor).
 
+## Pipeline Performance ## 
+
+This was measured by collecting the start cycle - when we first start recieving data:
+
+| .mem File | Single Cycle | Pipelined |
+| :-------: | :----------: | :-------: |
+| sine      | 56445        | 37562     |           
+| noisy     | 307475       | 204900    |            
+| gaussian  | 185695       | 123728    |            
+| triangle  | 474172       | 316028    |            
+
+We actually see that for our particular PDF program, pipelining is slower. This is due to the fact our program is small and performs frequenct branching and jumping, causing more frequenct flushes of our pipeline registers.
+
+For example, this can be seen in the following wavefile of XXXX.mem:
+
+INSERT WAVE VIEWER HERE
+
 We decided to design our Pipelined processor into multiple modules:
 
 1. Fetch

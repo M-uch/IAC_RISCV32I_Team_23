@@ -16,7 +16,7 @@ logic [7:0] data_array [2**17-1:0]; // set max address to 1FFFF as shown in memo
 // load data memory 
 initial begin
     $display("loading Data Memory.");
-    $readmemh("gaussian.mem", data_array, 32'h00010000, 32'h0001FFFF);
+    $readmemh("triangle.mem", data_array, 32'h00010000, 32'h0001FFFF);
 end;
 
 // write input
