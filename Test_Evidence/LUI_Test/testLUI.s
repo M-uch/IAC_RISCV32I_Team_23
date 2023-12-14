@@ -1,0 +1,2 @@
+addi a0, zero, 0x1
+LUI a0, 0x1
