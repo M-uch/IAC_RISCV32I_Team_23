@@ -21,4 +21,4 @@ $ ./doit.sh
 
 - This can be tuned by editing the initial loaded values of registers s4 (delay between LEDs) and s5 (fixed delay when all LEDs on) in the [F1 Program](<../Legacy Components/F1 Code/myprog/F1ProgramTest.s>). Then recompiling the program and inserting the machine code into [F1.mem](F1.mem).
 
-- The F1 Program assembly can be found in [F1 Code](<../Legacy Components/F1 Code>), which contains an commented version describing the process in detail, and the newer compiled version in "myprog". The two programs differ slightly in register use and use BNEs for unconditional branching instead of BEQs however should function exactly the same. 
+- The F1 Program assembly can be found in [F1 Code](<../Legacy Components/F1 Code>), which contains an commented version describing the process in detail, and the newer compiled version in "myprog". The two programs differ slightly in register use and the latter uses BNEs for unconditional branching instead of BEQs however should function exactly the same. 
