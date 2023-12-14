@@ -1,8 +1,10 @@
 # Testing the F1 Program
 
-## You can simulate the CPU and run the F1 program following these steps. 
+Please clone and open this repository in VSCode. 
 
-1. Connect Vbuddy to WSL and ensure that the correct [USB Port](vbuddy.cfg) is written into the config file (typically /dev/ttyUSB0)
+## You can simulate the CPU and run the F1 program following these steps
+
+1. Connect Vbuddy to WSL and ensure that the correct USB port is specified in the [config file](vbuddy.cfg) (typically /dev/ttyUSB0).
 
 2. Right click on the "F1_Test" folder to open an integrated terminal and run the following shell script.
 
@@ -11,7 +13,7 @@ $ ./doit.sh
 ```
 3. When the program begins, pressing VBuddy's rotary encoder button will initiate the F1 light sequence once. The light sequence can be run many times, and each instance will have a random turnoff delay when all LEDs are on.
 
-4. The full waveform vcd file "top.vcd" will be generated in "F1_Test"
+4. The full waveform vcd file "top.vcd" will be generated in "F1_Test".
 
 ## Notes
 
