@@ -30,7 +30,7 @@
 <div id="ALU">
 
 ## ALU  ##
-Construction of [ALU.sv](#https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Legacy%20Components/RMAD/ALU.sv) was the first thing that I set out to do in this project. In theory it was simple, to use a select signal to decide the operation to be done on the two input signals.<br /> 
+Construction of [ALU.sv](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Legacy%20Components/RMAD/ALU.sv) was the first thing that I set out to do in this project. In theory it was simple, to use a select signal to decide the operation to be done on the two input signals.<br /> 
 Here is a table of the select signal (ALUCtrl) and the corresponding operation it would perform:
 
 |  ALUCtrl  | Operation | 
