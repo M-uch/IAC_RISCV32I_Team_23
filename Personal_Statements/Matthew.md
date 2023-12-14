@@ -60,12 +60,13 @@ Testing of these two mux modules was done with [Mux_tb.cpp](#INCLUDELINK) and [M
 <div id="RegisterFile">
 
 ## Register File ##
+This RAM file stores the value of a register using its address and outputs the values through to the execution stage (or just the ALU and a mux for the single-cycle CPU). I tested the register with [RegFile_tb.cpp](ADDLINK).
 
 <div id="RMAD">
 
 ## RMAD ##
 The RMAD module is a top file module for the regfile, muxes, ALU and data memory that I created. The point of this file was to make it easier for Alex to write the top module for the single-cycle CPU by reducing the number of connections he needed to deal with. The RMAD module got scrapped when we began the pipelining stage because the CPU got split into stages that the RMAD module was not able to incorporate. Although it wasn't used in the pipelined CPU, it was still of use in the single-cycle CPU.
-Testing the RMAD module was not done as rigorously as some of my other modules due to the large number of inputs, but some testing was done using [RMAD_tb.cpp](#INCLUDE LINK).
+Testing the RMAD module was not done as rigorously as some of my other modules due to the large number of inputs, but some testing was done using [RMAD_tb.cpp](#INCLUDELINK).
 
 <div id="HazardDetectionUnit">
 
@@ -88,7 +89,7 @@ For forwarding, this is the relevant code:
     else if ((Rs2E == RdW) && (RegWriteW) && (Rs2E!=0))     ForwardBE = 1;
     else                                                    ForwardBE = 0;
 ```
-This section of code compares the registers that are being used in the execute phase to the registers that will be written to in the memory and writeback stage (with memory stage taking prioity as this stage holds a newer value of the register). Once it checks if forwarding from the memory or writeback stage is required, it uses ForwardAE and ForwardBE to control a three input mux in the execute phase. This three input mux decides which register values is inputted into the ALU. Forwarding cannot happen if the register value is 0 as this is the zero register.
+This section of code compares the registers that are being used in the execute phase to the registers that will be written to in the memory and writeback stage (with memory stage taking prioity as this stage holds a newer value of the register). Once it checks if forwarding from the memory or writeback stage is required, it uses ForwardAE and ForwardBE to control three input muxes in the execute phase. These three input muxes decide which register values is inputted into the ALU. Forwarding cannot happen if the register value is 0 as this is the zero register (a constant register).
 
 For stalling, this is the relevant code:
 
@@ -112,39 +113,50 @@ PCSrcE determines if a jump or a branch instruction is taking place, if it's hig
 <div id="PipelineRegisters">
 
 ## Pipeline Registers ##
-Between each of the pipeline stages, four pipeline registers were installed so that the CPU could process multiple instructions at once. These registers were made compatible with the hazard unit to solve problems caused by data hazard and control hazard. In each bullet point, I explain how every register was incorporated with the hazard unit:
+Between each of the pipeline stages, four pipeline registers were installed so that the CPU could process multiple instructions at once. These registers were made compatible with the hazard unit to solve problems caused by data hazard and control hazard. Without the addition of the hazard unit, these pipeline registers are simple d-type registers that push the inputs to the output on every clock rising edge. The additions made to the registers to account for hazard handling is listed below:
 
-- Fetch To Decode:
-- Decode To Execute: a reset was added for when a flush was enabled.
+- Fetch To Decode: An enable was added so the register can be stalled and a clear was added so the register can be flushed.
+- Decode To Execute: A clear was added for when a flush was enabled.
 - Execute to Memory: No changes required.
 - Memory to Writeback: No changed required.
 
 <div id="ExecuteStageFile">
 
 ## Execute Stage File ##
+This stage file (like the other stage files) was created to simplify the top file and help debug issues. In this stage file, everything in the execute stage was written into it including the ExecuteToMemory pipeline register.
 
 <div id="MemoryStageFile">
 
 ## Memory Stage File ##
+This stage file serves the same function as the Execute stage file but with the exception of containing the Memory stage components and MemoryToWriteback register.
 
 <div id="WritebackStageFile">
 
 ## Writeback Stage File ##
+This stage file serves the same function as the Execute stage file but with the exception of containing the Writeback stage components.
 
 <div id="Debugging">
 
 ## Debugging ##
-This entailed fixing errors
+When the construction of the pipelined-CPU was complete, debugging issues was essential. Alex and I worked together on this as we had both made/contributed to the stage and top files. At first it was mostly syntax and compiler errors that arose but because of the error list provided by the compiler, these were easy to fix. <br />
+Once the compiler was able to run without any errors, the CPU still didn't work. When we ran the f1 program, VBuddy would momentarily display a 1 on the TFT display before going back to 0. After using VCD waveform viewer, we found that the FetchToDecode register was clearing all output values once A0 (the displayed register) turned to 0. This was weird because the clear input was never going high. After some thought and testing, I realised that the clear signal was being controlled by signals that were synchronous with the clock, meaning the clear signals were also synchonous with the clock. This is important because the pipeline registers were written to have an asynchrnous clear. Once I changed the FetchToDecode and DecodeToFetch files to be synchronous, the f1 program began running properly. We also tested the PDF programs which also ran without error.
 
 <div id="Mistakes">
 
 ## Mistakes ##
+When I created the Pipeline-Processor branch on the git repository, I accidentaly cloned all the files on the main branch over to the new branch. This was not a major issue as we only needed to delete the cloned files but it was annoying because the branch already had many commits from the main branch.(The first commit on the Pipeline-Processor branch was "Commit Hazard Unit"). <br />
+When creating the pipeline registers, I made the registers with an asynchronous clear signal which became a problem when testing the pipelined-CPU. This was a very easy fix as all I had to do was make the registers synchronous.<br />
+When I made the ALU, I coded the zero signal incorrectly. When Alex and Raymond began debugging the single-cycle CPU, they found that the zero signal was not outputting what it was meant to output. Alex fixed the ALU by making the zero signal go high whenever ALUResult was zero. He also shortened it by using a case statement as opposed to multiple if statements.<br />
+When I created the Data memory, I hadn't include byte addressing, this became a problem when testing the PDF programs. Raymond added everything that was missing to the Data Memory file, this included a data memory to load to and little endian storage.
 
 <div id="Learnt">
 
 ## What I've learnt ##
+I have learnt how to use GitHub beyond simply cloning repositories as I can now create branches, create a github repo (I'm not the one who made the teams repo but I still learnt how to via observational learning) and how to push and pull commits. My knowledge and skills in using RISV and System Verilog has become more in-depth.
 
 <div id="Improvements">
 
 ## If I Did It Again ##
-
+If I did it again, I would've made sure to attempt to fix all my mistakes myself. When the ALU and Data Memory mistakes were found, I had moved onto the pipeline stage whilst Alex and Raymond were debugging the CPU which left it to them to fix it. <br />
+With my new skills using github, I would take more advantage of branching because it was very useful when seperating folders. <br />
+Completing the data memory cache challenge would've been desirable but due to a time constraint, we weren't able to complete it.
