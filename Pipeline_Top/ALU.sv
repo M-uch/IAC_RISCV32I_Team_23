@@ -19,7 +19,7 @@ always_comb begin
         3'b000: ALU_Result = ALUop1 + ALUop2; 
         3'b001: ALU_Result = ALUop1 - ALUop2; 
         3'b010: ALU_Result = ALUop1 << ALUop2; 
-        3'b011: ALU_Result = 32'bx;
+        3'b011: ALU_Result = ALUop2; // Select Input 2 for LUI type
         3'b100: ALU_Result = ALUop1 ^ ALUop2; 
         3'b101: ALU_Result = ALUop1 >> ALUop2;      
         3'b110: ALU_Result = ALUop1 | ALUop2;    

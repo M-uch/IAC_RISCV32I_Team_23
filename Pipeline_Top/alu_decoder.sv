@@ -71,7 +71,7 @@ always_comb begin
         end
 
         Type_U_LUI: begin     
-            alu_ctrl = 3'b010; 
+            alu_ctrl = 3'b011; 
             a_type = 1'bx;                                // assuming need to do sll
         end
 
