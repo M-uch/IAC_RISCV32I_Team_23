@@ -20,7 +20,7 @@ int main(int argc, char **argv, char **env) {
  
   // init Vbuddy
   if (vbdOpen()!=1) return(-1);
-  vbdHeader("PDF: Triangle");
+  vbdHeader("PDF");
   vbdSetMode(0); 
 
   top->clk = 0;
@@ -36,7 +36,7 @@ int main(int argc, char **argv, char **env) {
       top->eval ();
     }
 
-    if((top->A0 != 0)){ // starts plotting after an output is detected (skips vbuddy while still initialising PDF)
+    if((top->A0 != 0)){
       plot = 1;
     } 
 

@@ -13,11 +13,12 @@ module DataMemory #(
 // 7:0 set as each address holds 8 bits
 logic [7:0] data_array [2**17-1:0]; // set max address to 1FFFF as shown in memory map 
 
-// load data memory 
+/* load data memory UNUSED IN F1 PROGRAM 
 initial begin
     $display("loading Data Memory.");
-    // $readmemh("triangle.mem", data_array, 32'h00010000, 32'h0001FFFF);
+    $readmemh(".mem", data_array, 32'h00010000, 32'h0001FFFF);
 end;
+*/
 
 // write input
 always_ff @(posedge clk) begin
