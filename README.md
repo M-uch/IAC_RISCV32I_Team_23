@@ -81,6 +81,8 @@ Various components could be pulled from lab 4 and reused in the project with add
 
 **Modified Single Cycle CPU Diagram**
 
+![Alt text](Personal_Statements/src/Top_Abstracted.png)
+
 the following tasks needed to completed to finish the first stage of the project:
 
 - Writing a f1 program in assembly and converting to it's little endian machine code equivalent 
@@ -89,6 +91,8 @@ the following tasks needed to completed to finish the first stage of the project
 - Implementing additional control signals to the control unit for the JAL instructions required and store load instructions
 - Adding components to allow for jumps (storing the RET address and returning to respective address on RET)
 - Implementing a trigger that can be externally changed through Vbuddy to start the f1 light sequence on demand
+
+**For detailed explanations of work see individual statements**
 
 ## Evidence ##
 
@@ -103,21 +107,31 @@ Below are the tests for the provided signal data:
 
 https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/70d67e01-1402-4487-a6f4-13e8fe51c50d
 
+![Alt text](Test_Evidence/vcd_waveforms/sine.png)
+
 2. Triangle wave - triangle.mem:
 
 https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/03f22519-758b-468f-bdb6-fa98026f6996
+
+![Alt text](Test_Evidence/vcd_waveforms/Triangle.png)
 
 3. Noise signal with gaussian distribution - gaussian.mem:
 
 https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/92d7c906-4bcf-46a5-abcd-91c0d0818510
 
+![Alt text](Test_Evidence/vcd_waveforms/Gaussian.png)
+
 4. Noisy sine wave - noisy.mem:
 
 https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/a66fb50a-68e7-4e3f-a972-f938b1e35a6e
 
+![Alt text](Test_Evidence/vcd_waveforms/Noisy.png)
+
 # 2. **Pipelined RISCV-32I**
 
 For files and CPU see [Pipeline Processor Branch](https://github.com/M-uch/IAC_RISCV32I_Team_23/tree/Pipeline-Processor).
+
+This branch contains all pipeline related work. Including the rtl source, and test folders for F1 and PDF programs.
 
 ## Pipeline Structure ##
 
