@@ -1,5 +1,5 @@
 # IAC-RISC-V-32I-CPU-Team-23
-Implementing a 32 bit RISCV-I instruction set CPU used to run a F1 light simulation, with additional versions which implement pipelining and data caching.
+Implementing a 32 bit RISCV-I instruction set CPU used to run an F1 light simulation, with an additional version which implements pipelining.
 
 **Group Details**
 
@@ -35,7 +35,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Testbench               |     M     |          |           |        |
 | Debugging               |     x     |          |           |   x    |
 | **Pipelining Design**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
-| Pipeline Registers      |           |          |     M     |    x   |
+| Pipeline Registers      |           |          |     M     |        |
 | Hazard Detection Unit   |           |          |     M     |        |
 | Top level sv            |           |          |     x     |    M   |
 | Fetch Stage             |           |          |           |    M   |
@@ -50,14 +50,15 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 
 # Repository Organisation
 
-The decision was made to work within a branch for each version of the CPU, with single cycle and pipelining being seperate branches. 
-- Reduced management due to branch merging and maintenance
-- ensures that all team members are working with the newest version of the project
+The decision was made to work within a branch for each version of the CPU, with single cycle and pipelining being seperate branches. <br/>
+This benefited us by:
+- reducing management due to branch merging and maintenance
+- ensuring that all team members are working with the newest version of the project
 - ease of access to all resources and work
 
-Individual work on components and tests on versions each CPU were created in separate folders to make them distinguishable, and components could be copied and tested with others in their own folders when needed.
+Individual work on components and tests with each version of the CPU were created in separate folders. By doing this, components could easily be copied and tested by others in their own folders when needed.
 
-to avoid overlap and accidental removal of work when committing, members would individually work on folders and notify others if jointly working in one, a git pull would be run before starting a work session, with all changes being committed upon finishing. 
+to avoid overlap and accidental removal of work when committing, members would individually work on folders and notify others if jointly working in one. A git pull would be run before starting a work session, with all changes being committed upon finishing. 
 
 # Overview of CPU Models
 
@@ -83,12 +84,12 @@ Various components could be pulled from lab 4 and reused in the project with add
 
 ![Alt text](Personal_Statements/src/Top_Abstracted.png)
 
-the following tasks needed to completed to finish the first stage of the project:
+the following tasks needed to be completed to finish the first stage of the project:
 
-- Writing a f1 program in assembly and converting to it's little endian machine code equivalent 
+- Writing an f1 program in assembly and converting to it's little endian machine code equivalent 
 - Adding the data memory component and it's respective multiplexer (including byte sized addressing)
 - Implementing additional operations to the ALU
-- Implementing additional control signals to the control unit for the JAL instructions required and store load instructions
+- Implementing additional control signals to the control unit for the JAL instructions and the store load instructions
 - Adding components to allow for jumps (storing the RET address and returning to respective address on RET)
 - Implementing a trigger that can be externally changed through Vbuddy to start the f1 light sequence on demand
 
@@ -149,7 +150,7 @@ Below is a diagram detailing the abstracted scope of the top file:
 
 ## Pipeline Performance ## 
 
-This was measured by collecting the start cycle - when we first start recieving data:
+This was measured by counting the number of cycles from start to finish.
 
 | .mem File | Single Cycle | Pipelined |
 | :-------: | :----------: | :-------: |
@@ -158,9 +159,9 @@ This was measured by collecting the start cycle - when we first start recieving 
 | gaussian  | 123728       | 185695    |            
 | triangle  | 316028       | 474172    |            
 
-It was discovered that for our particular PDF program, pipelining is slower. This is due to the fact that the program frequently branches and jumps, this causes the hazard unit to frequent flush the pipeline registers, which increases the number of cycles it takes to run the program.
+It was discovered that for our particular PDF program, pipelining is slower. This is due to the fact that the program frequently branches and jumps and so this causes the hazard unit to frequently flush the pipeline registers, which increases the number of cycles it takes to run the program.
 
-For example, this can be seen in the following wavefile of noisy.mem:
+This can be seen in the following wavefile of noisy.mem:
 
 ![Noisy Wave Viewer](Test_Evidence/Pipeline_Performance/noisypipelinewaveform.png)
 
@@ -170,4 +171,8 @@ Left of the marker is the PDF program before plotting and to the right is during
 
 Caching was the next step to our processor design, we had planned to implement two-way associative cache on top of our pipeline processor with hazard handling. 
 
-however due to unforeseen cirumstances and delays, we decided that it would be best to focus on ensuring that the quality of our current work was to a good standard. 
+However, due to unforeseen cirumstances and delays we decided that it would be best to focus on ensuring that the quality of our current work was to a good standard. 
+
+#
+
+This project both used information and followed the same structure as the CPU from [Digital Design and Computer Architecture: RISC-V Edition](https://www.vlebooks.com/Product/Index/2432539?page=0&startBookmarkId=-1) by Harris, Sarah L.
