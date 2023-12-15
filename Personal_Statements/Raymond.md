@@ -33,7 +33,7 @@ I used the VSCode extension [RISC-V Venus Simulator](https://marketplace.visuals
 
 Stepping through a version of the F1 program during the debugging process. Current instruction highlighted in yellow, registers located on the left hand side, registers that have recently updated are highlighted as they change.
 
-the subsequent program was then compiled using the shell script provided in the project brief, which generated a hexadecimal array where instructions are in little endian format. Each address would represent a byte of the 32 bit instruction, where the least significant address corresponds to the least significant byte, and address+3 would represent the most significant byte.
+The subsequent program was then compiled using the shell script provided in the project brief, which generated a hexadecimal array where instructions are in little endian format. Each address would represent a byte of the 32 bit instruction, where the least significant address corresponds to the least significant byte, and address+3 would represent the most significant byte.
 
 ## Additional Changes
 
@@ -69,7 +69,7 @@ see [DataMemory.sv](<../Legacy Components/RMAD with byte addressing/DataMemory.s
 
 Writing to the data memory is controlled by the signals WE (Write enable) and ADTP (Addressing type). 
 
-ADTP = 0 writes a full 32 bit value into the memory using the same method as reading, bits 0~7 are written into the input address, 8~15 into address+1 etc.
+ADTP = 0 writes a full 32 bit value into the memory using the same method as reading, bits 0:7 are written into the input address, 8:15 into address+1 etc.
 
 When ADTP = 1, this specifies byte addressing, the data memory will only write into the exact address the first 8 bits of input write data. When reading the value from the exact address is output after being extended with 0s to the left giving a 8 bit value extended to 32 bits.
 
@@ -133,10 +133,10 @@ An oversight was made when testing the program with different memories loaded wa
 
 When running the program with each data memory they would take a varying number of cycles to completely initialise before output is displayed:
 
-sine.mem -> 30000+ cycles
-noisy.mem -> 200000+ cycles
-gaussian.mem -> 120000+ cycles
-triangle.mem -> 310000+ cycles
+- sine.mem -> 30000+ cycles
+- noisy.mem -> 200000+ cycles
+- gaussian.mem -> 120000+ cycles
+- triangle.mem -> 310000+ cycles
 
 When plotting output onto Vbuddy's display this would reduce the number of cycles per second to < 100, meaning to see any relevant output the simulation would have had to run for a minimum of 5 minutes. 
 
@@ -148,20 +148,20 @@ To fix this problem I reprogrammed the test bench to only begin plotting to VBud
 
 This section briefly covers areas of work that I assisted in, but did not manage directly.
 
-**1. Jump & RET muxes:**
-   The jump and RET muxes were something that I had initially mentioned during the development of the single cycle CPU, as they were required to correctly store and load a return address during J type instructions. They could be implemented as a set of 2, 2 input multiplexers with a control signals as a select. Discussion eventually led to the decision to integrate the JUMP mux into the result mux where PC+4 would be an input to write into the registers given the correct control signals, and the RET mux would be implemented separately to load register Ra into the PC on RETs. Matthew took on the task of programming them into his RMAD top level file.
+**Jump & RET muxes:**
+The jump and RET muxes were something that I had initially mentioned during the development of the single cycle CPU, as they were required to correctly store and load a return address during J type instructions. They could be implemented as a set of 2, 2 input multiplexers with a control signals as a select. Discussion eventually led to the decision to integrate the JUMP mux into the result mux where PC+4 would be an input to write into the registers given the correct control signals, and the RET mux would be implemented separately to load register Ra into the PC on RETs. Matthew took on the task of programming them into his RMAD top level file.
    
-**2. Trigger input to CPU for F1 program:**
-   To include a manual trigger for the f1 program I modified the register block so that it would take an external input and write directly into T0 (register x5), this register is then used to determine when to initiate the F1 light sequence in the program. Using the Vbuddy flag state in one shot mode proved as sufficient input for t0.
+**Trigger input to CPU for F1 program:**
+To include a manual trigger for the f1 program I modified the register block so that it would take an external input and write directly into T0 (register x5), this register is then used to determine when to initiate the F1 light sequence in the program. Using the Vbuddy flag state in one shot mode proved as sufficient input for t0.
 
-**3. Pipelining debugging and testing:**
-   Matthew and Alex did most of the programming for the pipelining stage, as my laptop broke down suddenly during the start of this stage. I helped mainly by giving an extra opinion during the debugging stage as they inspected the VCD files generated during the tests. The difference in performance between the single cycle and pipelined processors were also noted by me and Alex, where it was discovered that the pipelined processor performed much slower than the single cycle. This was due to the frequent flushing of the pipeline registers as both the F1 and PDF programs used jumps and branches very frequently. Final tests were done as a team before committing rtl and final test folders for each of the processor versions.
+**Pipelining debugging and testing:**
+Matthew and Alex did most of the programming for the pipelining stage, as my laptop broke down suddenly during the start of this stage. I helped mainly by giving an extra opinion during the debugging stage as they inspected the VCD files generated during the tests. The difference in performance between the single cycle and pipelined processors were also noted by me and Alex, where it was discovered that the pipelined processor performed much slower than the single cycle. This was due to the frequent flushing of the pipeline registers as both the F1 and PDF programs used jumps and branches very frequently. Final tests were done as a team before committing rtl and final test folders for each of the processor versions.
 
-**4. Additional implementation of instructions:**
-   For additional completeness of our CPU, Alex and I decided to implement and test the LUI instruction afterwards which was originally omitted in the F1 and PDF programs. This involved an addition of an ALU function and modification of it's respective control signals. 
+**Additional implementation of instructions:**
+For additional completeness of our CPU, Alex and I decided to implement and test the LUI instruction afterwards which was originally omitted in the F1 and PDF programs. This involved an addition of an ALU function and modification of it's respective control signals. 
 
-**5. Repository Organisation:** 
-   Organisation of the repository and it's branches were discussed frequently between the team as everyone had partial responsibility. This includes the group statement and various other descriptions in the repo such as the test instructions.
+**Repository organisation:** 
+ Organisation of the repository and related branches were discussed frequently between the team as everyone had partial responsibility. This includes the group statement and various other descriptions in the repo such as the test instructions.
 
 # Challenges during the Project
 

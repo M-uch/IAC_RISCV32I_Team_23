@@ -12,7 +12,7 @@ Please clone and open this repository in VSCode.
 $ ./doit.sh
 ```
 
-**Verilator warnings may occur, this is due to some partially unused inputs in the CPU. Please configure verilator to bypass these warnings, otherwise the script will exit due to these warnings**
+**Verilator warnings may occur, this is due to some partially unused inputs in the CPU. This should not impact the test in any way.**
 
 3. When the program begins, pressing VBuddy's rotary encoder button will initiate the F1 light sequence once. The light sequence can be run many times, and each instance will have a random turnoff delay when all LEDs are on. 
 
