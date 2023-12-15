@@ -30,7 +30,7 @@
 <div id="ALU">
 
 ## ALU  [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/1cdfe83262b019dd869af057e12a288df94841f4)
-Construction of the ALU was the first thing that I set out to do in this project. In theory it was simple, to use a select signal to decide the operation to be done on the two input signals.<br /> 
+Construction of the ALU was the first thing that I set out to do in this project. In theory it was simple, to use a select signal to decide the operation to be done on the two input signals.<br />
 Here is a table of the select signal (ALUCtrl) and the corresponding operation it would perform:
 
 |  ALUCtrl  | Operation | 
@@ -67,7 +67,11 @@ This register may be referred to as RegFile. This RAM file writes to a single re
 
 ## RMAD [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/1cdfe83262b019dd869af057e12a288df94841f4)
 The RMAD module is a top file module for the regfile, muxes, ALU and data memory. The point of this file was to make it easier for Alex to write the top module for the single-cycle CPU by reducing the number of connections he needed to deal with. The RMAD module got scrapped when we began the pipelining stage because it was spread across multiple pipeling stages and so was not worth the effort of including it in the top file. Although it wasn't used in the pipelined CPU, it was still of use in the single-cycle CPU.
-Testing the RMAD module was not done as rigorously as some of the other modules due to the larger number of inputs, but some testing was done using [RMAD_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/65b7d4d855dc4af01b430ae197592c502140f43f). As new components and signals were being created, RMAD got changed frequently. A commit with one of these changes: ([Added ra and return mux](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dec7dde3efe5caa388fb73671f319b11fdae7117)).
+Testing the RMAD module was not done as rigorously as some of the other modules due to the larger number of inputs, but some testing was done using [RMAD_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/65b7d4d855dc4af01b430ae197592c502140f43f). As new components and signals were being created, RMAD got changed frequently. This mux was one of the changes: ([Added ra and return mux](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dec7dde3efe5caa388fb73671f319b11fdae7117)).
+
+![RMAD](src/RMAD.jpg)
+<br/>
+This diagram of RMAD was what it looked like initially before additional wires and components were added to it.
 
 <div id="HazardDetectionUnit">
 
@@ -126,17 +130,26 @@ All the testbenches that were used to test these pipelines are all on this [comm
 <div id="ExecuteStageFile">
 
 ## Execute Stage File [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dd7c29dd4a231a0fb5f6df8a1a92be81047aa0e5)
-This stage file (like the other stage files) was created to simplify the top file and help debug issues. The execute stage is responsible for selecting the immediate or register value, calculating the new value of the Rd register, calculating the target PC value and this section is also where forwarding takes place. Modules included in this file are: ALU, adder, two input mux, 2 three input muxes and the ExecuteToMemory pipeline register. No testbench was made for the stage files as we went straight to debugging the whole CPU once we completed the stages and top.
+This stage file (like the other stage files) was created to simplify the top file and help debug issues. The execute stage is responsible for selecting the immediate or register value, calculating the new value of the Rd register, calculating the target PC value and selecting the return address or an offset value. This section is also where forwarding takes place. Modules included in this file are: ALU, adder, 2 two input mux, 2 three input muxes and the ExecuteToMemory pipeline register. The PCSrcE logic that was originally in the PC has been moved to the execute stage. No testbench was made for the stage files as we went straight to debugging the whole CPU once we completed the stages and top.<br/>
+![Execute Stage](src/ExecuteStageSmaller.jpg)
+<br/>
+![Execute Stage Mux](src/ExecuteStageMuxSmaller.jpg)
+<br/>
+The mux with the PCTargetE input replaces the line from PCTargetE to the Fetch mux.
 
 <div id="MemoryStageFile">
 
 ## Memory Stage File [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/c3cbb31a5ead8233989c6e73732a5ee10b9ad78f)
 The two components in this stage are the data memory and MemoryToWriteback pipeline register. The function of this stage is to write to memory and load from memory.
 
+![Memory Stage](src/MemoryStageSmaller.jpg)
+
 <div id="WritebackStageFile">
 
 ## Writeback Stage File [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/c3cbb31a5ead8233989c6e73732a5ee10b9ad78f)
 The single component in this stage is a three input mux which decides if the output is from an arithmetic instruction, memory instruction or a JAL instruction.
+
+![Writeback Stage](src/WritebackStageSmaller.jpg)
 
 <div id="Debugging">
 
@@ -152,7 +165,7 @@ Once the compiler was able to run without any errors, the CPU still didn't work.
 When I created the Pipeline-Processor branch on the git repository, I accidentally cloned all the files on the main branch over to the new branch. This was not a major issue as we only needed to delete the cloned files but it was annoying because the branch already had many commits to it.(The first commit on the Pipeline-Processor branch was ([Commit Hazard Unit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/e1388c9698eadfbd5aa9c9ee080bccdbd89d3ff4))). <br />
 When creating the pipeline registers, I made the registers with an asynchronous clear signal which became a problem when testing the pipelined-CPU.<br />
 When I made the ALU, I coded the zero signal incorrectly. When Alex and Raymond began debugging the single-cycle CPU, they found that the zero signal was not outputting what it was meant to output. Alex fixed the ALU by making the zero signal go high whenever ALUResult was zero (as I should have done at the beginning). He also shortened it by using a single case statement as opposed to multiple if statements. Here is Alex's [commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/53c47d8b04ee0b69a6d64a546f77094fc5240d94).<br />
-When I created the Data memory, I hadn't include byte addressing, this became a problem when testing the PDF programs. Raymond added everything that was missing to the Data Memory file, this included little endian storage. Here is Raymond's [commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/d788471a35f995b33250cfeadc5d643fedc8b1b7).
+When I created the Data memory, I hadn't included byte addressing, this became a problem when testing the PDF programs. Raymond added everything that was missing to the Data Memory file, this included little endian storage. Here is Raymond's [commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/d788471a35f995b33250cfeadc5d643fedc8b1b7).
 
 <div id="Learnt">
 
