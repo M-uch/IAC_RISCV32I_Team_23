@@ -74,17 +74,22 @@ Various components could be pulled from lab 4 and reused in the project with add
 
 **Lab 4 CPU Diagram**
 
-![Alt text](<Pictures/Pasted image 20231207112136.png>)
+![Alt text](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/Pasted%20image%2020231207112136.png)
 
 **Project Brief Diagram**
 
-![Alt text](<Pictures/Pasted image 20231207111708.png>)
+![Alt text](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Pictures/Pasted%20image%2020231207111708.png)
 
-**Modified Single Cycle CPU Diagram**
+## Our Design: ##
 
-![Alt text](Personal_Statements/src/Top_Abstracted.png)
+**Abstracted 'Top' CPU Diagram**
 
-the following tasks needed to be completed to finish the first stage of the project:
+![Alt text](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Personal_Statements/src/Top_Abstracted.png)
+
+**Unabstracted CPU Diagram**
+
+![Alt text](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Personal_Statements/src/Top_UnAbstracted.png)
+Tthe following tasks needed to be completed to finish the first stage of the project:
 
 - Writing an f1 program in assembly and converting to it's little endian machine code equivalent 
 - Adding the data memory component and it's respective multiplexer (including byte sized addressing)
@@ -108,25 +113,25 @@ Below are the tests for the provided signal data:
 
 https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/70d67e01-1402-4487-a6f4-13e8fe51c50d
 
-![Alt text](Test_Evidence/vcd_waveforms/sine.png)
+![Alt text](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Test_Evidence/vcd_waveforms/sine.png)
 
 2. Triangle wave - triangle.mem:
 
 https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/03f22519-758b-468f-bdb6-fa98026f6996
 
-![Alt text](Test_Evidence/vcd_waveforms/Triangle.png)
+![Alt text](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Test_Evidence/vcd_waveforms/Triangle.png)
 
 3. Noise signal with gaussian distribution - gaussian.mem:
 
 https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/92d7c906-4bcf-46a5-abcd-91c0d0818510
 
-![Alt text](Test_Evidence/vcd_waveforms/Gaussian.png)
+![Alt text](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Test_Evidence/vcd_waveforms/Gaussian.png)
 
 4. Noisy sine wave - noisy.mem:
 
 https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/a66fb50a-68e7-4e3f-a972-f938b1e35a6e
 
-![Alt text](Test_Evidence/vcd_waveforms/Noisy.png)
+![Alt text](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Test_Evidence/vcd_waveforms/Noisy.png)
 
 # 2. **Pipelined RISCV-32I**
 
@@ -146,7 +151,7 @@ We decided to split the pipeline into 5 stages:
 
 Below is a diagram detailing the abstracted scope of the top file:
 
-![Alt text](Personal_Statements/src/Top_Abstracted_P.png)
+![Alt text](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Personal_Statements/src/Top_Abstracted_P.png)
 
 ## Pipeline Performance ## 
 
@@ -163,7 +168,7 @@ It was discovered that for our particular PDF program, pipelining is slower. Thi
 
 This can be seen in the following wavefile of noisy.mem:
 
-![Noisy Wave Viewer](Test_Evidence/Pipeline_Performance/noisypipelinewaveform.png)
+![Noisy Wave Viewer](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/Test_Evidence/Pipeline_Performance/noisypipelinewaveform.png)
 
 Left of the marker is the PDF program before plotting and to the right is during plotting. It can be seen clearly that flushes occur very frequently, therefore explaining the loss in performance for our particular program.
     
