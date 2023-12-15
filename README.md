@@ -18,7 +18,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | :---------              | :-------: | :------: | :-------: | :----: |
 | Group Statement         |     x     |          |           |   x    |
 | F1 Assembly Code        |     M     |          |           |        |
-| ALU                     |           |          |     M     |   x    |   
+| ALU                     |     x     |          |     M     |   x    |   
 | Control Unit            |     x     |    x     |           |   M    |   
 | Data Memory             |           |          |     M     |        |     
 | Instruction Memory      |     M     |          |           |        |
@@ -43,7 +43,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Execute Stage           |           |          |     M     |    x   |
 | Memory Stage            |           |          |     M     |    x   |
 | Writeback Stage         |           |          |     M     |    x   |
-| Debugging               |           |          |     x     |    x   |
+| Debugging               |     x     |          |     x     |    x   |
 
 
 *Main Contributor = M*   

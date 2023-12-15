@@ -1,16 +1,16 @@
 # Overview
 This statement outlines my contributions to the group project and the development of a RISC-V 32I CPU with single cycle and also pipelining capabilities. The statement is divided into the following sections.
 
-1. Writing the F1 Program in Assembly
-2. Instruction Memory
-3. Data Memory RAM with Byte Addressing
-4. Immediate Extension Module
-5. Debugging of the F1 Program in Single Cycle
-6. Debugging of the Reference PDF Program in Single Cycle
-7. Miscellaneous Contributions 
-8. Challenges during the Project
-9. Conclusions
-10. Significant Commits
+1. [Writing the F1 Program in Assembly](#writing-the-f1-program-in-assembly)
+2. [Instruction Memory](#instruction-memory)
+3. [Data Memory RAM with Byte Addressing](#data-memory-ram-with-byte-addressing)
+4. [Immediate Extension Module](#immediate-extension-module)
+5. [Debugging of the F1 Program in Single Cycle](#debugging-of-the-f1-program-in-single-cycle)
+6. [Debugging of the Reference PDF Program in Single Cycle](#debugging-of-the-reference-pdf-program-in-single-cycle)
+7. [Miscellaneous Contributions](#miscellaneous-contributions)
+8. [Challenges during the Project](#challenges-during-the-project)
+9. [Conclusions](#conclusions)
+10. [Significant Commits](#significant-commits)
 11. [Other Notes](#other-notes)
 
 # Writing the F1 program in Assembly
@@ -83,7 +83,7 @@ The immediate extension module is responsible for reconstructing the correct imm
 
 This was a relatively simple task of concatenation and checking the most significant bit following the structure of the RISCV instruction set.
 
-![Alt text](<Raymond Media/RISCV Instruction Architecture.png>)#
+![Alt text](<Raymond Media/RISCV Instruction Architecture.png>)
 
 see [signextend.sv](<../Legacy Components/ImmExtend/signextend.sv>)
 
@@ -171,7 +171,7 @@ Various challenges were encountered during the duration of this project, which h
    
 2. The importance of having a consistent coding style across the whole project has become apparent, as inconsistent naming schemes for input and output of components make it much more difficult in long term development. As a project grows in complexity, having to revisit code to decipher it's function becomes increasingly tedious. This is even more important when working on a project with other team members, as each person's coding style will vary.
    
-3. Backing up data and ensuring you have a secondary workspace became a hard learned lesson when my laptop broke down becoming unusable (see Other Notes for more details). While I had lost no progress to my work on the project, it became delayed as I had no available computer to work with at them time, having to spend time to find a set up a new workstation as I had not prepared one prior.
+3. Backing up data and ensuring you have a secondary workspace became a hard learned lesson when my laptop broke down becoming unusable (see [Other Notes](#other-notes) for more details). While I had lost no progress to my work on the project, it became delayed as I had no available computer to work with at them time, having to spend time to find a set up a new workstation as I had not prepared one prior.
    
 4. Understanding of the different CPU components proved difficult due to each team member working with each specific area of the CPU led to greater individual understanding. However this meant that time needed to be spent for members to understand other components in details. To improve this issue I commented most of my work in detail to show it's function, allowing for others to understand without having to directly ask me.
 
@@ -215,7 +215,7 @@ This section contains a list of significant commits throughout the course of the
 - [Identified RET error during F1 debugging](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/ae9c4cfd89584dea31bf06fa51d39f54a047c1ab)
 - [Creation of data memory with byte addressing](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/d788471a35f995b33250cfeadc5d643fedc8b1b7)
 - [Finished debugging of pdf reference program](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/11709fd9baffa456e57ea438e04ece1cf6e36d16)
-- 11/12/2023 <- laptop breaks down
+- 11/12/2023 <- [laptop breaks down](#other-notes) 
 - [Implemented LUI for CPU](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/b0327bebfb90df647ddccbed06d670968e96cab2)
 - [Final tests for single cycle processor, created test and rtl folders](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/a1d91ced1c78deac3f780ced99d0a09fa51b694c)
 - [Final tests for pipelined processor, created test and rtl folders](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/7db3a10abaa5d22b8ef6bf5393b67fc23715c406)
