@@ -11,6 +11,9 @@ Please clone and open this repository in VSCode.
 ```bash
 $ ./doit.sh
 ```
+
+**Verilator warnings may occur, this is due to some partially unused inputs in the CPU. Please configure verilator to bypass these warnings, otherwise the script will exit due to these warnings**
+
 3. When the program begins, pressing VBuddy's rotary encoder button will initiate the F1 light sequence once. The light sequence can be run many times, and each instance will have a random turnoff delay when all LEDs are on. 
 
 4. The simulation will end when entering "q" into the terminal, or when it has run for 100000 cycles. The full waveform vcd file "top.vcd" will be generated in "F1_Test".
