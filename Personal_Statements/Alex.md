@@ -37,22 +37,22 @@
 
 ## The Control Unit ##
 
-The main methodology behind my CU design was to make the '.sv' files readbable and easy to debug. This would allow my team members to quickly interpret and thus inform their own design choices when they depended upon control signals from the CU.
+The main methodology behind my CU design was to make the '.sv' files readbable and easy to debug. This would allow my team members to quickly interpret and inform their own design choices when they depended upon control signals from the CU.
 
 The component design was split into **2 seperate modules**:
 
 1. The Main Decoder
 2. The ALU Decoder
 
-These components form design detailled in the diagram below:
+These components form the design detailed in the diagram below:
 
 ![CU Design Diagram](src/CU_Design.png)
 
-The CU has been decomposed as shown so that we can implement any instruction's appropriate ALU operations seperately from its control signals. Not only does this make the code clearer to read, but also it provides some interesting functionality, allowing us to combine R-Type and I-ALU type instructions using the same 'ALUOp' signal.
+The CU has been decomposed as shown so that we can implement any instruction's appropriate ALU operations seperately from its control signals. Not only does this make the code clearer to read, but also it allows us to combine R-Type and I-ALU type instructions using the same 'ALUOp' signal.
 
 **The Main Decoder:**
 
-Here is where the bulk of the signals are assigned, only excluding 'ALUCTRL' and 'ATYPE'. The assignment of these control signals are as follows:
+Here is where all signals excluding 'ALUCTRL' and 'ATYPE' are assigned, as shown below:
 
 | Instruction Type | RegWrite | ImmSrc | ALUSrc | MemWrite | ResultSrc | Branch | ALUOp | Jump | JumpSrc |
 | :--------------: | :------: | :----: | :----: | :------: | :-------: | :----: | :---: | :--: | :-----: |
@@ -97,9 +97,9 @@ end
 
 **The ALU Decoder:**
 
-Recieving the ALUOp signal from The Main Decoder, we can now assign the appropriate ALU operations to instructions. Due to our use of a limited set of instructions we can simply implement entire instruction types in a single line. We also combine the Type_R and Type_I_ALU instructions.
+Recieving the 'ALUOp' signal from The Main Decoder, we can now assign the appropriate ALU operations to instructions. Due to our use of a limited set of instructions we can implement entire instruction types in a single line. We also combine the Type_R and Type_I_ALU instructions.
 
-The table below details the 'ALUCtrl' and 'AType' signals based on the instruction type:
+The table below details the 'ALUCtrl' signal based on the instruction type:
 
 | Instruction Type | ALUCtrl | 
 | :--------------: | :-----: | 
@@ -174,9 +174,9 @@ Below is a table detailling what each control signal is responsible for:
 
 ## Top File ##
 
-Designing and construction of the Top file included a lot of debugging and house keeping. This meant solving errors and warnings here and there, those of note will be mentioned in the 'Testing/Debugging' and the 'ALU/Register File' section.
+Designing and construction of the Top file involved a lot of debugging and house keeping. Errors of note will be mentioned in the 'Testing/Debugging' and the 'ALU/Register File' section.
 
-Another consideration included in the top file was the naming convention of having all top signals in all captial letters. This was designed to make it easy to distinguish between the layers of the abstraction in the CPU and helped with out decomposition overall.
+I decided on the naming convention of having all top signals in all captial letters, making it easy to distinguish between the layers of the abstraction in the CPU and helped with out decomposition overall.
 
 Below is a diagram detailing the abstracted scope of the top file:
 
@@ -186,7 +186,7 @@ Below is a diagram detailing the abstracted scope of the top file:
 
 ## PC ##
 
-The PC was mostly unchanged from the design I implemented in Lab 4, however slight changes were made so that we could implement 'JALR' logic, this meant storing PC+4 when we perform a JAL instruction and then also allowing use of the PC_Target signal. This was used to implement a mux which chooses between PC_Target (on branches), or the value stored in Ra (on return instructions).
+The PC was mostly unchanged from the design I implemented in Lab 4, however changes were made so that we could implement 'JALR' logic, this meant storing PC+4 when we perform a JAL instruction and then also allowing use of the PC_Target signal outside the scope of the PC. This was used to implement a mux which chooses between PC_Target (on branches), or the value stored in Ra (on return instructions).
 
 Below are the changes:
 
@@ -237,7 +237,7 @@ These were 2 partial contributions during the development of the single cycle st
 
 1. **ALU**
 
-    I simply modified the structure of Matthew's ALU logic, changing it from if statements to a single case statement. Additionally I ammended the logic for the EQ O/P signal - we were having problems with this during the debugging stage, with respect to branching logic.
+    I modified the structure of Matthew's ALU logic, changing it from if statements to a single case statement. Additionally I ammended the logic for the EQ O/P signal - we were having problems with the branching logic while debugging.
 
     ```
         // Orginal Code:
@@ -288,7 +288,7 @@ These were 2 partial contributions during the development of the single cycle st
 
 2. **Register File**
 
-    During the debugging process we came across issues when performing the unconditional jump instruction in the reference program, where we would write to the zero register. This was therefore ammended with a small addition to the logic.
+    While debugging we found an issue with the unconditional jump instruction in the reference program, where we would write to the zero register. This was ammended with a small addition to the logic.
 
     ```
         // Orginal Code:
@@ -311,11 +311,11 @@ These were 2 partial contributions during the development of the single cycle st
 
 ## Top File / Structure (Pipelining) ##
 
-My pipeline structure would take the form of a top file connecting the 5 pipeline stages. Below is a diagram detailing this:
+My pipeline structure is arranged as a top file connecting the 5 pipeline stages. Below is a diagram detailing this:
 
 ![Abstracted Top File Pipelining](src/Top_Abstracted_P.png)
 
-The pipeline would be decomposed as follows:
+The pipeline is decomposed as follows:
 
 | Pipeline Stage | Modules Included | Stage Purpose |
 | :------------: | :--------------- | :------------ |
@@ -325,7 +325,7 @@ The pipeline would be decomposed as follows:
 | Memory Stage   | Data Memory | Read / Write to Data Memory |
 | Writeback Stage| Result Mux | Feedback CPU Result to Register File |
 
-Inside each stage is the pipeline register for the next stage, this means that that when it enters the next pipeline stage it will be a cycle later. This was by design so that connections could be made on top file easily, when it came to I/P signals to the hazard unit.
+Inside each stage is the pipeline register for the next stage, this means that that when it enters the next pipeline stage it will be a cycle later. This was by design so that connections could be made in the top file easily, e.g the I/P signals to the hazard unit.
 
 *Note that the Writeback stage does not include a pipeline register, it is simply a mux*
 
@@ -333,7 +333,7 @@ Inside each stage is the pipeline register for the next stage, this means that t
 
 ## Fetch Stage ##
 
-The Fetch Stage is responsible for outputting instructions for the rest of the pipeline. There were 2 modules which required changing (from the single-cycle versions) for implementation in the pipelined processor:
+The Fetch Stage is responsible for outputting instructions for the rest of the pipeline. There were 2 modules which required changing (from the single-cycle CPU) for implementation in the pipelined processor:
 
 1. **PC**
 
@@ -418,7 +418,7 @@ The Decode Stage is responsible for providing the control signals, register data
 
 1. **CU**
 
-    The Control Unit had to modified so that we would perform the appropriate logical operations to calculate 'PCSrc' (signal which defined our PC input) in the execute phase. This meant we had to change the I/O to now output the 'branch' and 'jump' signals.
+    The Control Unit had to modified so that we could perform the appropriate logical operations to calculate 'PCSrc' (signal which defined our PC input) in the execute phase. This meant we had to change the I/O to now output the 'branch' and 'jump' signals.
 
     ```
         // Original Code:
@@ -474,7 +474,7 @@ The Decode Stage is responsible for providing the control signals, register data
 
 2. **Register File**
 
-    The Register File also needed to be modified to perform its sequential logic on the falling edge rather than the rising edge. This is so we could allow for the the synchronous nature of the pipeline data moving 'downstream'(between pipeline stages), and would avoid unintentionally overwriting any important data.
+    The Register File also needed to be modified to perform its sequential logic on the falling edge rather than the rising edge. This allows for the the synchronous nature of the pipeline data moving 'downstream'(between pipeline stages), and would avoid unintentionally overwriting any important data.
 
     ```
         // Original Code:
