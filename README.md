@@ -19,7 +19,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Group Statement         |     x     |          |           |   x    |
 | F1 Assembly Code        |     M     |          |           |        |
 | ALU                     |     x     |          |     M     |   x    |   
-| Control Unit            |     x     |    x     |           |   M    |   
+| Control Unit            |     x     |          |           |   M    |   
 | Data Memory             |           |          |     M     |        |     
 | Instruction Memory      |     M     |          |           |        |
 | Imm Extender            |     M     |          |           |        |
@@ -45,7 +45,6 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Writeback Stage         |           |          |     M     |    x   |
 | Debugging               |     x     |          |     x     |    x   |
 
-
 *Main Contributor = M*   
 *Contribution = x*
 
@@ -60,13 +59,13 @@ Individual work on components and tests on versions each CPU were created in sep
 
 to avoid overlap and accidental removal of work when committing, members would individually work on folders and notify others if jointly working in one, a git pull would be run before starting a work session, with all changes being committed upon finishing. 
 
-# Summary of CPU Models
+# Overview of CPU Models
 
-1. **Single Cycle RISCV-32I**: CPU used to run the F1 light sequence program and reference programs provided, including jump instructions
+1. [**Single Cycle RISCV-32I**](#1-single-cycle-riscv-32i): CPU used to run the F1 light sequence program and reference programs provided, including jump instructions.
 
-2. **Pipelined RISCV-32I**: CPU with pipelining which improves performance by fetching instructions for multiple steps.
+2. [**Pipelined RISCV-32I**](#2-pipelined-riscv-32i): CPU with 5 stage pipelining which improves performance by staging instructions across multiple steps.
 
-3. **Data Caching RISCV-32I**: CPU with data caching which improves performance by storing frequently used data. 
+3. [**Caching RISCV-32I**](#3-caching-riscv-32i): CPU with pipelining and caching which improves performance by storing relavant data and instructions. 
 
 # 1. Single Cycle RISCV-32I: 
 
@@ -114,8 +113,6 @@ https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/92d7c906-4bcf-46a
 
 https://github.com/M-uch/IAC_RISCV32I_Team_23/assets/123762865/a66fb50a-68e7-4e3f-a972-f938b1e35a6e
 
-**Specific details on components can be found in the personal statements and each component folder**
-
 # 2. **Pipelined RISCV-32I**
 
 For files and CPU see [Pipeline Processor Branch](https://github.com/M-uch/IAC_RISCV32I_Team_23/tree/Pipeline-Processor).
@@ -130,7 +127,7 @@ We decided to split the pipeline into 5 stages:
 4. Memory
 5. Writeback
 
-Below is a diagram detailling the abstracted scope of the top file:
+Below is a diagram detailing the abstracted scope of the top file:
 
 INSERT DIAGRAM HERE
 
@@ -140,12 +137,12 @@ This was measured by collecting the start cycle - when we first start recieving 
 
 | .mem File | Single Cycle | Pipelined |
 | :-------: | :----------: | :-------: |
-| sine      | 56445        | 37562     |           
-| noisy     | 307475       | 204900    |            
-| gaussian  | 185695       | 123728    |            
-| triangle  | 474172       | 316028    |            
+| sine      | 37562        | 56445     |           
+| noisy     | 204900       | 307475    |            
+| gaussian  | 123728       | 185695    |            
+| triangle  | 316028       | 474172    |            
 
-We actually see that for our particular PDF program, pipelining is slower. This is due to the fact our program is small and performs frequenct branching and jumping, causing more frequenct flushes of our pipeline registers.
+It was discovered that for our particular PDF program, pipelining is slower. This is due to the fact that the program frequently branches and jumps, this causes the hazard unit to frequent flush the pipeline registers, which increases the number of cycles it takes to run the program.
 
 For example, this can be seen in the following wavefile of noisy.mem:
 
@@ -300,6 +297,8 @@ We decided to design our Pipelined processor into multiple modules:
     - ResultW
     - RegWriteW
     
-# 3. **Data Caching RISCV-32I**
+# 3. **Caching RISCV-32I**
 
-N/A
+Caching was the next step to our processor design, we had planned to implement two-way associative cache on top of our pipeline processor with hazard handling. 
+
+however due to unforeseen cirumstances and delays, we decided that it would be best to focus on ensuring that the quality of our current work was to a good standard. 
