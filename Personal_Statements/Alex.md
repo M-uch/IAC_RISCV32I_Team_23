@@ -14,7 +14,6 @@
 11. [Commit Evidence](#commits)
 12. [Conclusion](#conclude) 
 
-PUT IN CONTENTS TABLE AT THE END
 
 <div id ="contributions">
 

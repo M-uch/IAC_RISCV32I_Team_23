@@ -80,11 +80,16 @@ Various components could be pulled from lab 4 and reused in the project with add
 
 ![Alt text](<Pictures/Pasted image 20231207111708.png>)
 
-**Modified Single Cycle CPU Diagram**
+## Our Design: ##
+
+**Abstracted 'Top' CPU Diagram**
 
 ![Alt text](Personal_Statements/src/Top_Abstracted.png)
 
-the following tasks needed to be completed to finish the first stage of the project:
+**Unabstracted CPU Diagram**
+
+![ALt text](Personal_Statements/src/Top_UnAbstracted.png)
+Tthe following tasks needed to be completed to finish the first stage of the project:
 
 - Writing an f1 program in assembly and converting to it's little endian machine code equivalent 
 - Adding the data memory component and it's respective multiplexer (including byte sized addressing)
