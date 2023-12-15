@@ -67,7 +67,11 @@ This register may be referred to as RegFile. This RAM file writes to a single re
 
 ## RMAD [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/1cdfe83262b019dd869af057e12a288df94841f4)
 The RMAD module is a top file module for the regfile, muxes, ALU and data memory. The point of this file was to make it easier for Alex to write the top module for the single-cycle CPU by reducing the number of connections he needed to deal with. The RMAD module got scrapped when we began the pipelining stage because it was spread across multiple pipeling stages and so was not worth the effort of including it in the top file. Although it wasn't used in the pipelined CPU, it was still of use in the single-cycle CPU.
-Testing the RMAD module was not done as rigorously as some of the other modules due to the larger number of inputs, but some testing was done using [RMAD_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/65b7d4d855dc4af01b430ae197592c502140f43f). As new components and signals were being created, RMAD got changed frequently. A commit with one of these changes: ([Added ra and return mux](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dec7dde3efe5caa388fb73671f319b11fdae7117)).
+Testing the RMAD module was not done as rigorously as some of the other modules due to the larger number of inputs, but some testing was done using [RMAD_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/65b7d4d855dc4af01b430ae197592c502140f43f). As new components and signals were being created, RMAD got changed frequently. This mux was one of the changes: ([Added ra and return mux](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dec7dde3efe5caa388fb73671f319b11fdae7117)).
+
+![RMAD](src/RMAD.jpg)
+<br/>
+This diagram of RMAD was what it looked like initially before additional wires and components were added to it.
 
 <div id="HazardDetectionUnit">
 
