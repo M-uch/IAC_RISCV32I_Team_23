@@ -19,16 +19,16 @@ PUT IN CONTENTS TABLE AT THE END
 
 ### Single Cycle Processor: ###
 
-- CU([link](put in link here))
-- Top File([link](put in link here))
-- PC([link](put in link here))
-- Testing/Debugging([link](put in link here))
-- ALU/Register([link](put in link here))
+- [CU](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/rtl/CU.sv)
+- [Top File](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/rtl/Top.sv)
+- [PC](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/rtl/PC.sv)
+- [Testing/Debugging](https://github.com/M-uch/IAC_RISCV32I_Team_23/tree/main/Test_Evidence)
+- [ALU/Register](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/main/rtl/ALU.sv)
 
 ### Pipelined Processor: ###
-- Top File([Top File](#Top_P))
-- Fetch Stage([Fetch Stage](#Fetch))
-- Decode Stage([Decode Stage](#Decode))
+- [Top File / Structure](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/Pipeline-Processor/Pipeline_Top/Top.sv)
+- [Fetch Stage](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/Pipeline-Processor/Pipeline_Top/Fetch_stage.sv)
+- [Decode Stage](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/Pipeline-Processor/Pipeline_Top/Decode_stage.sv)
 
 <div id="CU">
 
@@ -299,7 +299,24 @@ These were 2 partial contributions during the development of the single cycle st
 
 ## Top File / Structure (Pipelining) ##
 
-CREATE TABLE FOR EACH STAGE, INSERT ABSTRACTED DIAGRAM!!!!!!!
+My pipeline structure would take the form of a top file connecting the 5 pipeline stages. Below is a diagram detailing this:
+
+![Abstracted Top File Pipelining](src/Top_Abstracted_P.png)
+
+The pipeline would be decomposed as follows:
+
+| Pipeline Stage | Modules Included | Stage Purpose |
+| :------------: | :--------------- | :------------ |
+| Fetch Stage    | PC, Instruction Memory| Get Instruction| 
+| Decode Stage   | CU, Register File, Sign Extend | Get Control Signals and Register Data |
+| Execute Stage  | ALU, Jump Functionality | Perform ALU/Jump Operations |
+| Memory Stage   | Data Memory | Read / Write to Data Memory |
+| Writeback Stage| Result Mux | Feedback CPU Result to Register File |
+
+Inside each stage is the pipeline register for the next stage, this means that that when it enters the next pipeline stage it will be a cycle later. This was by design so that connections could be made on top file easily, when it came to I/P signals to the hazard unit.
+
+*Note that the Writeback stage does not include a pipeline register, it is simply a mux*
+
 <div id="Fetch">
 
 ## Fetch Stage ##
@@ -385,30 +402,82 @@ The Fetch Stage is responsible for outputting instructions for the rest of the p
 
 ## Decode Stage ##
 
-The Decode Stage is responsible for...
+The Decode Stage is responsible for providing the control signals, register data and sign extend data for the pipeline. Again there were 2 modules which had to be edited to accomodate the use of pipelining:
 
 1. **CU**
 
-    wdasd
+    The Control Unit had to modified so that we would perform the appropriate logical operations to calculate 'PCSrc' (signal which defined our PC input) in the execute phase. This meant we had to change the I/O to now output the 'branch' and 'jump' signals.
 
     ```
         // Original Code:
+        module CU #(
+            parameter WIDTH = 32
+        ) (
+            input logic     [WIDTH-1:0]     instr,   // Instruction
+            input logic                     eq,
+            output logic                    pc_src,
+            output logic    [1:0]           result_src,
+            output logic                    mem_write,
+            output logic    [2:0]           alu_ctrl,
+            output logic                    alu_src,
+            output logic    [2:0]           imm_src,
+            output logic                    reg_write,
+            output logic                    jump_src,
+            output logic                    a_type
+
+        );
+
+            logic [2:0] ALUOp;
+            logic branch;                               // NOTE: Branch / Jump 
+            logic jump;                                 // defined only in CU scope
+
+            assign pc_src = (branch & ~eq) || jump;     // NOTE: Performing in decode
+
+            // Instantiate modules...
     ```
 
     ```
         // Pipeline Modifications:
+        module CU_P #(
+            parameter WIDTH = 32
+        ) (
+            input logic     [WIDTH-1:0]     instr,        // Instruction
+            output logic    [1:0]           result_src,
+            output logic                    mem_write,
+            output logic    [2:0]           alu_ctrl,
+            output logic                    alu_src,
+            output logic    [2:0]           imm_src,
+            output logic                    reg_write,
+            output logic                    jump_src,
+            output logic                    a_type,
+            output logic                    jump,         // NEW: jump and branch now part of I/O
+            output logic                    branch
+
+        );
+
+            logic [2:0] ALUOp;
+
+            // Instantiate modules...
     ```
 
 2. **Register File**
 
-    wadswa
+    The Register File also needed to be modified to perform its sequential logic on the falling edge rather than the rising edge. This is so we could allow for the the synchronous nature of the pipeline data moving 'downstream'(between pipeline stages), and would avoid unintentionally overwriting any important data.
 
     ```
         // Original Code:
+        always_ff @(posedge clk) begin      // NOTE: On 'posedge'
+            if(WE3 && (A3 != 5'b00000)) Reg_File[A3] <= WD3;
+            if(trigger== 1'b1) Reg_File[5] <= 1; // t0 location 
+        end
     ```
 
     ```
         // Pipeline Modifications:
+        always_ff @(negedge clk) begin      // NEW: On 'negedge'
+            if(WE3 && (A3 != 5'b00000)) Reg_File[A3] <= WD3;  
+            if(trigger== 1'b1) Reg_File[5] <= 1; // t0 location 
+        end
     ```
 
 ## Appendix ##
