@@ -11,6 +11,7 @@ Please clone and open this repository in VSCode.
 ```bash
 $ ./doit.sh
 ```
+
 **Verilator warnings may occur, this is due to some partially unused inputs in the CPU. Please configure verilator to bypass these warnings, otherwise the script will exit due to these warnings**
 
 3. Vbuddy's display should plot the PDF for the corresponding function loaded into the data memory, the data memory loaded by default is gaussian.mem. You can change this by changing the .mem file loaded in the [data memory](DataMemory.sv).
