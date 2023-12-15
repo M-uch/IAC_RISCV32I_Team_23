@@ -536,13 +536,43 @@ This is not an enumerative list, but includes all the main changes / modificatio
 
 # Conclusion #
 
-### What I Learnt ###
+### What I Have Learnt ###
+
+I have learnt the following skills:
+
+1. System Verilog
+2. Git and GitHub workflow as a team
+3. Markdown
+4. Principles and considerations for computer architecture development
+5. Debugging using a waveviewer
 
 ### Mistakes ###
 
+- **Naming convention with pipelining**
+    
+    A lot of our compiler errors for our pipelining was due to rushing the connections in the top file. This meant when it came to creating the pipeling stages, it became confusing which I/O pins did what, or it was unclear of their functionality based on their name. Using multiple naming conventions and a lack of communication caused this. 
+
+    For example using '_i' and '_o' in places and not in others, which caused confusion.
+
+- **Intital control signals**
+
+    Initially I did not assign the correct control signals for JAL, RET and LUI. These all had to be changed later and were only discovered through time spent debugging in the wave viewer. The commit table in the previous section details where these changes were fixed but ultimately they ended up costing us a fair amount of time. 
+
+
 ### What I Would Do Differently ###
 
+- **Ensure Consistency With Programming Conventions**
 
+    This includes naming conventions, program structure and commenting. By following to a set of conventions it would've significantly cut back on time spent debugging.
+
+- **Be More Thorough When Assigning Signals**
+
+    This means ensuring the signal is correct before implementing it in the 'final' design. With this design methodology we can greatly cut back on debugging time in ensuring certain modules are working correctly.
+
+- **Make Clearer Commit Messages**
+
+    This could entail planning out my commits better as well as providing clearer and more detailed (if necessary) commit messages. This would ultimately make it easier for all members of the team to see the contributions and changes to the CPU.
+  
 ## Appendix ##
 
 [RISC-V ISA](src/RISC-V_ISA.png)
