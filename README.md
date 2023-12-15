@@ -75,18 +75,20 @@ Various components could be pulled from lab 4 and reused in the project with add
 
 ![Alt text](<Pictures/Pasted image 20231207112136.png>)
 
-**Project Diagram**
+**Project Brief Diagram**
 
 ![Alt text](<Pictures/Pasted image 20231207111708.png>)
+
+**Modified Single Cycle CPU Diagram**
 
 the following tasks needed to completed to finish the first stage of the project:
 
 - Writing a f1 program in assembly and converting to it's little endian machine code equivalent 
 - Adding the data memory component and it's respective multiplexer (including byte sized addressing)
-- implementing additional operations to the ALU
-- implementing additional control signals to the control unit for the JAL instructions required and store load instructions
+- Implementing additional operations to the ALU
+- Implementing additional control signals to the control unit for the JAL instructions required and store load instructions
 - Adding components to allow for jumps (storing the RET address and returning to respective address on RET)
-- implementing a trigger that can be externally changed through Vbuddy to start the f1 light sequence on demand
+- Implementing a trigger that can be externally changed through Vbuddy to start the f1 light sequence on demand
 
 ## Evidence ##
 
@@ -129,7 +131,7 @@ We decided to split the pipeline into 5 stages:
 
 Below is a diagram detailing the abstracted scope of the top file:
 
-INSERT DIAGRAM HERE
+![Alt text](Personal_Statements/src/Top_Abstracted_P.png)
 
 ## Pipeline Performance ## 
 
@@ -149,153 +151,6 @@ For example, this can be seen in the following wavefile of noisy.mem:
 ![Noisy Wave Viewer](Test_Evidence/Pipeline_Performance/noisypipelinewaveform.png)
 
 Left of the marker is the PDF program before plotting and to the right is during plotting. It can be seen clearly that flushes occur very frequently, therefore explaining the loss in performance for our particular program.
-
-We decided to design our Pipelined processor into multiple modules:
-
-1. Fetch
-    This includes the modules:
-    - Instruction memory
-    - PC register
-    - PC mux
-    - PC + 4
-
-    And has the following inputs:
-    - PC Target E
-    - StallF
-    - StallD
-    - FlushD
-    - PCSrcE
-    - clk
-
-    And has the following outputs:
-    - InstrD
-    - PCD
-    - PC+4D
-
-2. Decode
-    This includes the modules:
-    - Register file
-    - Extend
-    - CU
-
-    And has the following inputs:
-    - InstrD
-    - PCD
-    - PC+4D
-    - RegWriteW
-    - ResultW
-    - RdW
-    - FlushE
-    - Trigger
-    - (NOT) clk
-
-    And has the following outputs:
-    - RegWriteE
-    - ATypeE
-    - ResultSrcE
-    - MemWriteE
-    - JumpE
-    - BranchE
-    - ALUCtrlE
-    - ALUSrcE
-    - Rd1E
-    - Rd2E
-    - PCE
-    - RAE
-    - A0
-    - Rs1E
-    - Rs2E
-    - RDE
-    - ImmExtE
-    - PC+4E
-    - Rs1D
-    - Rs2D
-
-3. Execute
-
-    This includes the modules:
-    - 2, 3 input muxes
-    - 2 input mux
-    - PC Targer
-    - ALU
-
-    And has the following inputs:
-    - RegWriteE
-    - ATypeE
-    - ResultSrcE
-    - MemWriteE
-    - JumpE
-    - BranchE
-    - ALUCtrlE
-    - ALUSrcE
-    - Rd1E
-    - Rd2E
-    - PCE
-    - RAE
-    - Rs1E
-    - Rs2E
-    - RDE
-    - ImmExtE
-    - PC+4E
-    - ALUResultM
-    - ResultW
-    - FowardAE
-    - ForwardBE
-
-    And has the following outputs:
-    - RDE
-    - RDM
-    - RS2E
-    - RS1E
-    - PCsrcE
-    - PC+4M
-    - WriteDataM
-    - ALUResultM
-    - MemWriteM
-    - ResultSrcM
-    - RegWriteM
-
-4. Memory
-    This includes the modules:
-    - Data memory
-
-    And has the following inputs:
-    - RDM
-    - PC+4M
-    - WriteDataM
-    - ALUResultM
-    - MemWriteM
-    - ResultSrcM
-    - RegWriteM
-    - clk
-
-    And has the following outputs:
-    - RegWriteM
-    - RegWriteW
-    - RDM
-    - ALUResultM
-    - ResultSrcW
-    - ReadDataW
-    - ALUResultW
-    - RDW
-    - PC+4W
-
-5. Writeback
-    This includes the modules:
-    - 3 input mux
-
-    And has the following inputs:
-    - RegWriteW
-    - ResultSrcW
-    - ReadDataW
-    - ALUResultW
-    - RDW
-    - PC+4W
-
-    And has the following outputs:
-    - RDW
-    - ResultW
-    - RegWriteW
     
 # 3. **Caching RISCV-32I**
 
