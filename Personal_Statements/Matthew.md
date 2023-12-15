@@ -21,7 +21,7 @@
 
 ### [Mistakes](#Mistakes) ###
 
-### [What I've learnt](#Learnt) ###
+### [What I've Learnt](#Learnt) ###
 
 ### [If I Did It Again](#Improvements) ###
 
@@ -30,7 +30,7 @@
 <div id="ALU">
 
 ## ALU  [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/1cdfe83262b019dd869af057e12a288df94841f4)
-Construction of the ALU was the first thing that I set out to do in this project. In theory it was simple, to use a select signal to decide and perform an operation using two input signals.<br />
+Construction of the ALU was the first thing that I set out to do in this project.<br />
 Here is a table of the select signal (ALUCtrl) and the corresponding operation it would perform:
 
 |  ALUCtrl  | Operation | 
@@ -44,7 +44,7 @@ Here is a table of the select signal (ALUCtrl) and the corresponding operation i
 | 101       | Slr       |
 
 The LUI operation was added by Raymond and Alex later in the project.
-To test the ALU, [ALU_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/a9a83fff95a73f4615dde3c13ca1bdeaa4766044) was used. In this testbench, it assigned input values for the ALU and then ran through a loop to test each operation. Gtkwave was used to display the output value at each clock cycle. Further testing consisted of repeating this multiple times with varying input values.
+To test the ALU, [ALU_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/a9a83fff95a73f4615dde3c13ca1bdeaa4766044) was used. This testbench assigned input values for the ALU and then ran through a loop to test each operation. Gtkwave was used to display the output value at each clock cycle. Further testing consisted of repeating this multiple times with varying input values.
 <br />Due to a conceptual misunderstanding, I implemented the Zero signal incorrectly and I used multiple if statements instead of a much neater single case statement. More on this in the [mistakes](#Mistakes) section.
 
 <div id="DataMemory">
@@ -61,13 +61,13 @@ Testing of these two mux modules was done with [Mux_tb.cpp](https://github.com/M
 <div id="RegisterFile">
 
 ## Register File [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/1cdfe83262b019dd869af057e12a288df94841f4)
-This register may be referred to as RegFile. This RAM file writes to a single register and reads from two registers at a time. It outputs the read values towards the execute stage (or just the ALU and a mux for the single-cycle CPU). To test the register, [RegFile_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/e63b1686499fbe658864e5b10ff9ddec50735b4a) was used. The testbench that was first commited had incorrect inputs that I accidentally added, hence why the commit is an error fix. As the project progressed, the team realised that we needed an a0 output, ra output, trigger input and another condition in the if statement that prevented the zero register from being modified. The trigger and a0 were added by Raymond ([added t0 direct access to regfile and a0](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dc5faa550381e1ae12df13fdec0057f61473a7fa)), ra was added by me ([Added ra and return mux](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dec7dde3efe5caa388fb73671f319b11fdae7117)) and the condition to keep the zero register constant was added by Alex ([debugging - jumpsrc = 0 for branches, added condition for uncondition…](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/5826b2e81b71bdd3603836ff5a5d3e3d64f72e6c)).
+This register may be referred to as RegFile. To test the register, [RegFile_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/e63b1686499fbe658864e5b10ff9ddec50735b4a) was used. The testbench that was first commited had incorrect inputs that I accidentally added, hence why the commit is an error fix. As the project progressed, the team realised that we needed an a0 output, ra output, trigger input and another condition in the if statement that prevented the zero register from being modified. The trigger and a0 were added by Raymond ([added t0 direct access to regfile and a0](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dc5faa550381e1ae12df13fdec0057f61473a7fa)), ra was added by me ([Added ra and return mux](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dec7dde3efe5caa388fb73671f319b11fdae7117)) and the condition to keep the zero register constant was added by Alex ([debugging - jumpsrc = 0 for branches, added condition for uncondition…](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/5826b2e81b71bdd3603836ff5a5d3e3d64f72e6c)).
 
 <div id="RMAD">
 
 ## RMAD [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/1cdfe83262b019dd869af057e12a288df94841f4)
-The RMAD module is a top file module for the regfile, muxes, ALU and data memory. The function of this file was to make it easier for Alex to write the top module for the single-cycle CPU by reducing the number of connections he needed to deal with. The RMAD module got scrapped when we began the pipelining stage because it was spread across multiple pipeline stages and so was not worth the effort of including in the top file. Although it wasn't used in the pipelined CPU, it was still of use in the single-cycle CPU.
-Testing the RMAD module was not done as rigorously as some of the other modules due to the larger number of inputs, but some testing was done using [RMAD_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/65b7d4d855dc4af01b430ae197592c502140f43f). As new components and signals were being created, RMAD got changed frequently. The ra and a0 signals as well as this mux were some of the changes: ([Added ra and return mux](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dec7dde3efe5caa388fb73671f319b11fdae7117)).
+The RMAD module is a top file module for the regfile, muxes, ALU and data memory. The function of this file was to make it easier for Alex to write the top module for the single-cycle CPU by reducing the number of connections he needed to deal with. The RMAD module was not used in the pipelining stage because it was spread across multiple pipeline stages.
+Some testing was done using [RMAD_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/65b7d4d855dc4af01b430ae197592c502140f43f). As new components and signals were being created, RMAD got changed frequently. The ra and a0 signals as well as this mux were some of the changes: ([Added ra and return mux](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dec7dde3efe5caa388fb73671f319b11fdae7117)).
 
 ![RMAD](src/RMAD.jpg)
 <br/>
@@ -76,10 +76,10 @@ This diagram of RMAD was what it looked like initially before additional wires a
 <div id="HazardDetectionUnit">
 
 ## Hazard Detection Unit [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/e1388c9698eadfbd5aa9c9ee080bccdbd89d3ff4)
-The CPU was split into 5 stages (Fetch, Decode, Execute, Memory and Writeback) and by doing this we introduced the CPU to hazards. The hazard unit is responsible for solving these problems. <br />The hazards that needed to be solved and a description of them are:
-- Raw data hazard. This hazard is caused when a register that is still inside the CPU is being used again by a later instruction. To solve this, the new value of the register needs to be fed back into the execute stage of the CPU to replace the old value that is currently being used by the later instruction. This is called forwarding.
-- Load data hazard. This hazard is similar to raw data hazard except the register that is still inside the CPU is being loaded onto a memory address (result of a load instruction). This means that the new value of the register can't be used until the instruction is fully completed. Stalling is used to solve this. Stalling is when the PC is paused so that the load instruction can finish its cycle before the next instruction is ran.
-- Control hazard. When jumping or branching, the following instructions in the PC are not wanted to be processed but because it takes multiple cycles to process the jump/branch, new unwanted instructions are processed in the CPU. Flushing is used to solve this. Flushing is done by reseting all the values in the first two pipeline registers so that no registers are modified whilst waiting to jump/branch.
+The hazards that needed to be solved and a description of them are:
+- Raw data hazard. This hazard is caused when a register that is still inside the CPU is being used again by a later instruction. To solve this, the new value of the register needs to replace the old value that is currently being used by the later instruction. This is forwarding.
+- Load data hazard. This hazard is similar to raw data hazard except a load instruction is being ran. This means that the new value of the register can't be used until the instruction is fully completed. Stalling solves this by pausing the PC so that the load instruction can finish its cycle before the next instruction is ran.
+- Control hazard. When jumping or branching, the following instructions in the PC are not wanted to be processed but because it takes multiple cycles to process the jump/branch, new unwanted instructions are processed in the CPU. Flushing solves this by reseting all the values in the first two pipeline registers so that no registers are modified whilst waiting to jump/branch.
 
 The code of the Hazard Unit was split into three sections, one for each hazard type.<br />
 
@@ -94,7 +94,7 @@ For forwarding, this is the relevant code:
     else if ((Rs2E == RdW) && (RegWriteW) && (Rs2E!=0))     ForwardBE = 1;
     else                                                    ForwardBE = 0;
 ```
-This section of code compares the registers that are being used in the execute phase to the registers that will be written to in the memory and writeback stage (with the memory stage taking priority as this stage holds the newest value of the register). Once it checks if forwarding from the memory or writeback stage is required, it uses ForwardAE and ForwardBE to control three input muxes in the execute phase. These three input muxes decide which register values will be inputted into the ALU. Forwarding cannot happen if the register value is 0 as this is the zero register (a constant register).
+This section of code compares the registers that are being used in the execute phase to the registers that will be written to in the memory and writeback stage (the memory stage takes priority as this stage holds the newest value of the register). If forwarding is required, it uses ForwardAE and/or ForwardBE to control two three input muxes in the execute phase. These three input muxes decide which register values will be inputted into the ALU.
 
 For stalling, this is the relevant code:
 
@@ -113,24 +113,23 @@ For flushing (and stalling), this is the relevant code:
 ```
 PCSrcE determines if a jump or a branch instruction is taking place, if it's high then flushing is required to not process unwanted instructions. FlushE can also be triggered if there is a stall. Stalling holds the values in the fetch and decode stage but it doesn't prevent the values in the decode stage from being pushed into the execute stage, this is why the execute stage needs to be flushed on a stall.
 
-[HazardUnit_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/3171f691dbc2570c4856ece37c2fb3a3a89db23e) was used to test the Hazard Unit. As the pipeline stage files were being created, some confusion came of how to configure the ResultSrcE bits but we ultimately agreed to make the signal a single bit and use the top file to only connect the 0th bit to the hazard unit.
+[HazardUnit_tb.cpp](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/3171f691dbc2570c4856ece37c2fb3a3a89db23e) was used to test the Hazard Unit.
 
 <div id="PipelineRegisters">
 
 ## Pipeline Registers [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/861bf4e906655ee4075c6343a6e7eac0e45373ab)
-Between each of the pipeline stages, four pipeline registers were installed so that the CPU could process multiple instructions at once. These registers were made compatible with the hazard unit to solve problems caused by data/control hazard. Without the addition of the hazard unit, these pipeline registers are simple d-type registers that push the inputs to the output on every clock rising edge. The additions made to the registers to account for hazard handling is listed below:
+Four pipeline registers were made compatible with the hazard unit to solve problems caused by data/control hazards. Without the addition of the hazard unit, these pipeline registers are simple d-type registers that push the inputs to the output on every clock rising edge. The additions made to the registers to account for hazard handling is listed below:
 
 - Fetch To Decode: An enable was added so the register can be stalled and a clear was added so the register can be flushed.
 - Decode To Execute: A clear was added so the register can be flushed.
-- Execute to Memory: No changes required.
-- Memory to Writeback: No changed required.
+- Execute to Memory and Memory to Writeback: No changes required.
 
-All the testbenches that were used to test these pipelines are all on this [commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/3171f691dbc2570c4856ece37c2fb3a3a89db23e).
+All the testbenches used for these pipelines: [commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/3171f691dbc2570c4856ece37c2fb3a3a89db23e).
 
 <div id="ExecuteStageFile">
 
 ## Execute Stage File [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/dd7c29dd4a231a0fb5f6df8a1a92be81047aa0e5)
-This stage file (like the other stage files) was created to simplify the top file and help debug issues. The execute stage is responsible for selecting the immediate or register value, calculating the new value of the Rd register, calculating the target PC value and selecting the return address or an offset value. This section is also where forwarding takes place. Modules included in this file are: ALU, adder, 2 two input mux, 2 three input mux and the ExecuteToMemory pipeline register. The PCSrcE logic that was originally in the PC has been moved to the execute stage. No testbench was made for the stage files as we went straight to debugging the whole CPU once we completed the stages and top.<br/>
+This stage file (like the other stage files) was created to simplify the top file and help debug issues. Modules included in this file are the: ALU, adder, 2 two input mux, 2 three input mux and the ExecuteToMemory pipeline register. The PCSrcE logic that was originally in the PC has been moved to the execute stage. No testbench was made for the stage files as we went straight to debugging the whole CPU once we completed the stages and top files.<br/>
 ![Execute Stage](src/ExecuteStageSmaller.jpg)
 <br/>
 ![Execute Stage Mux](src/ExecuteStageMuxSmaller.jpg)
@@ -140,32 +139,32 @@ The mux with the PCTargetE input replaces the line from PCTargetE to the Fetch m
 <div id="MemoryStageFile">
 
 ## Memory Stage File [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/c3cbb31a5ead8233989c6e73732a5ee10b9ad78f)
-The two components in this stage are the data memory and the MemoryToWriteback pipeline register. The function of this stage is to write to memory and load from memory.
+The two components in this stage are the data memory and the MemoryToWriteback pipeline register.
 
 ![Memory Stage](src/MemoryStageSmaller.jpg)
 
 <div id="WritebackStageFile">
 
 ## Writeback Stage File [.sv Commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/c3cbb31a5ead8233989c6e73732a5ee10b9ad78f)
-The single component in this stage is a three input mux which decides if the output is from an arithmetic instruction, memory instruction or a JAL instruction.
+The single component in this stage is a three input mux.
 
 ![Writeback Stage](src/WritebackStageSmaller.jpg)
 
 <div id="Debugging">
 
 ## Debugging ##
-When the construction of the pipelined-CPU was complete, debugging issues was essential. Alex and I worked together on this as we had both made/contributed to the stage and top files. At first it was mostly syntax and compiler errors that arose but because of the error list provided by the compiler, these were easy to fix. <br />
+When the construction of the pipelined-CPU was complete, debugging issues was essential. At first it was mostly syntax and compiler errors but these were easy to fix. <br />
 ([Debugged compiler errors](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/9a4c481c2d15a0f8e117c68b240d5eb9b725780d)), ([Debug syntax errors [1]](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/7b8bcd04fa21b1195b48ccd3e87060afc779dd47)), ([Debug syntax errors [2]](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/d340c4de8b7edb338d536a3c16bf0c2865172a67)), ([Debug errors](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/8d02c447d74046146307dd38d6be4d1b8c914043)) and ([Corrected ResultSrcE bit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/bb74176784d0818c0e64804ad39df3364a499d8a))
 
-Once the compiler was able to run without any errors, the CPU still didn't work. After some testing we found that the FetchToDecode register was clearing all output values. This was weird because the clear input was never going high. After some thought and more testing, we realised that the signals controlling the clear signal were synchronous with the clock, meaning the clear signals were also synchonous with the clock. This is important because the pipeline registers were written to have an asynchronous clear. Once I changed the FetchToDecode and DecodeToFetch files to be synchronous ([Made pipeline registers synchronous](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/2bf3858d684ddf9d46bc735aced070268439a855)), the f1 program began running properly. We also tested the PDF programs which also ran without error.
+Once the compiler was able to run without any errors, the CPU still didn't work. After some testing we found that the FetchToDecode register was clearing all output values. This was weird because the clear input was never going high. We eventually realised that the clear signal was synchronous with the clock. This is important because the pipeline registers were written to have an asynchronous clear. Once I changed the FetchToDecode and DecodeToFetch files to be synchronous ([Made pipeline registers synchronous](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/2bf3858d684ddf9d46bc735aced070268439a855)), the f1 program began running properly. We also tested the PDF programs which also ran without error.
 
 <div id="Mistakes">
 
 ## Mistakes ##
-When I created the Pipeline-Processor branch on the git repository, I accidentally cloned all the files on the main branch over to the new branch. This was not a major issue as we only needed to delete the cloned files but it was annoying because the branch already had many commits to it (the first commit on the Pipeline-Processor branch was ([Commit Hazard Unit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/e1388c9698eadfbd5aa9c9ee080bccdbd89d3ff4))). <br />
+When I created the Pipeline-Processor branch, I accidentally cloned all the files on the main branch over to the new branch. We only needed to delete the cloned files but it was annoying that the branch already had many commits to it (First commit on the Pipeline-Processor branch: ([Commit Hazard Unit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/e1388c9698eadfbd5aa9c9ee080bccdbd89d3ff4))). <br />
 When creating the pipeline registers, I made the registers with an asynchronous clear signal which became a problem when testing the pipelined-CPU.<br />
-When I made the ALU, I had the wrong understanding of what the zero signal did. When Alex and Raymond began debugging the single-cycle CPU, they found that the zero signal was not outputting what it was meant to output. Alex fixed the ALU by making the zero signal go high whenever ALUResult was zero (as I should have done at the beginning). He also shortened it by using a single case statement as opposed to multiple if statements. Here is Alex's [commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/53c47d8b04ee0b69a6d64a546f77094fc5240d94).<br />
-When I created the Data memory, I hadn't included byte addressing, this became a problem when testing the PDF programs. Raymond added everything that was missing to the Data Memory file, this included little endian storage. Here is Raymond's [commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/d788471a35f995b33250cfeadc5d643fedc8b1b7).
+When I made the ALU, I had the wrong understanding of what the zero signal did. When Alex and Raymond began debugging the single-cycle CPU, they found that the zero signal was not outputting what it was meant to output. Alex fixed the ALU by making the zero signal go high whenever ALUResult was zero. Here is Alex's [commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/53c47d8b04ee0b69a6d64a546f77094fc5240d94).<br />
+When I created the Data memory, I hadn't included byte addressing, this became a problem when testing the PDF programs. Raymond added everything that was missing to the Data Memory file. Here is Raymond's [commit](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/d788471a35f995b33250cfeadc5d643fedc8b1b7).
 
 <div id="Learnt">
 
@@ -176,6 +175,6 @@ I have learnt how to use GitHub beyond simply cloning repositories as I can now 
 
 ## If I Did It Again ##
 When the ALU and Data Memory mistakes were found, I had moved onto the pipeline stage whilst Alex and Raymond were debugging the single-cycle CPU and so they fixed my errors themselves. If I did it again, I would make sure to fix my own mistakes or at least attempt to. This would be to make sure that I'm not a liability to my teammates and have a chance to learn from my mistakes. <br />
-With the pipelined CPU, we used _i and _o to represent signals that needed to be inputted and outputted, we also used lettering to show which stage a signal was in but these two naming techniques often got mixed up and so if I did this project again I would make sure that the team sticks to the same naming conventions. This was because connecting wires with different naming conventions was annoying to deal with and resulted in many errors.<br />
-With my new skills using github, I would take more advantage of branching as it was very useful for keeping the repository neat. I would also like to be the repo master to deepen my technical understanding of github and to take on more responsibility for the team.<br />
+With the pipelined CPU, we used _i and _o to represent signals that needed to be inputted and outputted, we also used lettering to show which stage a signal was in but these two naming techniques often got mixed up and so if I did this again I would make sure that the team sticks to the same naming conventions as it got very confusing.<br />
+With my new skills using github, I would take more advantage of branching as it was very useful for keeping the repository neat. I would also like to be the repo master to further my skills with github and to take on more responsibility.<br />
 Completing the data memory cache challenge would've been desirable but due to a time constraint, we weren't able to.
