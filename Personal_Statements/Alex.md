@@ -9,7 +9,10 @@
 6. [ALU / Register File](#partial)
 7. [Top File / Structure (Pipelining)](#Top_P)
 8. [Fetch Stage](#Fetch)
-9. [Decode Stage](#Decode) 
+9. [Decode Stage](#Decode)
+10. [Testing / Debugging (Pipelining)](#Test_P)
+11. [Commit Evidence](#commits)
+12. [Conclusion](#conclude) 
 
 PUT IN CONTENTS TABLE AT THE END
 
@@ -29,6 +32,7 @@ PUT IN CONTENTS TABLE AT THE END
 - [Top File / Structure](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/Pipeline-Processor/Pipeline_Top/Top.sv)
 - [Fetch Stage](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/Pipeline-Processor/Pipeline_Top/Fetch_stage.sv)
 - [Decode Stage](https://github.com/M-uch/IAC_RISCV32I_Team_23/blob/Pipeline-Processor/Pipeline_Top/Decode_stage.sv)
+- [Testing/Debugging](https://github.com/M-uch/IAC_RISCV32I_Team_23/tree/main/Test_Evidence)
 
 <div id="CU">
 
@@ -175,7 +179,7 @@ Designing and construction of the Top file included a lot of debugging and house
 
 Another consideration included in the top file was the naming convention of having all top signals in all captial letters. This was designed to make it easy to distinguish between the layers of the abstraction in the CPU and helped with out decomposition overall.
 
-Below is a diagram detailling the abstracted scope of the top file:
+Below is a diagram detailing the abstracted scope of the top file:
 
 ![Abstracted Top File](src/Top_Abstracted.png)
 
@@ -215,7 +219,16 @@ Below are the changes:
 
 ## Testing / Debugging  ##
 
-TALK ABOUT VIDEOS, DEBUGGING IN OTHER SECTIONS, LUI TESTING ETC (MAYBE THE GRAPHS IF YOU HAVE TIME)
+Testing and debugging were a large part of my work through this project, especially given that I had the responsibility of forming the top files. The next section shows some examples where I made considerable changes to modules based on my debugging. Raymond and I also made considerable efforts to collect evidence of our testing, which can be seen in the [Test Evidence Folder](https://github.com/M-uch/IAC_RISCV32I_Team_23/tree/main/Test_Evidence).
+
+The folder contains the following:
+
+| Folder               | Folder Description |
+| :------------------  | :-------------
+| LUI_TEST             | Evidence of testing of the LUI instruction |
+| Pipeline Performance | Testing and observing our program's performance with pipelining vs single cycle |
+| Videos               | A collection of videos showing the Vbuddy screen during program execution |
+| vcd_waveforms        | Screenshots from the vcd wave viewer of program output
 
 <div id="partial">
 
@@ -479,6 +492,56 @@ The Decode Stage is responsible for providing the control signals, register data
             if(trigger== 1'b1) Reg_File[5] <= 1; // t0 location 
         end
     ```
+
+<div id="Test_P">
+
+## Testing / Debugging (Pipelining) ##
+
+Testing and debugging for the pipelined CPU was mostly just dealing with simple errors provided from the compiler in the terminal. Our only problem with the CPU design was with the synchronicity of the CLR signal into the pipeline registers. Originally it was asynchronous, which we amended to be synchronous.
+
+<div id="commits">
+
+## Commit Evidence ## 
+
+This is not an enumerative list, but includes all the main changes / modifications I made.
+
+| CPU Contribution | Commit Link                                                                                                        | Commit Description                            |
+| :--------------: | :--------:                                                                                                         | :----------------:                            |
+| Control Unit                  | [main](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/5da045f1d78346617c2746257049183e8457bb4b) | Initial structure |                                                                                             |    
+|                               | [1](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/9d775dc97444dafa5005c65c5b1cf6505906f37f)    | Added JumpSrc                                 |
+|                               | [2](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/98f78cd879691f08f3caca5eb5c4bf6c850f771f)    | Added Byte Addressing                         |
+|                               | [3](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/319cec488205db79ebd09168f662eeeec3a5d7f8)    | Added LUI functionality                       |
+| Top File                      | [main](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/d571f5ee3584182070088235770cf808a44995f4) | Intial addition of Top                        |
+| Program Counter               | [main](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/d571f5ee3584182070088235770cf808a44995f4) | PC added                                      |
+| ALU                           | [main](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/53c47d8b04ee0b69a6d64a546f77094fc5240d94) | Added EQ Functionality and re-structured ALU  |
+| Register File                 | [main](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/5826b2e81b71bdd3603836ff5a5d3e3d64f72e6c) | Fixed '0' Register Writing                    |
+| Testing/Debugging             | No Main                                                                                               |                                               |
+|                               | [1](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/53c47d8b04ee0b69a6d64a546f77094fc5240d94)    | Intial changes during testing of single cycle |
+|                               | [2](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/3e27bc8ec936306b5aa4ac88be3a208a8c198c31)    | Changed RET functionality                     |
+|                               | [3](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/5826b2e81b71bdd3603836ff5a5d3e3d64f72e6c)    | Modification of control signals and regfile   |
+|                               | [4](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/327f941a69ba1b605f00cac0fd8aee3b6c8d1342)    | Added video evidence                          |
+|                               | [5](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/e714c313d7bf2b9c351e170377945cb9a420af61)    | LUI testing                                   |
+|                               | [6](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/f8b3aae944b47cfad6621d7d03703b798f931714)    | Added vcd waveform                            |
+| Top (Pipeline)                | [main](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/335ae4459c350f55ae61e76a735280c930324be1) | Initial structure and I/O                     |
+| Fetch Stage                   | [main](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/8272d4aaaaa8ff59e71e4cdbccef5d109a91e1e5) | Initial 'complete' fetch stage                |
+| Decode Stage                  | [main](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/2432dff54d5ba2b1e7602b4e3ebc6f11e970597d) | Inital 'complete decode stage                 |
+| Testing/Debugging (Pipelining)| No main                                                                                               | Testing of pipelining was done with Matthew   |
+|                               | [1](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/ccf7a85759e63068e9c7303183cf2c9cd34963c0)    | Fixing compiler errors #1                     |
+|                               | [2](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/fa6b3bdd403ada68133a8dccace1798d7056b888)    | Fixing compiler errors #2                     |
+|                               | [3](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/905e6fb1fe9aa74f93729160ec3833d322668ef9)    | Fixing compiler errors #3                     |
+|                               | [4](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/a1ed2aaa69b8cc802c10ad5c8832d659a30cf2b5)    | Fixing compiler errors #4                     |
+|                               | [5](https://github.com/M-uch/IAC_RISCV32I_Team_23/commit/e6563f0f5050a057ae43836b0316906607218390)    | Fixed final compiler errors                   |
+
+<div id="conclude">
+
+# Conclusion #
+
+### What I Learnt ###
+
+### Mistakes ###
+
+### What I Would Do Differently ###
+
 
 ## Appendix ##
 
