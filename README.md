@@ -6,7 +6,7 @@ Implementing a 32 bit RISCV-I instruction set CPU used to run a F1 light simulat
 | Name    | CID           | GitHub Username | Personal Statement           |
 | :-----  | :-------------| :-------------  | :------------------          |
 | Raymond | 02288579      | M-uch           | [Raymond's Personal Statement](/Personal_Statements/Raymond.md) |
-| Letong  |               | ksrxlt          | [Letong's Personal Statement](/Personal_Statements/Letong.md)   |
+| Letong  | 02225603      | ksrxlt          | [Letong's Personal Statement](/Personal_Statements/Letong.md)   |
 | Matthew | 02300957      | MatthewGodsmark | [Matthew's Personal Statement](/Personal_Statements/Matthew.md) |
 | Alex    | 02269571      | AlexSeferidis   | [Alex's Personal Statement](/Personal_Statements/Alex.md)        |
 
@@ -36,7 +36,7 @@ Below is a breakdown of how we distributed the work amongst ourselves:
 | Debugging               |     x     |          |           |   x    |
 | **Pipelining Design**   | **Raymond** | **Letong** | **Matthew** | **Alex** |
 | Pipeline Registers      |           |          |     M     |    x   |
-| Hazard Detection Unit   |     x     |          |     M     |        |
+| Hazard Detection Unit   |           |          |     M     |        |
 | Top level sv            |           |          |     x     |    M   |
 | Fetch Stage             |           |          |           |    M   |
 | Decode Stage            |           |          |           |    M   |
